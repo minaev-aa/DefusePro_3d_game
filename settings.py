@@ -6,9 +6,10 @@ width_cube = 10
 height_cube = 10
 
 player_speed = 1
-player_angle = 0
-x_player = 0
-y_player = 0
+player_angle = 0 #начальный угол смотрит вверх по миникарте
+player_angle_change_speed = 0.01
+x_player = 500
+y_player = 300
 radius_player = 5
 
 White = (255, 255, 255)

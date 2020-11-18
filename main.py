@@ -11,7 +11,7 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 def draw():
-    circle(screen, Green, (player.x_player, player.y_player), radius_player)
+    circle(screen, Green, (int(player.x_player), int(player.y_player)), radius_player)
 
 while not finished:
     pygame.time.Clock().tick(FPS)
