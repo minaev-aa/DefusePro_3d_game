@@ -2,7 +2,7 @@ import pygame
 from settings import *
 from Player import *
 from pygame.draw import *
-
+#test
 finished = False
 player = Player()
 
