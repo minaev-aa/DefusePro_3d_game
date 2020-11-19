@@ -51,6 +51,16 @@ class Audio_source():
         if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
             Audio.play()
 
+    def Background_music_on_AfraidSound(self):
+        """
+        Меняет фоновый звук на керамический гул, если включен фоновый звук в настройках.
+        :return: Смена фонового звука, если он включен в настройках.
+        """
+        if self.is_background_music_on:
+            pg.mixer.music.load('Music_and_sound\Format_ogg\страшный гул.ogg')
+            pg.mixer.music.play(-1)
+            pg.mixer.music.set_volume(self.background_volume * 0.8)
+
 
 def test(obj, obj1):
     """
@@ -99,4 +109,4 @@ if __name__ == '__main__':
     sc = pg.display.set_mode((400, 300))
 
     object1 = Audio_source()
-    test(object1.sounf_if_button_down, object1.sound_when_cursor_under_button)
+    test(object1.plus_anythings, object1.sound_when_cursor_under_button)
