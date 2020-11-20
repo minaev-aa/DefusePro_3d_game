@@ -14,10 +14,6 @@ class Audio_source():
         self.is_sounds_on = 1  # Проверка на включенность звуков.
         self.count_of_sound_effects = 8  # Количество шагов подгрузки данных.
 
-        # Проверим работу подсчета данных для реализации окна загрузки игры.
-        assert self.step_of_init == 1  # Изменено кол-во данных в модуле звуков и мелодий,\
-        # нарушена работа подсчета этих данных.
-
     # Инициализация звуковых эффектов.
     def steps_init(self):
         self.steps = pg.mixer.Sound('Music_and_sound\Format_ogg\шаги - 2.ogg')
@@ -51,6 +47,11 @@ class Audio_source():
         self.checkpoint = pg.mixer.Sound('Music_and_sound\Format_ogg\Чекпоинт.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
+    def check_init(self):
+        # Проверим работу подсчета данных для реализации окна загрузки игры.
+        assert self.step_of_init == 1  # Изменено кол-во данных в модуле звуков и мелодий,\
+        # нарушена работа подсчета этих данных.
+
     def Sound_play(self, Audio):
         """
         Включает звук.
@@ -79,6 +80,7 @@ def test(obj, obj1):
     """
     # pg.mixer.music.load('Music_and_sound\Format_ogg\страшный гул.ogg')
     # pg.mixer.music.play(-1)
+
 
     sound1 = pg.mixer.Sound('Music_and_sound\Format_ogg\шаги - 2.ogg')
     sound2 = pg.mixer.Sound('Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
@@ -118,4 +120,6 @@ if __name__ == '__main__':
     sc = pg.display.set_mode((400, 300))
 
     object1 = Audio_source()
+    object1.plus_anything_init()
+    object1.sound_when_cursor_under_button_init()
     test(object1.plus_anythings, object1.sound_when_cursor_under_button)
