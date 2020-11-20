@@ -13,34 +13,43 @@ class Audio_source():
         self.is_background_music_on = 1  # Проверка на включенность фоновой мелодии.
         self.is_sounds_on = 1  # Проверка на включенность звуков.
         self.count_of_sound_effects = 8  # Количество шагов подгрузки данных.
-        # Инициализация звуковых эффектов.
-        self.steps = pg.mixer.Sound('Music_and_sound\Format_ogg\шаги - 2.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.running = pg.mixer.Sound('Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.plus_anythings = pg.mixer.Sound('Music_and_sound\Format_ogg\плюс чего-то.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.sound_when_cursor_under_button = pg.mixer.Sound('Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.sounf_if_button_down = pg.mixer.Sound('Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.shortness = pg.mixer.Sound('Music_and_sound\Format_ogg\Отдышка.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.exhalation = pg.mixer.Sound('Music_and_sound\Format_ogg\Довольный выдох.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
-
-        self.checkpoint = pg.mixer.Sound('Music_and_sound\Format_ogg\Чекпоинт.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
 
         # Проверим работу подсчета данных для реализации окна загрузки игры.
         assert self.step_of_init == 1  # Изменено кол-во данных в модуле звуков и мелодий,\
         # нарушена работа подсчета этих данных.
+
+    # Инициализация звуковых эффектов.
+    def steps_init(self):
+        self.steps = pg.mixer.Sound('Music_and_sound\Format_ogg\шаги - 2.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def running_init(self):
+        self.running = pg.mixer.Sound('Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def plus_anything_init(self):
+        self.plus_anythings = pg.mixer.Sound('Music_and_sound\Format_ogg\плюс чего-то.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def sound_when_cursor_under_button_init(self):
+        self.sound_when_cursor_under_button = pg.mixer.Sound('Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def sounf_if_button_down_init(self):
+        self.sounf_if_button_down = pg.mixer.Sound('Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def shortness_init(self):
+        self.shortness = pg.mixer.Sound('Music_and_sound\Format_ogg\Отдышка.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def exhalation_init(self):
+        self.exhalation = pg.mixer.Sound('Music_and_sound\Format_ogg\Довольный выдох.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
+
+    def checkpoint_init(self):
+        self.checkpoint = pg.mixer.Sound('Music_and_sound\Format_ogg\Чекпоинт.ogg')
+        self.step_of_init += 1 / self.count_of_sound_effects
 
     def Sound_play(self, Audio):
         """
