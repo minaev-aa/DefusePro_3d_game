@@ -1,13 +1,15 @@
-
 from settings import *
 import pygame
 import numpy as np
 
 class Player:
     def __init__(self):
+        self.x_player, self.y_player = player_pos
         self.angle = player_angle
-        self.x_player = x_player
-        self.y_player = y_player
+
+    @property
+    def pos(self):
+        return (self.x_player, self.y_player)
 
     def move(self):
         pressed_keys = pygame.key.get_pressed()
