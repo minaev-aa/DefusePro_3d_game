@@ -15,7 +15,7 @@ class Menu():
         self.but_size = 120
         self.buts = []
         self.audio = audio
-        self.W = 1200  # Размеры экрана для модуля главного меню.
+        self.W = width_screen  # Размеры экрана для модуля главного меню.
         self.H = height_screen  # Ширина для модуля главного меню.
         self.y_but = self.H // 2
         self.sc = sc
@@ -82,8 +82,8 @@ class Button():
         self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
         self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
         self.COLOR = self.BACK_LOAD
-        self.W = 1200  # Размеры экрана для модуля главного меню.
-        self.H = 500  # Размеры экрана для модуля главного меню.
+        self.W = width_screen  # Размеры экрана для модуля главного меню.
+        self.H = height_screen  # Ширина для модуля главного меню.
         self.pi = 3.14
 
         self.audio = audio
@@ -142,8 +142,8 @@ class Load_cicle():
         self.GREEN_LOAD = (10, 200, 20)  # Цвет кружка загрузки.
         self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
         self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
-        self.W = 1200  # Размеры экрана для модуля главного меню.
-        self.H = 500  # Размеры экрана для модуля главного меню.
+        self.W = width_screen  # Размеры экрана для модуля главного меню.
+        self.H = height_screen  # Ширина для модуля главного меню.
         self.pi = 3.14
 
     def draw_cicle(self, x, y):
