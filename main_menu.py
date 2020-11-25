@@ -105,7 +105,8 @@ class Button():
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(self.Text, True, (255, 255, 255))
         # Добавляет текст на кнопку на координатах x, y.
-        sc.blit(text, [x - int(1.5 * self.size_of_font), y - int(self.size_of_font / 3)])
+        sc.blit(text, [x - int((len(self.Text)/2) * self.size_of_font//3),
+                       y - int(self.size_of_font / 3)])
 
     def is_but_down(self, massive):
         """
