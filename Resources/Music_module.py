@@ -1,5 +1,4 @@
 import pygame as pg
-import sys
 
 
 class Audio_source():
@@ -115,6 +114,8 @@ def test(obj, obj1):
 if __name__ == '__main__':
     print("Эта функция позволяет оценить работу модуля звука "
           " и разобраться в работе функций фонового звука и сторонних звуков.")
+    import pygame as pg
+    import sys
 
     pg.init()
     sc = pg.display.set_mode((400, 300))
