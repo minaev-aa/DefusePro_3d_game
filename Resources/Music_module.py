@@ -15,35 +15,35 @@ class Audio_source():
 
     # Инициализация звуковых эффектов.
     def steps_init(self):
-        self.steps = pg.mixer.Sound('Music_and_sound\Format_ogg\шаги - 2.ogg')
+        self.steps = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\шаги - 2.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def running_init(self):
-        self.running = pg.mixer.Sound('Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
+        self.running = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def plus_anything_init(self):
-        self.plus_anythings = pg.mixer.Sound('Music_and_sound\Format_ogg\плюс чего-то.ogg')
+        self.plus_anythings = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\плюс чего-то.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def sound_when_cursor_under_button_init(self):
-        self.sound_when_cursor_under_button = pg.mixer.Sound('Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
+        self.sound_when_cursor_under_button = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def sounf_if_button_down_init(self):
-        self.sounf_if_button_down = pg.mixer.Sound('Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
+        self.sounf_if_button_down = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def shortness_init(self):
-        self.shortness = pg.mixer.Sound('Music_and_sound\Format_ogg\Отдышка.ogg')
+        self.shortness = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Отдышка.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def exhalation_init(self):
-        self.exhalation = pg.mixer.Sound('Music_and_sound\Format_ogg\Довольный выдох.ogg')
+        self.exhalation = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Довольный выдох.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def checkpoint_init(self):
-        self.checkpoint = pg.mixer.Sound('Music_and_sound\Format_ogg\Чекпоинт.ogg')
+        self.checkpoint = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Чекпоинт.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def check_init(self):
@@ -66,7 +66,7 @@ class Audio_source():
         :return: Смена фонового звука, если он включен в настройках.
         """
         if self.is_background_music_on:
-            pg.mixer.music.load('Music_and_sound\Format_ogg\страшный гул.ogg')
+            pg.mixer.music.load('Resources\Music_and_sound\Format_ogg\страшный гул.ogg')
             pg.mixer.music.play(-1)
             pg.mixer.music.set_volume(self.background_volume * 0.8)
 

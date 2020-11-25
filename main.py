@@ -38,7 +38,7 @@ def Menu_func():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 is_one_of_buttons_on = Loader.menu.is_one_of_buttons_on()
                 if is_one_of_buttons_on != -1:
-                    # Loader.audio.Sound_play(Loader.menu.sound_if_button_down)
+                    Loader.audio.Sound_play(Loader.audio.sound_if_button_down)
                     num_in_massive_of_buttoms_from_main_menu = is_one_of_buttons_on
                     indificate_func(num_in_massive_of_buttoms_from_main_menu)
                     finished = True

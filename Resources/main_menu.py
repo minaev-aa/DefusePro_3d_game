@@ -2,17 +2,10 @@ import pygame as pg
 import sys
 from Music_module import Audio_source
 
-GREEN_LOAD = (10, 200, 20)
-BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
-BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
-
-W = 1300
-H = 731
-pi = 3.14
 
 
 class Menu():
-    def __init__(self, audio):
+    def __init__(self, audio, sc):
         """
         Это конструктор главного меню.
         :param audio: обьект, делающий звук.
@@ -22,12 +15,17 @@ class Menu():
         self.buts = []
         self.audio = audio
         self.y_but = H//2
+        self.sc = sc
         # Создадим кнопок.
         self.but_init(W // 2, self.y_but, "Начать", self.but_size)
         self.but_init(W // 2, self.y_but, "Продолжить", self.but_size)
         self.but_init(W // 2, self.y_but, "Настройки", self.but_size)
 
     def draw(self):
+        """
+        Отрисовывает элементы главного меню.
+        :return: Новые элементы.
+        """
         pos_of_mouse = pg.mouse.get_pos()
         for num in range(len(self.buts)):
             # Проверка на наведение курсора, и на то, что это первый кадр, когда курсор на кнопке
@@ -36,16 +34,35 @@ class Menu():
                 self.audio.Sound_play(self.audio.sound_when_cursor_under_button)
             self.buts[num].draw()
 
-
     def but_init(self, x, y, text, size):
-        self.buts.append(Button(size, x, y, self.audio))
+        """
+        Инициализирует кнопки.
+        :param x и y:  Координаты центра экрана.
+        :param text:  Текст, который будет написан на кнопке.
+        :param size:  Размер кнопки.
+        :return:  Массив кнопок, готовых к использованию.
+        """
+        self.buts.append(Button(size, x, y, self.audio, self.sc))
         l = len(self.buts)
         self.buts[l - 1].Text = text
         self.y_but += int(0.7 * size)
 
+    def is_one_of_buttons_on(self):
+        """
+        Проверяетб нажата ли кнопка.
+        :return: 0, если не нажата, (1,номер нажатой кнопки в массиве), если нажата.
+        """
+        searched = False
+        for num in range(len(self.buts)):
+            if self.buts[num] == 1:
+                searched = True
+                return 1, num
+
+        if not searched:
+            return 0
 
 class Button():
-    def __init__(self, size, x, y, audio):
+    def __init__(self, size, x, y, audio, sc):
         """
         Это конструктор класса кнопок.
         :param size: ширина кнопки.
@@ -57,7 +74,13 @@ class Button():
         self.Text = "Введите текст"
         self.y = y
         self.x = x
-        self.COLOR = BACK_LOAD
+        self.sc = sc
+        self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
+        self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
+        self.COLOR = self.BACK_LOAD
+        self.W = 1200  # Размеры экрана для модуля главного меню.
+        self.H = 500  # Размеры экрана для модуля главного меню.
+
         self.audio = audio
         self.is_down = 0
 
@@ -67,6 +90,7 @@ class Button():
         :param x и y: Координаты центра кнопки.
         :return: кнопку на экране.
         """
+        sc = self.sc
         x = self.x
         y = self.y
         a = int(self.size / 2)
@@ -87,11 +111,11 @@ class Button():
         a = int(self.size / 2)
         if self.y - a/2 < massive[1] < self.y + a/2 and \
                 W//2 - 3*a < massive[0] < W//2 + 3*a:
-            self.COLOR = BUT_LOAD
+            self.COLOR = self.BUT_LOAD
             self.is_down = 1
             return 1
         else:
-            self.COLOR = BACK_LOAD
+            self.COLOR = self.BACK_LOAD
             self.is_down = 0
             return 0
 
@@ -100,11 +124,19 @@ class Load_cicle():
     """
     Это класс обьекта, являющегося индификатором процесса загрузки.
     """
-    def __init__(self):
+    def __init__(self, sc):
         self.persent_of_load = 0
         self.scale = 1
         self.size = 150
+        self.sc = sc
         self.size_of_font = 30
+        self.GREEN_LOAD = (10, 200, 20)  # Цвет кружка загрузки.
+        self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
+        self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
+
+        self.W = 1200  # Размеры экрана для модуля главного меню.
+        self.H = 500  # Размеры экрана для модуля главного меню.
+        self.pi = 3.14
 
     def draw_cicle(self, x, y):
         """
@@ -112,11 +144,11 @@ class Load_cicle():
         :param x и y: Координаты центра экрана, на котором рисуется шкала.
         :return: шкалу загрузки на экране.
         """
-
+        sc = self.sc
         r = int(self.size/2)
-        pg.draw.arc(sc, GREEN_LOAD,
+        pg.draw.arc(sc, self.GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    0, 2 * pi * self.persent_of_load/100, 13)
+                    0, 2 * self.pi * self.persent_of_load/100, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
         # Добавляет текст на шкалу на координатах x, y.
@@ -127,8 +159,8 @@ class Load_cicle():
         Меняет цвет фона и рисует процесс загрузки.
         :return: фон, процесс загрузки.
         """
-        pg.draw.rect(sc, BACK_LOAD, (0, 0, W, H), 0)
-        self.draw_cicle(W//2, H//2)
+        pg.draw.rect(self.sc, self.BACK_LOAD, (0, 0, self.W, self.H), 0)
+        self.draw_cicle(self.W//2, self.H//2)
 
     def main_menu_init(self):
         """
@@ -136,7 +168,7 @@ class Load_cicle():
         Паралельно отрисовывает процесс загрузки.
         :return: Главное меню и процесс его загрузки.
         """
-        count = 5
+        count = 11
         part = int(1 / count * 100)
         self.draw_all_load()  # 0
         pg.display.update()
@@ -156,7 +188,7 @@ class Load_cicle():
         self.draw_all_load()
         pg.display.update()
 
-        self.menu = Menu(self.audio)  # 4
+        self.menu = Menu(self.audio, self.sc)  # 4
         self.persent_of_load += part
         self.draw_all_load()
         pg.display.update()
@@ -198,7 +230,11 @@ class Load_cicle():
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
 
 
-def test():
+def test__module_menu():
+    """
+    Часть бывшего внутреннего тестировщика.
+    :return: окно пайгейм.
+    """
     W = 400
     H = 300
 
@@ -213,14 +249,12 @@ def test():
         pg.time.delay(20)
 
 
-if __name__ == '__main__':
-    print("Этот модуль не для отдельного использования.\nВключен режим тестирования модуля")
-
-    sc = pg.display.set_mode((W, H))
-    sc.fill((100, 150, 200))
-    pg.init()
-
-    laod = Load_cicle()
+def __Menu_func__test__():
+    """
+    Запускает меню для тестирования модуля.
+    :return: меню.
+    """
+    laod = Load_cicle(sc)
 
     laod.main_menu_init()
 
@@ -228,13 +262,27 @@ if __name__ == '__main__':
         for i in pg.event.get():
             if i.type == pg.QUIT:
                 sys.exit()
-        sc.blit(laod.LK, (0, -100))
-        # but.is_but_down(pg.mouse.get_pos())
-        # but.draw()
+        sc.blit(laod.LK, (0, -230))  # Поправить, если будет новое разрешение.
         laod.menu.draw()
-        # laod.draw_all_load()
-        # laod.persent_of_load += 1
         pg.time.delay(60)
         pg.display.update()
+
+
+if __name__ == '__main__':
+    print("Этот модуль не для отдельного использования.\nВключен режим тестирования модуля")
+
+    GREEN_LOAD = (10, 200, 20)
+    BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
+    BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
+
+    W = 1200
+    H = 500
+    pi = 3.14
+
+    sc = pg.display.set_mode((W, H))
+    sc.fill((100, 150, 200))
+    pg.init()
+
+    __Menu_func__test__()
 
 
