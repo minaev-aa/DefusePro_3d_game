@@ -11,22 +11,6 @@ H = 731
 pi = 3.14
 
 
-
-def test():
-    W = 400
-    H = 300
-
-    sc = pg.display.set_mode((W, H))
-    sc.fill((100, 150, 200))
-
-    while 1:
-        for i in pg.event.get():
-            if i.type == pg.QUIT:
-                sys.exit()
-
-        pg.time.delay(20)
-
-
 class Menu():
     def __init__(self, audio):
         """
@@ -122,7 +106,7 @@ class Load_cicle():
         self.size = 150
         self.size_of_font = 30
 
-    def draw(self, x, y):
+    def draw_cicle(self, x, y):
         """
         Рисует шкалу загрузки.
         :param x и y: Координаты центра экрана, на котором рисуется шкала.
@@ -132,36 +116,125 @@ class Load_cicle():
         r = int(self.size/2)
         pg.draw.arc(sc, GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    0, int(2 * pi * self.persent_of_load/100), 13)
+                    0, 2 * pi * self.persent_of_load/100, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
         # Добавляет текст на шкалу на координатах x, y.
         sc.blit(text, [x - self.size_of_font/3, y - self.size_of_font/3])
 
+    def draw_all_load(self):
+        """
+        Меняет цвет фона и рисует процесс загрузки.
+        :return: фон, процесс загрузки.
+        """
+        pg.draw.rect(sc, BACK_LOAD, (0, 0, W, H), 0)
+        self.draw_cicle(W//2, H//2)
 
-sc = pg.display.set_mode((W, H))
-sc.fill((100, 150, 200))
-pg.init()
+    def main_menu_init(self):
+        """
+        Запускает главное меню и загружает все, что необходимо для работы игры в переменные.
+        Паралельно отрисовывает процесс загрузки.
+        :return: Главное меню и процесс его загрузки.
+        """
+        count = 5
+        part = int(1 / count * 100)
+        self.draw_all_load()  # 0
+        pg.display.update()
 
-LK = pg.image.load('Textures\ЛК.jpg')
+        self.LK = pg.image.load('Textures\ЛК.jpg')  # 1
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
 
-sc.blit(LK, (0, -100))
-laod = Load_cicle()
-laod.persent_of_load = 50
+        self.audio = Audio_source()  # 2
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
 
-#but = Button(120, W/2, H/2)
-audio = Audio_source()
-audio.sound_when_cursor_under_button_init()
-men = Menu(audio)
+        self.audio.sound_when_cursor_under_button_init()  # 3
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.menu = Menu(self.audio)  # 4
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.sounf_if_button_down_init()  # 5
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.steps_init()  # 6
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.running_init()  # 7
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.plus_anything_init()  # 8
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.shortness_init()  # 9
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.exhalation_init()  # 10
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+
+        self.audio.checkpoint_init()  # 11
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
+        # Помни, что нужно увеличить count, если добавил процедур загрузки.
 
 
-while True:
-    for i in pg.event.get():
-        if i.type == pg.QUIT:
-            sys.exit()
-    sc.blit(LK, (0, -100))
-    # but.is_but_down(pg.mouse.get_pos())
-    # but.draw()
-    men.draw()
-    pg.time.delay(20)
-    pg.display.update()
+def test():
+    W = 400
+    H = 300
+
+    sc = pg.display.set_mode((W, H))
+    sc.fill((100, 150, 200))
+
+    while 1:
+        for i in pg.event.get():
+            if i.type == pg.QUIT:
+                sys.exit()
+
+        pg.time.delay(20)
+
+
+if __name__ == '__main__':
+    print("Этот модуль не для отдельного использования.\nВключен режим тестирования модуля")
+
+    sc = pg.display.set_mode((W, H))
+    sc.fill((100, 150, 200))
+    pg.init()
+
+    laod = Load_cicle()
+
+    laod.main_menu_init()
+
+    while True:
+        for i in pg.event.get():
+            if i.type == pg.QUIT:
+                sys.exit()
+        sc.blit(laod.LK, (0, -100))
+        # but.is_but_down(pg.mouse.get_pos())
+        # but.draw()
+        laod.menu.draw()
+        # laod.draw_all_load()
+        # laod.persent_of_load += 1
+        pg.time.delay(60)
+        pg.display.update()
+
+
