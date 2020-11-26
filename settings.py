@@ -19,6 +19,8 @@ player_angle = min_alpha #начальный угол смотрит вверх 
 player_angle_change_speed = 0.04
 player_pos = (width_screen //2 ,height_screen//2)
 
+size_sprite = 100
+
 White = (255, 255, 255)
 Green = (0, 100, 0)
 Black = (0, 0, 0)
