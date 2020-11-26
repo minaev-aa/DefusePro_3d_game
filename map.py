@@ -10,6 +10,8 @@ text_map = [
     'W....W.....W',
     'WWWWWWWWWWWW'
 ]
+sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
+
 
 map = set()
 for j, row in enumerate(text_map):
