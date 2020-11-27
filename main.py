@@ -25,7 +25,7 @@ def Menu_func():
     finished = False
     while not finished:
 
-        screen.blit(Loader.LK, (0, -100))  # Поправить, если будет новое разрешение.
+        screen.blit(Loader.LK, (0, -100))
         Loader.menu.draw()
         pygame.time.delay(60)
         pygame.display.update()

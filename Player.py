@@ -3,9 +3,10 @@ import pygame
 import numpy as np
 
 class Player:
-    def __init__(self):
+    def __init__(self, audio):
         self.x_player, self.y_player = player_pos
         self.angle = player_angle
+        self.audio = audio
 
     @property
     def pos(self):
