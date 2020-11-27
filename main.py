@@ -3,13 +3,14 @@ from settings import *
 from Player import *
 from pygame.draw import *
 from map import *
-from ray_casting import *
+from texture import Planning
 from main_menu import Menu, Button, Load_cicle
+from minimap import *
 
 player = Player()
 pygame.init()
-
 screen = pygame.display.set_mode((width_screen, height_screen))
+sc = Planning(screen)
 
 
 def Menu_func():
@@ -67,10 +68,10 @@ def Main_game():
             if event.type == pygame.QUIT:
                 finished = True
         player.move()
-        #draw()
-        pygame.draw.rect(screen, Blue, (0, 0, width_screen, height_screen//2))
-        pygame.draw.rect(screen, Yellow, (0, height_screen//2, width_screen, height_screen//2))
-        ray_casting(screen, player.pos, player.angle)
+        # draw()
+        sc.sky(player.angle)
+        sc.plan(player.pos, player.angle)
+        draw_minimap(player, screen)
         pygame.display.flip()
 
     pygame.quit()

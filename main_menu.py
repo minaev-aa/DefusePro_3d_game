@@ -100,12 +100,12 @@ class Button():
         y = self.y
         a = int(self.size / 2)
         pg.draw.arc(sc, self.COLOR,
-                    (x - 3*a, y - a/2, 6 * a, a),
+                    (x - 3 * a, y - a / 2, 6 * a, a),
                     0, 2 * self.pi, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(self.Text, True, (255, 255, 255))
         # Добавляет текст на кнопку на координатах x, y.
-        sc.blit(text, [x - int((len(self.Text)/2) * self.size_of_font//3),
+        sc.blit(text, [x - int((len(self.Text) / 2) * self.size_of_font // 3),
                        y - int(self.size_of_font / 3)])
 
     def is_but_down(self, massive):
@@ -115,8 +115,8 @@ class Button():
         :return: 1, если мышь нажата, иначе 0.
         """
         a = int(self.size / 2)
-        if self.y - a/2 < massive[1] < self.y + a/2 and \
-                self.W//2 - 3*a < massive[0] < self.W//2 + 3*a:
+        if self.y - a / 2 < massive[1] < self.y + a / 2 and \
+                                                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
             self.COLOR = self.BUT_LOAD
             self.is_down = 1
             return 1
@@ -130,6 +130,7 @@ class Load_cicle():
     """
     Это класс обьекта, являющегося индификатором процесса загрузки.
     """
+
     def __init__(self, sc):
         """
         Это конструктор класса загрузочный модуль.
@@ -154,14 +155,14 @@ class Load_cicle():
         :return: шкалу загрузки на экране.
         """
         sc = self.sc
-        r = int(self.size/2)
+        r = int(self.size / 2)
         pg.draw.arc(sc, self.GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    0, 2 * self.pi * self.persent_of_load/100, 13)
+                    0, 2 * self.pi * self.persent_of_load / 100, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
         # Добавляет текст на шкалу на координатах x, y.
-        sc.blit(text, [x - self.size_of_font/3, y - self.size_of_font/3])
+        sc.blit(text, [x - self.size_of_font / 3, y - self.size_of_font / 3])
 
     def draw_all_load(self):
         """
@@ -169,7 +170,7 @@ class Load_cicle():
         :return: фон, процесс загрузки.
         """
         pg.draw.rect(self.sc, self.BACK_LOAD, (0, 0, self.W, self.H), 0)
-        self.draw_cicle(self.W//2, self.H//2)
+        self.draw_cicle(self.W // 2, self.H // 2)
 
     def main_menu_init(self):
         """
@@ -288,4 +289,3 @@ if __name__ == '__main__':
     pg.init()
 
     __Menu_func__test__()
-

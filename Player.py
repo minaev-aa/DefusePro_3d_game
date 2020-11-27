@@ -2,6 +2,7 @@ from settings import *
 import pygame
 import numpy as np
 
+
 class Player:
     def __init__(self, audio):
         self.x_player, self.y_player = player_pos

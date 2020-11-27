@@ -1,20 +1,23 @@
 from settings import *
 
+sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png')  # Маштаб, х, y, файлsw
+
 text_map = [
-    'WWWWWWWWWWWW',
-    'W.W....W...W',
-    'W.W.WW...W.W',
-    'W.......WW.W',
-    'W..W....W..W',
-    'W..W...W.W.W',
-    'W....W.....W',
-    'WWWWWWWWWWWW'
+    '111121111111',
+    '1......1...1',
+    '1..111...1.1',
+    '1....1..11.1',
+    '1..1....1..1',
+    '1..1...1.1.1',
+    '1....1.....1',
+    '112111111111'
 ]
-sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
 
-
-map = set()
+map = {}
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
-        if char == 'W':
-            map.add((i * cube, j * cube))
+        if char != '.':
+            if char == '1':
+                map[(i * cube, j * cube)] = '1'
+            elif char == '2':
+                map[(i * cube, j * cube)] = '2'
