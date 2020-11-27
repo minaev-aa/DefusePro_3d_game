@@ -8,6 +8,9 @@ class Player:
         self.x_player, self.y_player = player_pos
         self.angle = player_angle
 
+    def audio_init(self, audio):
+        self.audio = audio
+
     @property
     def pos(self):
         return (self.x_player, self.y_player)

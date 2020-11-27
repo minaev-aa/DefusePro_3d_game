@@ -272,7 +272,7 @@ def __Menu_func__test__():
         for i in pg.event.get():
             if i.type == pg.QUIT:
                 sys.exit()
-        sc.blit(laod.LK, (0, -230))  # Поправить, если будет новое разрешение.
+        sc.blit(laod.LK, (0, -100))  # Поправить, если будет новое разрешение.
         laod.menu.draw()
         pg.time.delay(60)
         pg.display.update()
@@ -281,13 +281,8 @@ def __Menu_func__test__():
 if __name__ == '__main__':
     print("Этот модуль не для отдельного использования.\nВключен режим тестирования модуля")
 
-    GREEN_LOAD = (10, 200, 20)
-    BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
-    BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
-
-    W = 1200
-    H = 500
-    pi = 3.14
+    W = width_screen  # Размеры экрана для модуля главного меню.
+    H = height_screen  # Ширина для модуля главного меню.
 
     sc = pg.display.set_mode((W, H))
     sc.fill((100, 150, 200))

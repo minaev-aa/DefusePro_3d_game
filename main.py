@@ -22,11 +22,12 @@ def Menu_func():
     # Инициализация загрузчика.
     Loader = Load_cicle(screen)
     Loader.main_menu_init()
+    player.audio_init(Loader.audio)
     # Отрисовка меню.
     finished = False
     while not finished:
 
-        screen.blit(Loader.LK, (0, -100))  # Поправить, если будет новое разрешение.
+        screen.blit(Loader.LK, (0, -100))
         Loader.menu.draw()
         pygame.time.delay(60)
         pygame.display.update()
