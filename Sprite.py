@@ -6,16 +6,22 @@ from map import *
 
 player = Player()
 pygame.init()
+screen = pygame.display.set_mode((width_screen, height_screen))
+
 
 class Sprite:
+
     def __init__(self, scale, x_pos, y_pos, file):
         self.scale = scale
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.angle_to_player = 0
         self.surf = pygame.image.load(file)
 
     def angle(self):
+        '''
+        Функция, которая расчитывает угол между игроком и спрайтом.
+        :return: угол между игроком и спрайтом.
+        '''
         delta_x = self.x_pos - player.x_player
         delta_y = self.y_pos - player.y_player
         angle_sprite = np.arctan(delta_y / delta_x)
@@ -26,6 +32,10 @@ class Sprite:
         return angle_to_player
 
     def size(self):
+        '''
+        Расчитывает размер изображения спрайта на экране
+        :return: размер спрайта
+        '''
         angle_to_player = self.angle()
         distance_to_player = ((self.x_pos - player.x_player) ** 2 + (self.y_pos - player.y_player) ** 2) ** (1 / 2)
         proec_size = int(distance / distance_to_player * self.scale * size_sprite)
@@ -44,11 +54,33 @@ class Sprite:
             screen.blit(guard_surf_new, guard_rect)
 
 
-screen = pygame.display.set_mode((width_screen, height_screen))
+class Guard(Sprite):
+
+    def __init__(self, scale, x_pos, y_pos, file):
+        super().__init__(scale, x_pos, y_pos, file)
+        self.if_good = True
+        self.bad_serf = pygame.image.load('Resources\\Sprayt\\quard_bad.png')
+        self.good_serf = pygame.image.load('Resources\\Sprayt\\guard_good.png')
+
+    def change_mood(self):
+        '''
+        Меняет настроение охранника.
+        '''
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                if not(self.if_good):
+                    self.surf = self.bad_serf
+                else:
+                    self.surf = self.good_serf
+                self.if_good = not(self.if_good)
+
+
 d = sprite1_data
 sprite1 = Sprite(d[0], d[1], d[2], d[3])
+guard1 = Guard(d[0], d[1], d[2], d[3])
 
 finished = False
+# Для теста, рисование спрайта.
 while not finished:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -63,7 +95,9 @@ while not finished:
     pygame.draw.line(screen, Green, (player.x_player, player.y_player),
                      (player.x_player + width_screen * np.cos(player.angle), player.y_player + width_screen * np.sin(player.angle)), 2)
 
-    sprite1.draw()
+    guard1.draw()
+    guard1.change_mood()
+
     pygame.display.flip()
 
 pygame.quit()
