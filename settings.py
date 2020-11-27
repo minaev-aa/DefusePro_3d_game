@@ -39,7 +39,7 @@ Red = (255, 0, 0)
 Grey = (40, 40, 40)
 
 # Длительность звуковых файлов.
-steps_duration = 1.2
+steps_duration = 1.5
 running_duration = 1.2
 plus_anything_duration = 1.2
 sound_when_cursor_under_button_duration = 1.2

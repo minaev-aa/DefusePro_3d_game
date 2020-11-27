@@ -17,11 +17,8 @@ class Player:
         Включает звук ходьбы для персонажа.
         :return: звук.
         """
-        self.audio.Sound_play(self.audio.steps,
-                                steps_duration,
-                                self.audio.steps_start_time)
-        self.audio.steps_start_time \
-            = self.audio.check_sound(steps_duration, self.audio.steps_start_time)
+        self.audio.Sound_play(self.audio.steps, steps_duration, self.audio.steps_start_time)
+        self.audio.steps_start_time = self.audio.check_sound(steps_duration, self.audio.steps_start_time)
 
     @property
     def pos(self):

@@ -68,7 +68,7 @@ class Audio_source():
         :return:  Включение звука, если это разрешено в настройках игры, время старта.
         """
         if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
-            if start_time + duration >= time.time():
+            if start_time + duration <= time.time():
                 Audio.play()
 
     def check_sound(self, duration, start_time):
