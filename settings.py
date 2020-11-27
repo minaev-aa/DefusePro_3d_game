@@ -21,6 +21,11 @@ player_pos = (width_screen //2 ,height_screen//2)
 
 size_sprite = 100
 
+scale_minimap = 5
+player_radius = 5
+player_length = 4 # длинна той штуки, которая торчит из игрока на миникарте для указание направления взгляда
+player_width = 2 # ширина этой штуки
+
 White = (255, 255, 255)
 Green = (0, 100, 0)
 Black = (0, 0, 0)
