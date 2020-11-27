@@ -1,4 +1,5 @@
 import math
+
 width_screen = 1200
 height_screen = 800
 FPS = 60
@@ -10,14 +11,17 @@ count_ray = 300
 mdepth = 800
 d_angle = fov / count_ray
 distance = count_ray / (2 * math.tan(pol_fov))
-proec_k =  3 * distance * cube
+proec_k = 3 * distance * cube
 size = width_screen // count_ray
 min_alpha = 0.000001
 
 player_speed = 6
-player_angle = min_alpha #начальный угол смотрит вверх по миникарте
+player_angle = min_alpha  # начальный угол смотрит вверх по миникарте
 player_angle_change_speed = 0.04
-player_pos = (width_screen //2 ,height_screen//2)
+player_pos = (width_screen // 2, height_screen // 2)
+
+texture_size = 600
+texture_k = texture_size // cube
 
 size_sprite = 100
 
