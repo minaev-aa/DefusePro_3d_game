@@ -1,4 +1,5 @@
 import pygame as pg
+import time
 
 
 class Audio_source():
@@ -17,49 +18,72 @@ class Audio_source():
     def steps_init(self):
         self.steps = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\шаги - 2.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.steps_start_time = 0
 
     def running_init(self):
         self.running = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.running_start_time = 0
 
     def plus_anything_init(self):
         self.plus_anythings = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\плюсик.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.plus_anything_start_time = 0
 
     def sound_when_cursor_under_button_init(self):
         self.sound_when_cursor_under_button = pg.mixer.Sound(
                 'Resources\Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.sound_when_cursor_under_button_start_time = 0
 
     def sound_if_button_down_init(self):
         self.sound_if_button_down = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.sound_if_button_down_start_time = 0
 
     def shortness_init(self):
         self.shortness = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Отдышка.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.shortness_start_time = 0
 
     def exhalation_init(self):
         self.exhalation = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Довольный выдох.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.exhalation_start_time = 0
 
     def checkpoint_init(self):
         self.checkpoint = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Чекпоинт.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
+        self.checkpoint_start_time = 0
 
     def check_init(self):
         # Проверим работу подсчета данных для реализации окна загрузки игры.
         assert self.step_of_init == 1  # Изменено кол-во данных в модуле звуков и мелодий,\
         # нарушена работа подсчета этих данных.
 
-    def Sound_play(self, Audio):
+    def Sound_play(self, Audio, duration, start_time):
         """
         Включает звук.
         :param Audio: переменная, в которой лежит звук, который необходимо включить.
-        :return:  Включение звука, если это разрешено в настройках игры.
+        :return:  Включение звука, если это разрешено в настройках игры, время старта.
         """
         if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
-            Audio.play()
+            if start_time + duration >= time.time():
+                Audio.play()
+
+    def check_sound(self, duration, start_time):
+        """
+        Проверяет возможность включения звука.
+        :param Audio: переменная, в которой лежит звук, который необходимо включить.
+        :param duration: Длительность звука.
+        :param start_time: Последнее время включения.
+        :return: Новое время старта.
+        """
+        if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
+            if start_time + duration <= time.time():
+                start_time = time.time()
+
+        return start_time
 
     def Background_music_on_AfraidSound(self):
         """

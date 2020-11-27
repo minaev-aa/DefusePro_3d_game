@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 from Music_module import Audio_source
 from settings import *
+import time
 
 
 class Menu():
@@ -34,7 +35,13 @@ class Menu():
             # Проверка на наведение курсора, и на то, что это первый кадр, когда курсор на кнопке
             if self.buts[num].is_down != self.buts[num].is_but_down(pos_of_mouse) and \
                     self.buts[num].is_but_down(pos_of_mouse):
-                self.audio.Sound_play(self.audio.sound_when_cursor_under_button)
+                self.audio.Sound_play(self.audio.sound_when_cursor_under_button,
+                                      sound_when_cursor_under_button_duration,
+                                      self.audio.sound_when_cursor_under_button_start_time)
+                self.audio.sound_when_cursor_under_button_start_time \
+                    = self.audio.check_sound(sound_when_cursor_under_button_duration,
+                                             self.audio.sound_when_cursor_under_button_start_time)
+
             self.buts[num].draw()
 
     def but_init(self, x, y, text, size):
@@ -238,6 +245,36 @@ class Load_cicle():
         self.draw_all_load()
         pg.display.update()
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
+
+        # Массив звуков.
+        self.Audios = [self.audio.steps,
+                       self.audio.running,
+                       self.audio.plus_anythings,
+                       self.audio.sound_when_cursor_under_button,
+                       self.audio.sound_if_button_down,
+                       self.audio.shortness,
+                       self.audio.exhalation,
+                       self.audio.checkpoint]
+
+        # Массив длительностей звуков.
+        self.durations = [self.audio.steps_start_time,
+                          self.audio.running_start_time,
+                          self.audio.plus_anything_start_time,
+                          self.audio.sound_when_cursor_under_button_start_time,
+                          self.audio.sound_if_button_down_start_time,
+                          self.audio.shortness_start_time,
+                          self.audio.exhalation_start_time,
+                          self.audio.checkpoint_start_time]
+
+        # Массив начал игры звука.
+        self.durations = [steps_duration,
+                          running_duration,
+                          plus_anything_duration,
+                          sound_when_cursor_under_button_duration,
+                          sound_if_button_down_duration,
+                          shortness_duration,
+                          exhalation_duration,
+                          checkpoint_duration]
 
 
 def test__module_menu():

@@ -37,3 +37,13 @@ Yellow = (255, 255, 0)
 Blue = (0, 0, 255)
 Red = (255, 0, 0)
 Grey = (40, 40, 40)
+
+# Длительность звуковых файлов.
+steps_duration = 1.2
+running_duration = 1.2
+plus_anything_duration = 1.2
+sound_when_cursor_under_button_duration = 1.2
+sound_if_button_down_duration = 1.2
+shortness_duration = 2.2
+exhalation_duration = 4.4
+checkpoint_duration = 1.2
