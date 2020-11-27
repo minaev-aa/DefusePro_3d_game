@@ -5,6 +5,7 @@ from pygame.draw import *
 from map import *
 from texture import Planning
 from main_menu import Menu, Button, Load_cicle
+from minimap import *
 
 player = Player()
 pygame.init()
@@ -69,6 +70,7 @@ def Main_game():
         #draw()
         sc.sky(player.angle)
         sc.plan(player.pos, player.angle)
+        draw_minimap(player, screen)
         pygame.display.flip()
 
     pygame.quit()
