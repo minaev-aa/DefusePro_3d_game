@@ -8,6 +8,13 @@ def mapping(a, b):
 
 
 def ray_casting(sc, player_pos, player_angle, texturs):
+    '''
+    :param sc: Экран
+    :param player_pos: Положение игрока
+    :param player_angle: Направеление угла камеры
+    :param texturs: Передаёт изображение текстуры
+    :return: Бросает лучи и даёт проекцию изображения на экран
+    '''
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
     cur_angle = player_angle - pol_fov
