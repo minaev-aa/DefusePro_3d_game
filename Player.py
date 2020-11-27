@@ -4,9 +4,11 @@ import numpy as np
 
 
 class Player:
-    def __init__(self, audio):
+    def __init__(self):
         self.x_player, self.y_player = player_pos
         self.angle = player_angle
+
+    def audio_init(self, audio):
         self.audio = audio
 
     @property

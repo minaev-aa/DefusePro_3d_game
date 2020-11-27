@@ -22,6 +22,7 @@ def Menu_func():
     # Инициализация загрузчика.
     Loader = Load_cicle(screen)
     Loader.main_menu_init()
+    player.audio_init(Loader.audio)
     # Отрисовка меню.
     finished = False
     while not finished:
