@@ -2,8 +2,10 @@ import pygame
 from settings import *
 from map import *
 
+
 def mapping(a, b):
     return (a // cube) * cube, (b // cube) * cube
+
 
 def ray_casting(sc, player_pos, player_angle, texturs):
     ox, oy = player_pos
@@ -49,4 +51,3 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         wall = texturs[textur].subsurface(shift * texture_k, 0, texture_k, texture_size)
         wall = pygame.transform.scale(wall, (size, proj_height))
         sc.blit(wall, (ray * size, height_screen // 2 - proj_height // 2))
-

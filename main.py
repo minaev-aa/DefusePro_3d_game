@@ -12,6 +12,7 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
 
+
 def Menu_func():
     """
     Запускает окно загрузки игры.
@@ -67,7 +68,7 @@ def Main_game():
             if event.type == pygame.QUIT:
                 finished = True
         player.move()
-        #draw()
+        # draw()
         sc.sky(player.angle)
         sc.plan(player.pos, player.angle)
         draw_minimap(player, screen)

@@ -28,7 +28,7 @@ class Audio_source():
 
     def sound_when_cursor_under_button_init(self):
         self.sound_when_cursor_under_button = pg.mixer.Sound(
-            'Resources\Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
+                'Resources\Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
         self.step_of_init += 1 / self.count_of_sound_effects
 
     def sound_if_button_down_init(self):

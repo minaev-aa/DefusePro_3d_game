@@ -10,7 +10,6 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 
 
 class Sprite:
-
     def __init__(self, scale, x_pos, y_pos, file):
         self.scale = scale
         self.x_pos = x_pos
@@ -28,7 +27,7 @@ class Sprite:
         angle_to_player = angle_sprite - player.angle
         if delta_x > 0:
             angle_to_player += np.pi
-        angle_to_player %= 2*np.pi
+        angle_to_player %= 2 * np.pi
         return angle_to_player
 
     def size(self):
@@ -50,12 +49,11 @@ class Sprite:
         angle_to_player = self.angle()
         if not (angle_to_player < np.pi / 2 or angle_to_player > 3 / 2 * np.pi):
             guard_rect = guard_surf_new.get_rect(
-                center=(width_screen // 2 - distance * np.tan(sprite1.angle()), height_screen // 2))
+                    center=(width_screen // 2 - distance * np.tan(sprite1.angle()), height_screen // 2))
             screen.blit(guard_surf_new, guard_rect)
 
 
 class Guard(Sprite):
-
     def __init__(self, scale, x_pos, y_pos, file):
         super().__init__(scale, x_pos, y_pos, file)
         self.if_good = True
@@ -68,11 +66,11 @@ class Guard(Sprite):
         '''
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-                if not(self.if_good):
+                if not (self.if_good):
                     self.surf = self.bad_serf
                 else:
                     self.surf = self.good_serf
-                self.if_good = not(self.if_good)
+                self.if_good = not (self.if_good)
 
 
 d = sprite1_data
@@ -93,7 +91,8 @@ while not finished:
     pygame.draw.circle(screen, Green, (int(player.x_player), int(player.y_player)), 5)
     pygame.draw.circle(screen, Red, (int(sprite1.x_pos), int(sprite1.y_pos)), 5)
     pygame.draw.line(screen, Green, (player.x_player, player.y_player),
-                     (player.x_player + width_screen * np.cos(player.angle), player.y_player + width_screen * np.sin(player.angle)), 2)
+                     (player.x_player + width_screen * np.cos(player.angle),
+                      player.y_player + width_screen * np.sin(player.angle)), 2)
 
     guard1.draw()
     guard1.change_mood()

@@ -1,6 +1,6 @@
 from settings import *
 
-sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файлsw
+sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png')  # Маштаб, х, y, файлsw
 
 text_map = [
     '111121111111',
@@ -10,7 +10,7 @@ text_map = [
     '1..1....1..1',
     '1..1...1.1.1',
     '1....1.....1',
-    '1121111111111'
+    '112111111111'
 ]
 
 map = {}

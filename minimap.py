@@ -13,4 +13,5 @@ def draw_minimap(player, screen):
                      (x_pl + player_length * np.cos(player.angle),
                       y_pl + player_length * np.sin(player.angle)), player_width)
     for x, y in map:
-        pygame.draw.rect(screen, Red, (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
+        pygame.draw.rect(screen, Red,
+                         (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
