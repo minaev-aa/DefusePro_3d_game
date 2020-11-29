@@ -72,11 +72,12 @@ def redrawWindow(win,player, player2, ModelPlayer):
     sc.sky(player.angle)
     sc.plan(player.pos, player.angle)
     ModelPlayer.move(player2.x_player, player2.y_player)
+    ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
-    pygame.draw.circle(screen, Red, player.pos, 10)
-    pygame.draw.circle(screen, Red, player2.pos, 10)
-    pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
+    #pygame.draw.circle(screen, Red, player.pos, 10)
+    #pygame.draw.circle(screen, Red, player2.pos, 10)
+    #pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
     pygame.display.flip()
 
 def Main_game():
@@ -84,7 +85,6 @@ def Main_game():
     n = Network()
     p = n.getP()
     p2 = n.send(p)
-    print(p2.x_player, p2.y_player)
     ModelPlayer = Guard(1, p2.x_player, p2.y_player, screen, p)
     fr = 0
     while not finished:
@@ -95,7 +95,6 @@ def Main_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
-        ModelPlayer.draw()
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
@@ -106,4 +105,3 @@ def Main_game():
 
 if __name__ == '__main__':
     Menu_func()
-    #Main_game()
