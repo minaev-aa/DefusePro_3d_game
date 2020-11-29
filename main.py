@@ -7,13 +7,15 @@ from texture import Planning
 from main_menu import Menu, Button, Load_cicle
 from minimap import *
 from network import Network
+from Sprite import *
+
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
 # Инициализация загрузчика.
 Loader = Load_cicle(screen)
-
+#guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
 
 def Menu_func():
     """
@@ -65,20 +67,25 @@ def indificate_func(num_in_massive_of_buttoms):
     else:
         pass
 
-def redrawWindow(win,player, player2):
+def redrawWindow(win,player, player2, ModelPlayer):
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
     sc.plan(player.pos, player.angle)
+    ModelPlayer.move(player2.x_player, player2.y_player)
+    ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
-    pygame.draw.circle(screen, Red, player.pos, 10)
-    pygame.draw.circle(screen, Red, player2.pos, 10)
+    #pygame.draw.circle(screen, Red, player.pos, 10)
+    #pygame.draw.circle(screen, Red, player2.pos, 10)
+    #pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
     pygame.display.flip()
 
 def Main_game():
     finished = False
     n = Network()
     p = n.getP()
+    p2 = n.send(p)
+    ModelPlayer = Guard(1, p2.x_player, p2.y_player, screen, p)
     fr = 0
     while not finished:
         pygame.time.Clock().tick(FPS)
@@ -92,10 +99,9 @@ def Main_game():
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
-        redrawWindow(sc, p, p2)
+        redrawWindow(sc, p, p2, ModelPlayer)
     pygame.quit()
 
 
 if __name__ == '__main__':
     Menu_func()
-    #Main_game()

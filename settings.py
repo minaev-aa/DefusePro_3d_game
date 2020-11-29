@@ -4,6 +4,7 @@ width_screen = 1200
 height_screen = 800
 FPS = 60
 cube = 100
+ip = "localhost"
 
 fov = math.pi / 3
 pol_fov = fov / 2
@@ -18,12 +19,13 @@ min_alpha = 0.000001
 player_speed = 6
 player_angle = min_alpha  # начальный угол смотрит вверх по миникарте
 player_angle_change_speed = 0.04
-player_pos = (width_screen // 2, height_screen // 2)
+player_pos1 = (width_screen // 2, height_screen // 2)
+player_pos2 = (width_screen // 4, height_screen // 4)
 
 texture_size = 600
 texture_k = texture_size // cube
 
-size_sprite = 100
+size_sprite = 1
 
 scale_minimap = 5
 player_radius = 5

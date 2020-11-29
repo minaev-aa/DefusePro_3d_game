@@ -2,8 +2,9 @@ import socket
 from _thread import *
 from Player import Player
 import pickle
+from settings import *
 
-server = "25.108.109.189"
+server = ip
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,7 +18,7 @@ s.listen(2)
 print("Waiting for a connection, Server Started")
 
 
-players = [Player(), Player()]
+players = [Player(player_pos1), Player(player_pos2)]
 
 def threaded_client(conn, player):
     conn.send(pickle.dumps(players[player]))

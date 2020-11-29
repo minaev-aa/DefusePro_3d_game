@@ -1,8 +1,9 @@
 import pygame
 from settings import *
 from map import *
+#from numba import njit
 
-
+#@njit(fastmath=True, cache=True)
 def mapping(a, b):
     return (a // cube) * cube, (b // cube) * cube
 
@@ -26,6 +27,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         # verticals
         x, dx = (xm + cube, 1) if cos_a >= 0 else (xm, -1)
         for i in range(0, width_screen, cube):
+            textur_v = '1'
             deep_v = (x - ox) / cos_a
             yv = oy + deep_v * sin_a
             m = mapping(x + dx, yv)
@@ -37,6 +39,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         # horizontals
         y, dy = (ym + cube, 1) if sin_a >= 0 else (ym, -1)
         for i in range(0, height_screen, cube):
+            textur_h = '1'
             deep_h = (y - oy) / sin_a
             xh = ox + deep_h * cos_a
             m = mapping(xh, y + dy)
@@ -54,7 +57,6 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         color = Green
         pygame.draw.rect(sc, color, (ray * size, height_screen // 2 - proj_height // 2, size, proj_height))
         cur_angle += d_angle
-
         wall = texturs[textur].subsurface(shift * texture_k, 0, texture_k, texture_size)
         wall = pygame.transform.scale(wall, (size, proj_height))
         sc.blit(wall, (ray * size, height_screen // 2 - proj_height // 2))
