@@ -4,7 +4,7 @@ from Player import Player
 import pickle
 from settings import *
 
-server = "localhost"
+server = ip
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

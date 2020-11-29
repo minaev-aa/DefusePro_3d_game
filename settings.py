@@ -4,6 +4,7 @@ width_screen = 1200
 height_screen = 800
 FPS = 60
 cube = 100
+ip = "localhost"
 
 fov = math.pi / 3
 pol_fov = fov / 2
