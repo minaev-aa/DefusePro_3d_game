@@ -1,6 +1,5 @@
 from settings import *
 
-sprite1_data = (1, 200, 300, 'Resources\\Sprayt\\guard_good.png')  # Маштаб, х, y, файлsw
 
 text_map = [
     '1111211112111121111111',

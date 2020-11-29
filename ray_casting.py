@@ -1,8 +1,9 @@
 import pygame
 from settings import *
 from map import *
+from numba import njit
 
-
+@njit(fastmath=True, cache=True)
 def mapping(a, b):
     return (a // cube) * cube, (b // cube) * cube
 
