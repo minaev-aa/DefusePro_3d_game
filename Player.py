@@ -58,9 +58,9 @@ class Player:
             self.y_player += self.Vx
 
         if pressed_keys[pygame.K_RIGHT]:
-            self.angle -= player_angle_change_speed
-        if pressed_keys[pygame.K_LEFT]:
             self.angle += player_angle_change_speed
+        if pressed_keys[pygame.K_LEFT]:
+            self.angle -= player_angle_change_speed
 
     def is_player_move(self):
         """
