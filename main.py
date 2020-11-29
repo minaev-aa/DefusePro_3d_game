@@ -11,6 +11,8 @@ from network import Network
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
+# Инициализация загрузчика.
+Loader = Load_cicle(screen)
 
 
 def Menu_func():
@@ -19,10 +21,8 @@ def Menu_func():
     Потом открывает главное меню.
     :return: Окно.
     """
-    # Инициализация загрузчика.
-    Loader = Load_cicle(screen)
     Loader.main_menu_init()
-    player.audio_init(Loader.audio)
+    #p.audio_init(Loader.audio)
     # Отрисовка меню.
     finished = False
     while not finished:
@@ -79,17 +79,23 @@ def Main_game():
     finished = False
     n = Network()
     p = n.getP()
+    fr = 0
     while not finished:
         pygame.time.Clock().tick(FPS)
-        p2 = n.send(p)
+        fr += 0
+        if fr % 10 == 0:
+            p2 = n.send(p)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
         p.move()
+        if p.is_player_move():
+            Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
+            Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2)
     pygame.quit()
 
 
 if __name__ == '__main__':
-    #Menu_func()
-    Main_game()
+    Menu_func()
+    #Main_game()
