@@ -22,8 +22,8 @@ class Menu():
         self.sc = sc
         # Создадим кнопок.
         self.but_init(self.W // 2, self.y_but, "Начать", self.but_size)
-        self.but_init(self.W // 2, self.y_but, "Продолжить", self.but_size)
         self.but_init(self.W // 2, self.y_but, "Настройки", self.but_size)
+        self.but_init(self.W // 2, self.y_but, "Выход", self.but_size)
 
     def draw(self):
         """
