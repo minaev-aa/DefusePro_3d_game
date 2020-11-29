@@ -6,8 +6,8 @@ from map import *
 from texture import Planning
 from main_menu import Menu, Button, Load_cicle
 from minimap import *
+from network import Network
 
-player = Player()
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
@@ -65,23 +65,31 @@ def indificate_func(num_in_massive_of_buttoms):
     else:
         pass
 
+def redrawWindow(win,player, player2):
+    pressed_keys = pygame.key.get_pressed()
+    sc.sky(player.angle)
+    sc.plan(player.pos, player.angle)
+    if pressed_keys[pygame.K_m]:
+        draw_minimap(player, screen)
+    pygame.draw.circle(screen, Red, player.pos, 10)
+    pygame.draw.circle(screen, Red, player2.pos, 10)
+    pygame.display.flip()
 
 def Main_game():
     finished = False
+    n = Network()
+    p = n.getP()
     while not finished:
         pygame.time.Clock().tick(FPS)
+        p2 = n.send(p)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
-        player.move()
-        # draw()
-        sc.sky(player.angle)
-        sc.plan(player.pos, player.angle)
-        draw_minimap(player, screen)
-        pygame.display.flip()
-
+        p.move()
+        redrawWindow(sc, p, p2)
     pygame.quit()
 
 
 if __name__ == '__main__':
-    Menu_func()
+    #Menu_func()
+    Main_game()

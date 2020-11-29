@@ -1,7 +1,6 @@
 from settings import *
 import pygame
 import numpy as np
-from Music_module import Audio_source
 
 
 class Player:
@@ -30,31 +29,43 @@ class Player:
 
     @property
     def pos(self):
-        return (self.x_player, self.y_player)
+        return (int(self.x_player), int(self.y_player))
 
     def move(self):
         pressed_keys = pygame.key.get_pressed()
-        self.Vx = player_speed * np.sin(self.angle)
-        self.Vy = player_speed * np.cos(self.angle)
-
+        self.is_move = False
         if pressed_keys[pygame.K_a]:
-            self.sound_of_steps()
-            self.x_player += self.Vx
-            self.y_player -= self.Vy
+            self.is_move = True
+            #self.sound_of_steps()
+            self.x_player += player_speed * np.sin(self.angle)
+            self.y_player -= player_speed * np.cos(self.angle)
         if pressed_keys[pygame.K_d]:
-            self.sound_of_steps()
-            self.x_player -= self.Vx
-            self.y_player += self.Vy
+            self.is_move = True
+            #self.sound_of_steps()
+            self.x_player -= player_speed * np.sin(self.angle)
+            self.y_player += player_speed * np.cos(self.angle)
         if pressed_keys[pygame.K_s]:
-            self.sound_of_steps()
-            self.x_player -= self.Vx
-            self.y_player -= self.Vy
+            self.is_move = True
+            #self.sound_of_steps()
+            self.x_player -= player_speed * np.cos(self.angle)
+            self.y_player -= player_speed * np.sin(self.angle)
         if pressed_keys[pygame.K_w]:
-            self.sound_of_steps()
-            self.x_player += self.Vx
-            self.y_player += self.Vy
+            self.is_move = True
+            #self.sound_of_steps()
+            self.x_player += player_speed * np.cos(self.angle)
+            self.y_player += player_speed * np.sin(self.angle)
 
         if pressed_keys[pygame.K_RIGHT]:
             self.angle -= player_angle_change_speed
         if pressed_keys[pygame.K_LEFT]:
             self.angle += player_angle_change_speed
+
+    def is_player_move(self):
+        """
+        Проверяет движентся ли игрок.
+        :return: True, если игрок движется, иаче False.
+        """
+        if self.is_move:
+            return True
+        else:
+            return False
