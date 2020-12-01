@@ -10,9 +10,14 @@ class Planning:
 
     def __init__(self, sc):
         self.sc = sc
-        self.textures = {'1': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
-                         '2': pygame.image.load('Resources/Textures/tex6X6.png').convert(),
-                         'S': pygame.image.load('Resources/Textures/stars.png').convert()
+        self.textures = {'0': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
+                         '1': pygame.image.load('Resources/Textures/tex6X6.png').convert(),
+                         'S': pygame.image.load('Resources/Textures/stars.png').convert(),
+                         'o': pygame.image.load('Resources/Textures/notexture.png').convert(),
+                         'd': pygame.image.load('Resources/Textures/notexture.png').convert(),
+                         't': pygame.image.load('Resources/Textures/notexture.png').convert(),
+                         'c': pygame.image.load('Resources/Textures/notexture.png').convert(),
+                         'p': pygame.image.load('Resources/Textures/notexture.png').convert(),
                          }
 
     def sky(self, angle):

@@ -70,7 +70,7 @@ def indificate_func(num_in_massive_of_buttoms):
         pass
 
 
-def redrawWindow(win, player, player2, ModelPlayer):
+def redrawWindow(win, player, player2, ModelPlayer, text):
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
     sprite_surf, sprite_rect = ModelPlayer.draw()
@@ -80,6 +80,14 @@ def redrawWindow(win, player, player2, ModelPlayer):
     #ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
+    if pressed_keys[pygame.K_t]:
+        global Time
+        surf1 = pygame.Surface((300, 120))
+        surf1.fill(White)
+        text_rect = text.get_rect(center=surf1.get_rect().center)
+        surf1.fill(White)
+        surf1.blit(text, text_rect)
+        screen.blit(surf1, (0, 0))
     # pygame.draw.circle(screen, Red, player.pos, 10)
     # pygame.draw.circle(screen, Red, player2.pos, 10)
     # pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
@@ -87,6 +95,12 @@ def redrawWindow(win, player, player2, ModelPlayer):
 
 
 def Main_game():
+    global All, Time
+    minigames = [0] * count_of_minigame
+    timer_event = pygame.USEREVENT + 1
+    pygame.time.set_timer(timer_event, 1000)
+    font = pygame.font.SysFont(None, 100)
+    text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
     p = n.getP()
     p2 = n.send(p)
@@ -99,13 +113,28 @@ def Main_game():
             p2 = n.send(p)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                finished = True
+                All = True
+            if event.type == timer_event:
+                Time -= 1
+                text = font.render(str(Time) + ' сек', True, Black)
+                if Time == 0:
+                    All = True
+                    finished = True
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
-        redrawWindow(sc, p, p2, ModelPlayer)
-        active(p)
+        redrawWindow(sc, p, p2, ModelPlayer, text)
+        try:
+            ro = active(p, timer_event, Time)
+            minigames[int(ro[0]) - 2], Time = ro[1]
+        except:
+            try:
+                ro = active(p, timer_event, Time)
+                if ro!= None:
+                    Time = ro
+            except:
+                pass
     #TODO Проверка времени, количесттва ошибок и выполненных заданий
     pygame.quit()
 

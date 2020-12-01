@@ -1,9 +1,13 @@
 import math
 import pygame
+import random
 
 All = False
 Time = 600
 Mistake = 0
+count_of_minigame = 1
+sn = random.randint(1000000000, 9999999999)
+
 
 width_screen = 1200
 height_screen = 800
