@@ -5,8 +5,6 @@ import numpy as np
 from map import *
 
 
-
-
 class Sprite:
     def __init__(self, scale, x_pos, y_pos, file, screen, player):
         self.scale = scale

@@ -1,4 +1,9 @@
 import math
+import pygame
+
+All = False
+Time = 600
+Mistake = 0
 
 width_screen = 1200
 height_screen = 800
@@ -51,3 +56,4 @@ sound_if_button_down_duration = 1.2
 shortness_duration = 2.2
 exhalation_duration = 4.4
 checkpoint_duration = 1.2
+

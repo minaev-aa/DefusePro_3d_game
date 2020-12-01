@@ -7,6 +7,7 @@ class Planning:
     '''
     Класс рисования текстур
     '''
+
     def __init__(self, sc):
         self.sc = sc
         self.textures = {'1': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
