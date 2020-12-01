@@ -30,6 +30,7 @@ player_angle = min_alpha  # начальный угол смотрит ввер�
 player_angle_change_speed = 0.04
 player_pos1 = (width_screen // 2, height_screen // 2)
 player_pos2 = (width_screen // 4, height_screen // 4)
+Frames_for_taching_with_walls = 5  # Увеличивает размер колайдеров стен.
 
 texture_size = 600
 texture_k = texture_size // cube
@@ -50,6 +51,7 @@ Yellow = (255, 255, 0)
 Blue = (0, 0, 255)
 Red = (255, 0, 0)
 Grey = (40, 40, 40)
+BACK_LOAD = (250, 235, 205)
 
 # Длительность звуковых файлов.
 steps_duration = 1.5
