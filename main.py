@@ -8,6 +8,7 @@ from main_menu import Menu, Button, Load_cicle
 from minimap import *
 from network import Network
 from Sprite import *
+from active_wall import *
 
 
 pygame.init()
@@ -102,6 +103,7 @@ def Main_game():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer)
+        active(p)
     pygame.quit()
 
 

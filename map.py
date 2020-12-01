@@ -20,6 +20,7 @@ text_map = [
 
 #Задание карты в текстовом формате и передача информации
 map = {}
+active_in_map = {}
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char != '.':
@@ -27,3 +28,4 @@ for j, row in enumerate(text_map):
                 map[(i * cube, j * cube)] = '1'
             elif char == '2':
                 map[(i * cube, j * cube)] = '2'
+                active_in_map[(i * cube, j * cube)] = '2'
