@@ -36,6 +36,9 @@ class Player:
         self.is_move = False
         self.Vy = player_speed * np.cos(self.angle)
         self.Vx = player_speed * np.sin(self.angle)
+        if pressed_keys[pygame.K_LSHIFT]:
+            self.Vy *= 2
+            self.Vx *= 2
         if pressed_keys[pygame.K_a]:
             self.is_move = True
             # self.sound_of_steps()

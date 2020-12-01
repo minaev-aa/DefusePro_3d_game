@@ -30,7 +30,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         # verticals
         x, dx = (xm + cube, 1) if cos_a >= 0 else (xm, -1)
         for i in range(0, width_screen, cube):
-            textur_v = '1'
+            textur_v = '0'
             deep_v = (x - ox) / cos_a
             yv = oy + deep_v * sin_a
             m = mapping(x + dx, yv)
@@ -42,7 +42,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         # horizontals
         y, dy = (ym + cube, 1) if sin_a >= 0 else (ym, -1)
         for i in range(0, height_screen, cube):
-            textur_h = '1'
+            textur_h = '0'
             deep_h = (y - oy) / sin_a
             xh = ox + deep_h * cos_a
             m = mapping(xh, y + dy)

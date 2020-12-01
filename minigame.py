@@ -2,15 +2,14 @@ import pygame
 import random
 from settings import *
 import time
-import os
+
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 FPS = 30
 
 
-def game1(sc):
-    sn = random.randint(1000000000, 9999999999)
+def game1(sc, sn):
     count = [0, 0, 0, 0, 0]
     colors = [Blue, Red, White, Black, Yellow]
     k = random.randint(3, 6)
@@ -253,7 +252,7 @@ def drawglobal(sc, result, light):
 
 
 def click(x, y):
-    if 1150 < x < 1200:
+    if 1140 < x < 1190:
         if 0 < y < 50:
             return True
 
@@ -263,10 +262,7 @@ def mistake():
     Mistake += 1
 
 
-def Manager(finished):
-    global Time, All
-    timer_event = pygame.USEREVENT + 1
-    pygame.time.set_timer(timer_event, 1000)
+def Manager(finished, timer_event, Time, sn):
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     surf1 = pygame.Surface((300, 120))
@@ -275,7 +271,7 @@ def Manager(finished):
     result = 0
     x, y = 0, 0
     clock = pygame.time.Clock()
-    out = game1(screen)
+    out = game1(screen, sn)
     true = out[1]
     while not finished:
         clock.tick(FPS)
@@ -299,16 +295,17 @@ def Manager(finished):
                 Time -= 1
                 text = font.render(str(Time) + ' сек', True, Black)
                 if Time == 0:
-                    All = True
                     finished = True
         text_rect = text.get_rect(center=surf1.get_rect().center)
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    return result
+    return (result, Time)
 
 
 if __name__ == '__main__':
-    print(Manager(False))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    timer_event = pygame.USEREVENT + 1
+    pygame.time.set_timer(timer_event, 1000)
+    print(Manager(False, timer_event, Time, sn))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
     print(Mistake)
     print(Time)
