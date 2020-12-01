@@ -7,6 +7,7 @@ class Planning:
     '''
     Класс рисования текстур
     '''
+
     def __init__(self, sc):
         self.sc = sc
         self.textures = {'1': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
@@ -25,10 +26,15 @@ class Planning:
         self.sc.blit(self.textures['S'], (sky_offset + width_screen, 0))
         pygame.draw.rect(self.sc, Grey, (0, height_screen // 2, width_screen, height_screen // 2))
 
-    def plan(self, player_pos, player_angle):
+    def plan(self, player_pos, player_angle, sprites):
         '''
         :param player_pos: Координаты игрока
         :param player_angle: Положение угла камеры
         :return: Рисует стены
         '''
-        ray_casting(self.sc, player_pos, player_angle, self.textures)
+        walls = ray_casting(self.sc, player_pos, player_angle, self.textures)
+        if not(sprites[2] == 0):
+            walls.append(sprites)
+        walls = sorted(walls, key=lambda wall: wall[0], reverse=True)
+        for wall in walls:
+            self.sc.blit(wall[1], wall[2])

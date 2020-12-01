@@ -38,22 +38,22 @@ class Player:
         self.Vx = player_speed * np.sin(self.angle)
         if pressed_keys[pygame.K_a]:
             self.is_move = True
-            #self.sound_of_steps()
+            # self.sound_of_steps()
             self.x_player += self.Vx
             self.y_player -= self.Vy
         if pressed_keys[pygame.K_d]:
             self.is_move = True
-            #self.sound_of_steps()
+            # self.sound_of_steps()
             self.x_player -= self.Vx
             self.y_player += self.Vy
         if pressed_keys[pygame.K_s]:
             self.is_move = True
-            #self.sound_of_steps()
+            # self.sound_of_steps()
             self.x_player -= self.Vy
             self.y_player -= self.Vx
         if pressed_keys[pygame.K_w]:
             self.is_move = True
-            #self.sound_of_steps()
+            # self.sound_of_steps()
             self.x_player += self.Vy
             self.y_player += self.Vx
 

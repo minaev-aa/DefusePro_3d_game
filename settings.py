@@ -1,4 +1,9 @@
 import math
+import pygame
+
+All = False
+Time = 600
+Mistake = 0
 
 width_screen = 1200
 height_screen = 800
@@ -32,6 +37,8 @@ player_radius = 5
 player_length = 4  # длинна той штуки, которая торчит из игрока на миникарте для указание направления взгляда
 player_width = 2  # ширина этой штуки
 
+active_size = 1 * cube  # размеры активной области, где можно принимать задания
+
 White = (255, 255, 255)
 Green = (0, 100, 0)
 Black = (0, 0, 0)
@@ -49,3 +56,4 @@ sound_if_button_down_duration = 1.2
 shortness_duration = 2.2
 exhalation_duration = 4.4
 checkpoint_duration = 1.2
+

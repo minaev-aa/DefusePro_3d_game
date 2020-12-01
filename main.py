@@ -8,14 +8,16 @@ from main_menu import Menu, Button, Load_cicle
 from minimap import *
 from network import Network
 from Sprite import *
-
+from active_wall import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
 # Инициализация загрузчика.
 Loader = Load_cicle(screen)
-#guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
+
+
+# guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
 
 def Menu_func():
     """
@@ -24,7 +26,7 @@ def Menu_func():
     :return: Окно.
     """
     Loader.main_menu_init()
-    #p.audio_init(Loader.audio)
+    # p.audio_init(Loader.audio)
     # Отрисовка меню.
     finished = False
     while not finished:
@@ -43,8 +45,8 @@ def Menu_func():
                 is_one_of_buttons_on = Loader.menu.is_one_of_buttons_on()
                 if is_one_of_buttons_on != -1:
                     Loader.audio.Sound_play(Loader.audio.sound_if_button_down,
-                                          sound_if_button_down_duration,
-                                          Loader.audio.sound_if_button_down_start_time)
+                                            sound_if_button_down_duration,
+                                            Loader.audio.sound_if_button_down_start_time)
                     Loader.audio.sound_if_button_down_start_time \
                         = Loader.audio.check_sound(sound_if_button_down_duration,
                                                    Loader.audio.sound_if_button_down_start_time)
@@ -67,27 +69,30 @@ def indificate_func(num_in_massive_of_buttoms):
     else:
         pass
 
-def redrawWindow(win,player, player2, ModelPlayer):
+
+def redrawWindow(win, player, player2, ModelPlayer):
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
-    sc.plan(player.pos, player.angle)
+    sprite_surf, sprite_rect = ModelPlayer.draw()
+    sprites = (ModelPlayer.distance_to_player(), sprite_surf, sprite_rect)
+    sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
-    ModelPlayer.draw()
+    #ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
-    #pygame.draw.circle(screen, Red, player.pos, 10)
-    #pygame.draw.circle(screen, Red, player2.pos, 10)
-    #pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
+    # pygame.draw.circle(screen, Red, player.pos, 10)
+    # pygame.draw.circle(screen, Red, player2.pos, 10)
+    # pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
     pygame.display.flip()
 
+
 def Main_game():
-    finished = False
     n = Network()
     p = n.getP()
     p2 = n.send(p)
     ModelPlayer = Guard(1, p2.x_player, p2.y_player, screen, p)
     fr = 0
-    while not finished:
+    while not All:
         pygame.time.Clock().tick(FPS)
         fr += 0
         if fr % 10 == 0:
@@ -100,6 +105,8 @@ def Main_game():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer)
+        active(p)
+    #TODO Проверка времени, количесттва ошибок и выполненных заданий
     pygame.quit()
 
 

@@ -2,6 +2,7 @@ import socket
 import pickle
 from settings import *
 
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

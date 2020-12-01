@@ -5,8 +5,6 @@ import numpy as np
 from map import *
 
 
-
-
 class Sprite:
     def __init__(self, scale, x_pos, y_pos, file, screen, player):
         self.scale = scale
@@ -30,12 +28,16 @@ class Sprite:
         angle_to_player %= 2 * np.pi
         return angle_to_player
 
+    def distance_to_player(self):
+        distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (1 / 2)
+        return distance_to_player
+
     def size(self):
         '''
         Расчитывает размер изображения спрайта на экране
         :return: размер спрайта
         '''
-        distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (1 / 2)
+        distance_to_player = self.distance_to_player()
         if distance_to_player ==0:
             distance_to_player = player_angle
         proec_size = int(proec_k / distance_to_player * self.scale * size_sprite)
@@ -45,12 +47,16 @@ class Sprite:
             return 0
 
     def draw(self):
-        guard_surf_new = pygame.transform.scale(self.surf, (int(self.size()), int(self.size())))
         angle_to_player = self.angle()
         if not (angle_to_player < np.pi / 2 or angle_to_player > 3 / 2 * np.pi):
+            guard_surf_new = pygame.transform.scale(self.surf, (int(self.size()), int(self.size())))
             guard_rect = guard_surf_new.get_rect(
                     center=(width_screen // 2 - 4*distance * np.tan(angle_to_player), height_screen // 2 ))
-            self.screen.blit(guard_surf_new, guard_rect)
+            return guard_surf_new, guard_rect
+        else:
+            return (0, 0)
+
+            #self.screen.blit(guard_surf_new, guard_rect)
 
 
 class Guard(Sprite):
