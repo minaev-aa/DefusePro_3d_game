@@ -70,9 +70,11 @@ def indificate_func(num_in_massive_of_buttoms):
 def redrawWindow(win,player, player2, ModelPlayer):
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
-    sc.plan(player.pos, player.angle)
+    sprite_surf, sprite_rect = ModelPlayer.draw()
+    sprites = (ModelPlayer.distance_to_player(), sprite_surf, sprite_rect)
+    sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
-    ModelPlayer.draw()
+    #ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
     #pygame.draw.circle(screen, Red, player.pos, 10)
