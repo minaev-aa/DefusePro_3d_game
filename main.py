@@ -126,11 +126,11 @@ def Main_game():
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
         try:
-            ro = active(p, timer_event, Time)
+            ro = active(p, timer_event, Time, Mistake)
             minigames[int(ro[0]) - 2], Time = ro[1]
         except:
             try:
-                ro = active(p, timer_event, Time)
+                ro = active(p, timer_event, Time, Mistake)
                 if ro!= None:
                     Time = ro
             except:

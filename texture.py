@@ -12,6 +12,7 @@ class Planning:
         self.sc = sc
         self.textures = {'0': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
                          '1': pygame.image.load('Resources/Textures/tex6X6.png').convert(),
+                         '2': pygame.image.load('Resources/Textures/file.png').convert(),
                          'S': pygame.image.load('Resources/Textures/stars.png').convert(),
                          'o': pygame.image.load('Resources/Textures/3.3tex6x6.png').convert(),
                          'd': pygame.image.load('Resources/Textures/3.3tex6x6.png').convert(),
@@ -38,7 +39,7 @@ class Planning:
         :return: Рисует стены
         '''
         walls = ray_casting(self.sc, player_pos, player_angle, self.textures)
-        if not(sprites[2] == 0):
+        if not (sprites[2] == 0):
             walls.append(sprites)
         walls = sorted(walls, key=lambda wall: wall[0], reverse=True)
         for wall in walls:

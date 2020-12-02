@@ -62,7 +62,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
         cur_angle += d_angle
         wall = texturs[textur].subsurface(shift * texture_k, 0, texture_k, texture_size)
         wall = pygame.transform.scale(wall, (size, proj_height))
-        #sc.blit(wall, (ray * size, height_screen // 2 - proj_height // 2))
+        # sc.blit(wall, (ray * size, height_screen // 2 - proj_height // 2))
 
         rect = (ray * size, height_screen // 2 - proj_height // 2)
         walls.append((deep, wall, rect))

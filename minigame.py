@@ -3,7 +3,6 @@ import random
 from settings import *
 import time
 
-
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 FPS = 30
@@ -142,14 +141,14 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[0]
                 return tline
-        if color[1] == 0:
+        elif color[1] == 0:
             if line[linennum[3]][1] == Yellow:
                 tline = linennum[1]
                 return tline
-        if color[0] == 1:
+        elif color[0] == 1:
             tline = linennum[1]
             return tline
-        if color[4] > 1:
+        elif color[4] > 1:
             tline = linennum[3]
             return tline
         else:
@@ -160,11 +159,11 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[3]
                 return tline
-        if color[1] == 1:
+        elif color[1] == 1:
             if color[4] > 1:
                 tline = linennum[1]
                 return tline
-        if color[3] == 0:
+        elif color[3] == 0:
             tline = linennum[2]
             return tline
         else:
@@ -175,11 +174,11 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[0]
                 return tline
-        if color[4] == 1:
+        elif color[4] == 1:
             if color[2] > 1:
                 tline = linennum[1]
                 return tline
-        if color[1] == 0:
+        elif color[1] == 0:
             tline = linennum[2]
             return tline
         else:
@@ -257,12 +256,11 @@ def click(x, y):
             return True
 
 
-def mistake():
-    global Mistake
+def mistake(Mistake):
     Mistake += 1
 
 
-def Manager(finished, timer_event, Time, sn):
+def Manager(finished, timer_event, Time, sn, Mistake):
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     surf1 = pygame.Surface((300, 120))
@@ -290,7 +288,7 @@ def Manager(finished, timer_event, Time, sn):
                 if cuts != None:
                     if cuts != -1:
                         if cuts != true:
-                            mistake()
+                            mistake(Mistake)
             if event.type == timer_event:
                 Time -= 1
                 text = font.render(str(Time) + ' сек', True, Black)
@@ -300,12 +298,13 @@ def Manager(finished, timer_event, Time, sn):
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    return (result, Time)
+    return (result, Time, Mistake)
 
 
 if __name__ == '__main__':
     timer_event = pygame.USEREVENT + 1
     pygame.time.set_timer(timer_event, 1000)
-    print(Manager(False, timer_event, Time, sn))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    print(Manager(False, timer_event, Time,
+                  sn))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
     print(Mistake)
     print(Time)

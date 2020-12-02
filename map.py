@@ -14,13 +14,13 @@ text_map = [
     '0..0.0..00....0.0..0.0',
     '0..0.0.0.0.0.0...0.0.0',
     '0..........0...0.0...0',
-    '0010odtcpo001000000000'
+    '0010odtcp0201000000000'
 ]
 
 # Задание карты в текстовом формате и передача информации
 map = {}
 active_in_map = {}
-chars = ['1', 'o', 'd', 't', 'c', 'p']
+chars = ['1', '2', 'o', 'd', 't', 'c', 'p']
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char != '.':
@@ -30,4 +30,3 @@ for j, row in enumerate(text_map):
                 if char == k:
                     map[(i * cube, j * cube)] = k
                     active_in_map[(i * cube, j * cube)] = k
-
