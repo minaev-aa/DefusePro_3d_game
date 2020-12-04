@@ -127,10 +127,10 @@ def correct(line, color, num, sn):
         if color[1] == 0:
             tline = linennum[1]
             return tline
-        elif line[linennum[2]][1] == White:
+        if line[linennum[2]][1] == White:
             tline = linennum[2]
             return tline
-        elif color[0] > 1:
+        if color[0] > 1:
             tline = linennum[0]
             return tline
         else:
@@ -141,14 +141,14 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[0]
                 return tline
-        elif color[1] == 0:
+        if color[1] == 0:
             if line[linennum[3]][1] == Yellow:
                 tline = linennum[1]
                 return tline
-        elif color[0] == 1:
+        if color[0] == 1:
             tline = linennum[1]
             return tline
-        elif color[4] > 1:
+        if color[4] > 1:
             tline = linennum[3]
             return tline
         else:
@@ -159,11 +159,11 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[3]
                 return tline
-        elif color[1] == 1:
+        if color[1] == 1:
             if color[4] > 1:
                 tline = linennum[1]
                 return tline
-        elif color[3] == 0:
+        if color[3] == 0:
             tline = linennum[2]
             return tline
         else:
@@ -174,11 +174,11 @@ def correct(line, color, num, sn):
             if sn % 2 == 1:
                 tline = linennum[0]
                 return tline
-        elif color[4] == 1:
+        if color[4] == 1:
             if color[2] > 1:
                 tline = linennum[1]
                 return tline
-        elif color[1] == 0:
+        if color[1] == 0:
             tline = linennum[2]
             return tline
         else:
@@ -305,6 +305,7 @@ if __name__ == '__main__':
     timer_event = pygame.USEREVENT + 1
     pygame.time.set_timer(timer_event, 1000)
     print(Manager(False, timer_event, Time,
-                  sn))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+                  sn,
+                  Mistake))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
     print(Mistake)
     print(Time)
