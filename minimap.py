@@ -26,7 +26,10 @@ def draw_minimap(player, screen):
         if map[(x, y)] == '0':
             pygame.draw.rect(screen, Red,
                              (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
-        if map[(x, y)] == '1':
+        if map[(x, y)] == ('1'):
+            pygame.draw.rect(screen, Green,
+                             (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
+        if map[(x, y)] == ('2'):
             pygame.draw.rect(screen, Green,
                              (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
         if map[(x, y)] in ['o', 'd', 't', 'c', 'p']:

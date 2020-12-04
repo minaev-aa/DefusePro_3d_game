@@ -18,12 +18,13 @@ class Letter:
                          'c': pygame.image.load('Resources/Textures/game4.png').convert(),
                          'p': pygame.image.load('Resources/Textures/game5.png').convert(),
                          }
-        self.timer_event =timer_event
+        self.timer_event = timer_event
         self.Time = Time
-        self.x, self.y = 0,0
+        self.x, self.y = 0, 0
         self.num = num
-        self.font =  pygame.font.SysFont(None, 100)
+        self.font = pygame.font.SysFont(None, 100)
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)
+
     def click(self):
         if 1140 < self.x < 1190:
             if 0 < self.y < 50:
@@ -62,6 +63,7 @@ class Letter:
             self.sc.blit(surf1, (0, 0))
             pygame.display.update()
         return (self.Time)
+
 
 if __name__ == '__main__':
     timer_event = pygame.USEREVENT + 1

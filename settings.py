@@ -8,7 +8,6 @@ Mistake = 0
 count_of_minigame = 1
 sn = random.randint(1000000000, 9999999999)
 
-
 width_screen = 1200
 height_screen = 800
 FPS = 60
@@ -62,4 +61,3 @@ sound_if_button_down_duration = 1.2
 shortness_duration = 2.2
 exhalation_duration = 4.4
 checkpoint_duration = 1.2
-
