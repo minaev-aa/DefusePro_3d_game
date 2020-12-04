@@ -4,7 +4,7 @@ from Player import *
 from pygame.draw import *
 from map import *
 from texture import Planning
-from main_menu import Menu, Button, Load_cicle
+from main_menu import Menu, Button, Load_cicle, Settings, Points_of_settings
 from minimap import *
 from network import Network
 from Sprite import *
@@ -18,6 +18,7 @@ Loader = Load_cicle(screen)
 
 
 # guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
+
 
 def Menu_func():
     """
@@ -61,13 +62,39 @@ def indificate_func(num_in_massive_of_buttoms):
     :param num_in_massive_of_buttoms: Номер нажатой кнопки в массиве.
     :return: None
     """
-    print(num_in_massive_of_buttoms)
     if num_in_massive_of_buttoms == 0:
         Main_game()
     elif num_in_massive_of_buttoms == 1:
         pass
+    elif num_in_massive_of_buttoms == 2:
+        Menu_of_settings()
     else:
         pass
+
+
+def Menu_of_settings():
+    """
+    Рисует окно настроек.
+    """
+    Set_Win = Settings(screen)
+    Set_Win.main()
+
+    finnish1 = False
+    while not finnish1:
+        for i in pygame.event.get():
+            if i.type == pygame.QUIT:
+                finnish1 = True
+            elif i.type == pygame.KEYDOWN:
+                if i.key == pygame.K_ESCAPE:
+                    finnish1 = True
+            elif i.type == pygame.MOUSEBUTTONDOWN:
+                mouse_position = pygame.mouse.get_pos()
+                Loader.audio.is_sounds_on = (Set_Win.points[0].is_point_down(mouse_position))
+        Set_Win.draw_set_win()
+        pygame.time.delay(60)
+        pygame.display.update()
+
+    Menu_func()
 
 
 def redrawWindow(win, player, player2, ModelPlayer, text):

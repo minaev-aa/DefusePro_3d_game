@@ -21,13 +21,15 @@ class Menu():
         self.y_but = self.H // 2
         self.sc = sc
         # Создадим кнопок.
-        self.but_init(self.W // 2, self.y_but, "Начать", self.but_size)
+        self.but_init(self.W // 2, self.y_but, "Подключиться", self.but_size)
+        self.but_init(self.W // 2, self.y_but, "Создать свой сервер", self.but_size)
         self.but_init(self.W // 2, self.y_but, "Настройки", self.but_size)
         self.but_init(self.W // 2, self.y_but, "Выход", self.but_size)
 
     def draw(self):
         """
         Отрисовывает элементы главного меню.
+        Включает звук, если курсор над клавишей.
         :return: Новые элементы.
         """
         pos_of_mouse = pg.mouse.get_pos()
@@ -144,6 +146,7 @@ class Load_cicle():
         :param sc: Экран, на котором рисуется игра.
         """
         self.persent_of_load = 0
+        self.opposite_persent_of_load = 0
         self.scale = 1
         self.size = 150
         self.sc = sc
@@ -165,7 +168,7 @@ class Load_cicle():
         r = int(self.size / 2)
         pg.draw.arc(sc, self.GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    0, 2 * self.pi * self.persent_of_load / 100, 13)
+                    self.opposite_persent_of_load, 2 * self.pi * self.persent_of_load / 100, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
         # Добавляет текст на шкалу на координатах x, y.
@@ -185,7 +188,8 @@ class Load_cicle():
         Паралельно отрисовывает процесс загрузки.
         :return: Главное меню и процесс его загрузки.
         """
-        count = 11
+        count = 12
+        self.persent_of_load = 0
         part = int(1 / count * 100)
         self.draw_all_load()  # 0
         pg.display.update()
@@ -244,6 +248,15 @@ class Load_cicle():
         self.persent_of_load += part
         self.draw_all_load()
         pg.display.update()
+
+        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
+        Sets = file.readlines()
+        self.audio.is_sounds_on = int(Sets[0].split()[0])
+        print(self.audio.is_sounds_on)
+        file.close()
+        self.persent_of_load += part
+        self.draw_all_load()
+        pg.display.update()
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
 
         # Массив звуков.
@@ -256,8 +269,8 @@ class Load_cicle():
                        self.audio.exhalation,
                        self.audio.checkpoint]
 
-        # Массив длительностей звуков.
-        self.durations = [self.audio.steps_start_time,
+        # Массив начал игры звука.
+        self.steps_starts = [self.audio.steps_start_time,
                           self.audio.running_start_time,
                           self.audio.plus_anything_start_time,
                           self.audio.sound_when_cursor_under_button_start_time,
@@ -266,7 +279,7 @@ class Load_cicle():
                           self.audio.exhalation_start_time,
                           self.audio.checkpoint_start_time]
 
-        # Массив начал игры звука.
+        # Массив длительностей звуков.
         self.durations = [steps_duration,
                           running_duration,
                           plus_anything_duration,
@@ -275,6 +288,136 @@ class Load_cicle():
                           shortness_duration,
                           exhalation_duration,
                           checkpoint_duration]
+
+
+class Settings():
+    """
+    Этот класс отвечает за рисование окна настроек для главного меню.
+    """
+    def __init__(self, sc):
+        self.size = height_screen // 3
+        self.y0 = height_screen - self.size
+        self.delta = 50
+        self.sc = sc
+        self.size_of_font = 30
+        self.points = []
+
+    def main(self):
+        """
+        Запускает окно настроек.
+        """
+        self.x = width_screen // 2
+        self.y = height_screen // 2
+        self.a = self.size
+        self.setting_point('Звук', self.size)
+
+    def __main_test__(self):
+        """
+        Запускает окно настроек.
+        """
+        x = width_screen // 2
+        y = height_screen // 2
+        a = self.size
+        self.setting_point('Звук', self.size)
+        self.setting_point("", self.size)
+        finnish1 = False
+        while not finnish1:
+            for i in pg.event.get():
+                if i.type == pg.QUIT:
+                    sys.exit()
+                if i.type == pg.K_ESCAPE:
+                    sys.exit()
+            pg.draw.rect(self.sc, BACK_LOAD, (x - a, y - a, 2 * a, 2 * a), 0)
+            pg.draw.rect(self.sc, Black, (x - a, y - a, 2 * a, 2 * a), 2)
+            for num in range(len(self.points)):
+                self.points[num].draw()
+            pg.time.delay(60)
+            pg.display.update()
+
+    def draw_set_win(self):
+        b = 0.65 * self.a
+        c = self.a // 4
+        pygame.draw.rect(self.sc, BACK_LOAD, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 0)
+        pygame.draw.rect(self.sc, Black, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 2)
+        font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
+        text = font.render('ВЫХОД', True, White)
+        # Добавляет текст на нухных координатах x, y.
+        self.sc.blit(text, [self.x + b, self.y - b - c])
+        text = font.render(' ESC', True, White)
+        self.sc.blit(text, [self.x + b, self.y - b - c + self.size_of_font])
+        for num in range(len(self.points)):
+            self.points[num].draw()
+
+    def setting_point(self, text, size):
+        """
+        Добавляет настройку.
+        """
+        a = int(0.8 * size)
+        self.points.append(Points_of_settings(self.sc, 1))
+        self.points[len(self.points) - 1].Text = text
+        self.points[len(self.points) - 1].x = width_screen // 2 - a
+        self.y0 += self.delta
+        self.points[len(self.points) - 1].y = self.y0 - a
+
+
+class Points_of_settings():
+    """
+    Это класс отдельных настроек для окна настроек.
+    """
+    def __init__(self, sc, parametr):
+        self.Text = "Настройка"
+        self.y = 110
+        self.x = 110
+        self.sc = sc
+
+        self.size = 10
+        self.size_of_font = 30
+        self.parametr = parametr
+
+    def draw(self):
+        """
+        Рисует настройку.
+        """
+        sc = self.sc
+        x = self.x
+        y = self.y
+        a = int(1.5 * self.size)
+        b = self.size_of_font // 3
+
+        pg.draw.circle(self.sc, Black, (x, y), self.size, self.size // 6)
+        if self.parametr:
+            pg.draw.circle(self.sc, Green, (x, y), self.size // 3, 0)
+
+        font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
+        text = font.render(self.Text, True, (255, 255, 255))
+        # Добавляет текст на нухных координатах x, y.
+        sc.blit(text, [x + a, y - b])
+
+    def is_point_down(self, massive):
+        """
+        Проверяет, нажали ли на настройку.
+        :massive: это массив данных о положении курсора на экране.
+        Возращает ПАРАМЕТР, если курсор нажал на настройку и если не нажал.
+        Меняет параметр, если настройка изменена.
+        """
+        a = self.size / 2
+        c = self.size_of_font / 2
+        leng = self.size_of_font * len(self.Text)
+        if self.x - c <= massive[0] <= self.x + leng and \
+                self.y - a <= massive[1] <= self.y + a:
+            if self.parametr:
+                self.parametr = False
+            else:
+                self.parametr = True
+                try:
+                    with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
+                        out_file.write(str(int(self.parametr)))
+                except:
+                    with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
+                        out_file.write(str(1))
+
+        return self.parametr
+
 
 
 def test__module_menu():
@@ -304,13 +447,21 @@ def __Menu_func__test__():
     laod = Load_cicle(sc)
 
     laod.main_menu_init()
-
+    p = Settings(sc)
+    fr = 0
     while True:
         for i in pg.event.get():
             if i.type == pg.QUIT:
                 sys.exit()
         sc.blit(laod.LK, (0, -100))  # Поправить, если будет новое разрешение.
         laod.menu.draw()
+        fr += 1
+        if fr == 30:
+            try:
+                p.main()
+            except:
+                pass
+        print(fr)
         pg.time.delay(60)
         pg.display.update()
 
