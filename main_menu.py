@@ -195,68 +195,44 @@ class Load_cicle():
         pg.display.update()
 
         self.LK = pg.image.load('Resources\Textures\ЛК.jpg')  # 1
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio = Audio_source()  # 2
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.sound_when_cursor_under_button_init()  # 3
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.menu = Menu(self.audio, self.sc)  # 4
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.sound_if_button_down_init()  # 5
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.steps_init()  # 6
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.running_init()  # 7
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.plus_anything_init()  # 8
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.shortness_init()  # 9
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.exhalation_init()  # 10
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         self.audio.checkpoint_init()  # 11
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
 
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
         Sets = file.readlines()
         self.audio.is_sounds_on = int(Sets[0].split()[0])
         print(self.audio.is_sounds_on)
         file.close()
-        self.persent_of_load += part
-        self.draw_all_load()
-        pg.display.update()
+        self.__upd__main_load(count)
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
 
         # Массив звуков.
@@ -288,6 +264,11 @@ class Load_cicle():
                           shortness_duration,
                           exhalation_duration,
                           checkpoint_duration]
+
+    def __upd__main_load(self, count):
+        self.persent_of_load += 1 // count
+        self.draw_all_load()
+        pg.display.update()
 
 
 class Settings():
