@@ -6,8 +6,12 @@ from map import *
 
 
 class Player:
-    def __init__(self, dplayer_pos):
-        self.x_player, self.y_player = dplayer_pos
+    '''
+    Класс игрока
+    player_pos :param Координаты игрока в кортеже
+    '''
+    def __init__(self, player_pos):
+        self.x_player, self.y_player = player_pos
         self.angle = player_angle
 
     def audio_init(self, audio):
@@ -31,9 +35,15 @@ class Player:
 
     @property
     def pos(self):
+        '''
+        :return: Позиция игрока
+        '''
         return (int(self.x_player), int(self.y_player))
 
     def move(self):
+        '''
+        :return: Движение игрока
+        '''
         pressed_keys = pygame.key.get_pressed()
         self.is_move = False
         self.Vy = player_speed * np.cos(self.angle)

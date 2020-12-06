@@ -29,6 +29,9 @@ class Sprite:
         return angle_to_player
 
     def distance_to_player(self):
+        '''
+        :return: Вычисление расстояния до игрока
+        '''
         distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (1 / 2)
         return distance_to_player
 
@@ -47,6 +50,9 @@ class Sprite:
             return 0
 
     def draw(self):
+        '''
+        :return: Отрисовка спрайта
+        '''
         angle_to_player = self.angle()
         if not (angle_to_player < np.pi / 2 or angle_to_player > 3 / 2 * np.pi):
             guard_surf_new = pygame.transform.scale(self.surf, (int(self.size()), int(self.size())))
@@ -55,8 +61,6 @@ class Sprite:
             return guard_surf_new, guard_rect
         else:
             return (0, 0)
-
-            #self.screen.blit(guard_surf_new, guard_rect)
 
 
 class Guard(Sprite):

@@ -22,6 +22,10 @@ class Network:
             pass
 
     def send(self, data):
+        '''
+        :param data: Данные
+        :return: Отправляет даные
+        '''
         try:
             self.client.send(pickle.dumps(data))
             return pickle.loads(self.client.recv(2048))

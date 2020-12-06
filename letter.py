@@ -8,6 +8,9 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class Letter:
     '''
     Класс рисования текстур
+    sc :param определяет экран на котором рисуют
+    Time :param время в игре таймер
+    num :param номер подсказки
     '''
 
     def __init__(self, sc, timer_event, Time, num):
@@ -26,11 +29,17 @@ class Letter:
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)
 
     def click(self):
+        '''
+        :return: Проверка на попадание по кнопке выхода
+        '''
         if 1140 < self.x < 1190:
             if 0 < self.y < 50:
                 return True
 
     def draw(self):
+        '''
+        :return: Рисует подсказку, кнопку, и таймер
+        '''
         finished = False
         self.sc.fill(White)
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)

@@ -98,26 +98,29 @@ def Menu_of_settings():
 
 
 def redrawWindow(win, player, player2, ModelPlayer, text):
+    '''
+    :param win: экран
+    :param player: основной игрок
+    :param player2: второй игрок
+    :param ModelPlayer: модель второго игрока
+    :param text: объект текста с оставшимся временем в таймер
+    :return: обновление экрана
+    '''
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
     sprite_surf, sprite_rect = ModelPlayer.draw()
     sprites = (ModelPlayer.distance_to_player(), sprite_surf, sprite_rect)
     sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
-    #ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
     if pressed_keys[pygame.K_t]:
-        global Time
         surf1 = pygame.Surface((300, 120))
         surf1.fill(White)
         text_rect = text.get_rect(center=surf1.get_rect().center)
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    # pygame.draw.circle(screen, Red, player.pos, 10)
-    # pygame.draw.circle(screen, Red, player2.pos, 10)
-    # pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
     pygame.display.flip()
 
 
@@ -146,7 +149,6 @@ def Main_game():
                 text = font.render(str(Time) + ' сек', True, Black)
                 if Time == 0:
                     All = True
-                    finished = True
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)

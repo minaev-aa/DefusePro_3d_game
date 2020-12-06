@@ -33,3 +33,4 @@ def active(player, timer_event, Time, Mistake):
                         return Letter(screen, timer_event, Time, 'c').draw()
                     if active_in_map[x, y] == 'p':
                         return Letter(screen, timer_event, Time, 'p').draw()
+#TODO Множественный return

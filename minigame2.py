@@ -7,6 +7,12 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 
 
 class game2:
+    '''
+    Класс второй минии игры - кнопка
+    Time :param оставшееся время
+    sn :param серийный номер
+    Mistake :param количество ошибок
+    '''
     def __init__(self, timer_event, Time, sn, Mistake):
         self.sc = screen
         self.textures = pygame.image.load('Resources/Textures/tex6X6.png').convert()
@@ -16,9 +22,6 @@ class game2:
         self.font = pygame.font.SysFont(None, 100)
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)
         self.describe = (random.choices(['Detonate', '   Hold', '  Abort', '  Boom', ' Defuse']))[0]
-        # self.describe = '   Hold'
-        # self.colorb = Blue
-        # self.colorl = Blue
         self.colorb = (random.choices([Blue, Red, White, Black, Yellow]))[0]
         self.colorl = (random.choices([Blue, Red, White, Black, Yellow]))[0]
         self.sn = sn
@@ -30,11 +33,17 @@ class game2:
         self.holds = 0
 
     def click(self):
+        '''
+        :return: проверка нажатия на кнопку выхода
+        '''
         if 1140 < self.x < 1190:
             if 0 < self.y < 50:
                 return True
 
     def right(self):
+        '''
+        :return: Проверка последовательности действий
+        '''
         pygame.draw.rect(screen, self.colorl, (350, 250, 50, 300))
         pygame.display.update()
         if (self.colorb == Blue and self.describe == '  Abort') or (self.sn % 2 == 1 and self.colorb == White) or (
@@ -49,39 +58,40 @@ class game2:
                 self.mistake()
 
     def mistake(self):
+        '''
+        :return: Добавление ошибки
+        '''
         self.mistakes += 1
 
-    def hold(self):
-        if self.colorl == Blue:
-            if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == 4 or (
-                        ((self.Time % 100) - (self.Time % 10)) / 10) == 4 or (self.Time % 10) == 4:
-                self.finished = True
-                self.correct = 1
-            else:
-                self.mistake()
-        elif self.colorl == White:
-            if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == 1 or (
-                        ((self.Time % 100) - (self.Time % 10)) / 10) == 1 or (self.Time % 10) == 1:
-                self.finished = True
-                self.correct = 1
-            else:
-                self.mistake()
-        elif self.colorl == Yellow:
-            if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == 5 or (
-                        ((self.Time % 100) - (self.Time % 10)) / 10) == 5 or (self.Time % 10) == 5:
-                self.finished = True
-                self.correct = 1
-            else:
-                self.mistake()
+    def check(self, n):
+        '''
+        :param n: определение соответствия последней цифры таймера
+        :return:
+        '''
+        if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == n or (
+            ((self.Time % 100) - (self.Time % 10)) / 10) == n or (self.Time % 10) == n:
+            self.finished = True
+            self.correct = 1
         else:
-            if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == 1 or (
-                        ((self.Time % 100) - (self.Time % 10)) / 10) == 1 or (self.Time % 10) == 1:
-                self.finished = True
-                self.correct = 1
-            else:
-                self.mistake()
+            self.mistake()
+
+    def hold(self):
+        '''
+        :return: Удержание кнопки, проверка дальнейших условий
+        '''
+        if self.colorl == Blue:
+            self.check(4)
+        elif self.colorl == White:
+            self.check(1)
+        elif self.colorl == Yellow:
+            self.check(5)
+        else:
+            self.check(1)
 
     def draw(self):
+        '''
+        :return: Отрисовка миниигры, кнопки и таймера
+        '''
         self.sc.fill(White)
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)
         surf1 = pygame.Surface((300, 120))
@@ -95,7 +105,6 @@ class game2:
                          (0, 180, 0))
         pygame.draw.rect(self.surf2, Grey, (50, 250, 50, 300))
         self.surf2.blit(text, (320, 365))
-        # surf2.blit(self.textures, (0, 0))
         self.sc.blit(self.surf2, (300, 0))
         surf4 = pygame.Surface((50, 50))
         surf4.blit(button, (0, 0))
@@ -106,7 +115,6 @@ class game2:
                     self.finished = True
                 if event.type == pygame.MOUSEMOTION:
                     self.x, self.y = event.pos
-                    # print(self.x, self.y)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.click():
                         self.finished = True
@@ -144,4 +152,4 @@ if __name__ == '__main__':
     timer_event = pygame.USEREVENT + 1
     pygame.time.set_timer(timer_event, 1000)
     print(game2(timer_event, Time,
-                sn).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+                sn, Mistake).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
