@@ -99,7 +99,4 @@ class Player:
         Проверяет движентся ли игрок.
         :return: True, если игрок движется, иаче False.
         """
-        if self.is_move:
-            return True
-        else:
-            return False
+        return self.is_move

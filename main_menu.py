@@ -1,9 +1,6 @@
 import pygame as pg
-import sys
 from Music_module import Audio_source
 from settings import *
-import time
-
 
 class Menu():
     def __init__(self, audio, sc):
@@ -128,18 +125,17 @@ class Button():
                                                 self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
             self.COLOR = self.BUT_LOAD
             self.is_down = 1
-            return 1
+            return self.is_down
         else:
             self.COLOR = self.BACK_LOAD
             self.is_down = 0
-            return 0
+            return self.is_down
 
 
 class Load_cicle():
     """
     Это класс обьекта, являющегося индификатором процесса загрузки.
     """
-
     def __init__(self, sc):
         """
         Это конструктор класса загрузочный модуль.
@@ -172,7 +168,7 @@ class Load_cicle():
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
         # Добавляет текст на шкалу на координатах x, y.
-        sc.blit(text, [x - self.size_of_font / 3, y - self.size_of_font / 3])
+        sc.blit(text, [int(x - self.size_of_font / 3), int(y - self.size_of_font / 3)])
 
     def draw_all_load(self):
         """
@@ -190,8 +186,7 @@ class Load_cicle():
         """
         count = 12
         self.persent_of_load = 0
-        part = int(1 / count * 100)
-        self.draw_all_load()  # 0
+        self.draw_all_load()  # 0 - номер процедуры подгрузки.
         pg.display.update()
 
         self.LK = pg.image.load('Resources\Textures\ЛК.jpg')  # 1
@@ -200,37 +195,25 @@ class Load_cicle():
         self.audio = Audio_source()  # 2
         self.__upd__main_load(count)
 
-        self.audio.sound_when_cursor_under_button_init()  # 3
+        self.menu = Menu(self.audio, self.sc)  # 3
         self.__upd__main_load(count)
 
-        self.menu = Menu(self.audio, self.sc)  # 4
-        self.__upd__main_load(count)
-
-        self.audio.sound_if_button_down_init()  # 5
-        self.__upd__main_load(count)
-
-        self.audio.steps_init()  # 6
-        self.__upd__main_load(count)
-
-        self.audio.running_init()  # 7
-        self.__upd__main_load(count)
-
-        self.audio.plus_anything_init()  # 8
-        self.__upd__main_load(count)
-
-        self.audio.shortness_init()  # 9
-        self.__upd__main_load(count)
-
-        self.audio.exhalation_init()  # 10
-        self.__upd__main_load(count)
-
-        self.audio.checkpoint_init()  # 11
-        self.__upd__main_load(count)
+        Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
+                               self.audio.sound_if_button_down_init(): '2',
+                               self.audio.steps_init():  '3',
+                               self.audio.running_init(): '4',
+                               self.audio.plus_anything_init(): '5',
+                               self.audio.shortness_init(): '6',
+                               self.audio.exhalation_init(): '7',
+                               self.audio.checkpoint_init(): '8'}
+        # Инициализация звуков.
+        for num in range(len(Dict_of_audio_inits)):  # 4 - 11
+            Dict_of_audio_inits.get(str(num))
+            self.__upd__main_load(count)
 
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
         Sets = file.readlines()
         self.audio.is_sounds_on = int(Sets[0].split()[0])
-        print(self.audio.is_sounds_on)
         file.close()
         self.__upd__main_load(count)
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
@@ -266,6 +249,9 @@ class Load_cicle():
                           checkpoint_duration]
 
     def __upd__main_load(self, count):
+        """
+        Process of load.
+        """
         self.persent_of_load += 1 // count
         self.draw_all_load()
         pg.display.update()
@@ -285,46 +271,28 @@ class Settings():
 
     def main(self):
         """
-        Запускает окно настроек.
+        Определяет размеры и настроки для окна настроек.
+        Здесь можно добавить пунктов настройки фунцией self.setting_point.
         """
         self.x = width_screen // 2
         self.y = height_screen // 2
         self.a = self.size
         self.setting_point('Звук', self.size)
 
-    def __main_test__(self):
-        """
-        Запускает окно настроек.
-        """
-        x = width_screen // 2
-        y = height_screen // 2
-        a = self.size
-        self.setting_point('Звук', self.size)
-        self.setting_point("", self.size)
-        finnish1 = False
-        while not finnish1:
-            for i in pg.event.get():
-                if i.type == pg.QUIT:
-                    sys.exit()
-                if i.type == pg.K_ESCAPE:
-                    sys.exit()
-            pg.draw.rect(self.sc, BACK_LOAD, (x - a, y - a, 2 * a, 2 * a), 0)
-            pg.draw.rect(self.sc, Black, (x - a, y - a, 2 * a, 2 * a), 2)
-            for num in range(len(self.points)):
-                self.points[num].draw()
-            pg.time.delay(60)
-            pg.display.update()
-
     def draw_set_win(self):
+        """
+        Рисует окно настроек.
+        """
         b = 0.65 * self.a
         c = self.a // 4
         pygame.draw.rect(self.sc, BACK_LOAD, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 0)
         pygame.draw.rect(self.sc, Black, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 2)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render('ВЫХОД', True, White)
-        # Добавляет текст на нухных координатах x, y.
+        # Добавляет текст на нужных координатах x, y.
         self.sc.blit(text, [self.x + b, self.y - b - c])
         text = font.render(' ESC', True, White)
+        # Добавляет еще текста сразу под предыдущим.
         self.sc.blit(text, [self.x + b, self.y - b - c + self.size_of_font])
         for num in range(len(self.points)):
             self.points[num].draw()
@@ -370,7 +338,7 @@ class Points_of_settings():
             pg.draw.circle(self.sc, Green, (x, y), self.size // 3, 0)
 
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
-        text = font.render(self.Text, True, (255, 255, 255))
+        text = font.render(self.Text, True, SET_BUT)
         # Добавляет текст на нухных координатах x, y.
         sc.blit(text, [x + a, y - b])
 
@@ -390,61 +358,13 @@ class Points_of_settings():
                 self.parametr = False
             else:
                 self.parametr = True
-                try:
-                    with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
-                        out_file.write(str(int(self.parametr)))
-                except:
-                    with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
-                        out_file.write(str(1))
+            try:
+                with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
+                    out_file.write(str(int(self.parametr)))
+            except:
+                raise FileNotFoundError("Файл с настройками не найден. Проверьте Resources\Sets_saves\sets.txt")
 
         return self.parametr
-
-
-
-def test__module_menu():
-    """
-    Часть бывшего внутреннего тестировщика.
-    :return: окно пайгейм.
-    """
-    W = 400
-    H = 300
-
-    sc = pg.display.set_mode((W, H))
-    sc.fill((100, 150, 200))
-
-    while 1:
-        for i in pg.event.get():
-            if i.type == pg.QUIT:
-                sys.exit()
-
-        pg.time.delay(20)
-
-
-def __Menu_func__test__():
-    """
-    Запускает меню для тестирования модуля.
-    :return: меню.
-    """
-    laod = Load_cicle(sc)
-
-    laod.main_menu_init()
-    p = Settings(sc)
-    fr = 0
-    while True:
-        for i in pg.event.get():
-            if i.type == pg.QUIT:
-                sys.exit()
-        sc.blit(laod.LK, (0, -100))  # Поправить, если будет новое разрешение.
-        laod.menu.draw()
-        fr += 1
-        if fr == 30:
-            try:
-                p.main()
-            except:
-                pass
-        print(fr)
-        pg.time.delay(60)
-        pg.display.update()
 
 
 if __name__ == '__main__':
@@ -453,8 +373,23 @@ if __name__ == '__main__':
     W = width_screen  # Размеры экрана для модуля главного меню.
     H = height_screen  # Ширина для модуля главного меню.
 
+    pg.init()
     sc = pg.display.set_mode((W, H))
     sc.fill((100, 150, 200))
-    pg.init()
+    print('Проверим модуль погрузки основных данных.')
+    final = "Load_cicle .... Инициализирован."
+    try:
+        Loader = Load_cicle(sc)
+    except:
+        final = "FAIL/Ошибка - mistake of initialisation/Ошибка инициализации."
+    print(final)
 
-    __Menu_func__test__()
+    print('Проверка main_menu_init()')
+    Loader.main_menu_init()
+    if Loader.persent_of_load > 1:
+        print('FAIL/ОШИБКА - Число процедур загрузки больше, чем указано в начале функции.')
+    else:
+        print("ОК")
+
+
+
