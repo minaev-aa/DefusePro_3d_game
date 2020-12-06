@@ -3,6 +3,7 @@ import pygame
 import numpy as np
 from ray_casting import mapping
 from map import *
+import math
 
 
 class Player:
@@ -81,13 +82,19 @@ class Player:
         :Vx: и :Vy: - Скорости по данным коодринатам.
         :return: Возращает скорочти по координатам cord_x и cord_yю
         """
-        Vx_m = Frames_for_taching_with_walls * Vx
-        Vy_m = Frames_for_taching_with_walls * Vy
+        collader_of_player = 10
+        Vx_m = collader_of_player * Vx / math.fabs(Vx)
+        Vy_m = collader_of_player * Vy / math.fabs(Vy)
         m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
         m_y = mapping(cord_x, cord_y + Vy_m)  # Создает кортеж координат.
-        if m_x in map:
+        m_d = mapping(cord_x + Vx_m, cord_y + Vy_m)
+        if m_x in map or m_y in map:
+            if m_x in map:
+                Vx = 0
+            if m_y in map:
+                Vy = 0
+        elif m_d in map:
             Vx = 0
-        if m_y in map:
             Vy = 0
         return Vx, Vy
 
