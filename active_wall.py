@@ -23,14 +23,6 @@ def active(player, timer_event, Time, Mistake):
                         pass
                     if active_in_map[x, y] == '5':
                         pass
-                    if active_in_map[x, y] == 'o':
-                        return Letter(screen, timer_event, Time, 'o').draw()
-                    if active_in_map[x, y] == 'd':
-                        return Letter(screen, timer_event, Time, 'd').draw()
-                    if active_in_map[x, y] == 't':
-                        return Letter(screen, timer_event, Time, 't').draw()
-                    if active_in_map[x, y] == 'c':
-                        return Letter(screen, timer_event, Time, 'c').draw()
-                    if active_in_map[x, y] == 'p':
-                        return Letter(screen, timer_event, Time, 'p').draw()
-#TODO Множественный return
+                    if active_in_map[x, y] in ['o', 'd','t', 'c', 'p']:
+                        return Letter(screen, timer_event, Time, active_in_map[x, y]).draw()
+

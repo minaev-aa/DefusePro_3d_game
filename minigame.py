@@ -31,143 +31,86 @@ def game1(sc, sn):
         i = i % 6
     line_print(line, sc)
     right = correct(line, count, num, sn)
-    # print(right)
-    # print(sn)
     return (line, right)
 
-#TODO Сделать функцию возврата номера от числа
-def numer(line, color, num):
+def numer(line, num):
     m = 0
-    if num == 3:
-        n23 = None
-        n33 = None
-        bl = None
-        for i in range(6):
-            if line[i][0]:
-                if line[i][1] == Blue:
-                    bl = i
-                m += 1
-            if m == 2:
-                if n23 == None:
-                    n23 = i
-            if m == 3:
-                if n33 == None:
-                    n33 = i
-        return (bl, n23, n33)
-    if num == 4:
-        rl = None
-        n14 = None
-        n44 = None
-        n24 = None
-        for i in range(6):
-            if line[i][0]:
-                if line[i][1] == Red:
-                    rl = i
-                m += 1
-            if m == 1:
-                if n14 == None:
-                    n14 = i
-            if m == 2:
-                if n24 == None:
-                    n24 = i
-            if m == 4:
-                if n44 == None:
-                    n44 = i
-        return (rl, n14, n24, n44)
-    if num == 5:
-        rl = None
-        n15 = None
-        n25 = None
-        n55 = None
-        n45 = None
-        for i in range(6):
-            if line[i][0]:
-                if line[i][1] == Red:
-                    rl = i
-                m += 1
-            if m == 1:
-                if n15 == None:
-                    n15 = i
-            if m == 2:
-                if n25 == None:
-                    n25 = i
-            if m == 4:
-                if n45 == None:
-                    n45 = i
-            if m == 5:
-                if n55 == None:
-                    n55 = i
-        return (rl, n15, n25, n45, n55)
-    if num == 6:
-        n36 = None
-        n46 = None
-        n66 = None
-        for i in range(6):
-            if line[i][0]:
-                m += 1
-            if m == 3:
-                if n36 == None:
-                    n36 = i
-            if m == 4:
-                if n46 == None:
-                    n46 = i
-            if m == 6:
-                if n66 == None:
-                    n66 = i
-        return (n36, n46, n66)
-
+    n = [None] * 8
+    for i in range(6):
+        if line[i][0]:
+            if line[i][1] == Blue:
+                n[6] = i
+            if line[i][1] == Red:
+                n[7] = i
+            m += 1
+        if m == 2:
+            if n[1] == None:
+                n[1] = i
+        if m == 3:
+            if n[2] == None:
+                n[2] = i
+        if m == 4:
+            if n[3] == None:
+                n[3] = i
+        if m == 5:
+            if n[4] == None:
+                n[4] = i
+        if m == 6:
+            if n[5] == None:
+                n[5] = i
+    return n
 
 def correct(line, color, num, sn):
     n = 0
     for i in range(6):
         if line[i][0]:
             n += 1
-    linennum = numer(line, color, num)
+    tline = 0
+    linennum = numer(line, num)
     if num == 3:
         if color[1] == 0:
             tline = linennum[1]
-
         if line[linennum[2]][1] == White:
             tline = linennum[2]
         if color[0] > 1:
-            tline = linennum[0]
+            tline = linennum[6]
         else:
             tline = linennum[2]
-    elif num == 4:
+    if num == 4:
         if color[1] > 1:
             if sn % 2 == 1:
-                tline = linennum[0]
+                tline = linennum[7]
         if color[1] == 0:
             if line[linennum[3]][1] == Yellow:
-                tline = linennum[1]
+                tline = linennum[0]
         if color[0] == 1:
-            tline = linennum[1]
+            tline = linennum[0]
         if color[4] > 1:
             tline = linennum[3]
         else:
-            tline = linennum[2]
-    elif num == 5:
+            tline = linennum[1]
+    if num == 5:
         if line[linennum[4]][1] == Black:
             if sn % 2 == 1:
                 tline = linennum[3]
         if color[1] == 1:
             if color[4] > 1:
-                tline = linennum[1]
+                tline = linennum[0]
         if color[3] == 0:
-            tline = linennum[2]
-        else:
             tline = linennum[1]
-    elif num == 6:
+        else:
+            tline = linennum[0]
+    if num == 6:
         if color[4] == 0:
             if sn % 2 == 1:
-                tline = linennum[0]
+                tline = linennum[2]
         if color[4] == 1:
             if color[2] > 1:
-                tline = linennum[1]
+                tline = linennum[3]
         if color[1] == 0:
-            tline = linennum[2]
+            tline = linennum[5]
         else:
-            tline = linennum[1]
+            tline = linennum[3]
     return tline
 
 def line_print(line, sc):
