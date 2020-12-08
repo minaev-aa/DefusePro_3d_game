@@ -1,9 +1,10 @@
 import pygame
 from settings import *
 import time
+import random
 
 pygame.init()
-screen = pygame.display.set_mode((width_screen, height_screen))
+surface = pygame.display.set_mode((width_screen, height_screen))
 
 wait = 200
 wait_space = wait
@@ -42,9 +43,22 @@ W = '.__'
 X = '_.._'
 Y = '_.__'
 Z = '__..'
+words = [[S, H, E, L, L], [H, A, L, L, S], [S, L, I, C, K], [T, R, I, C, K], [B, O, X, E, S], [L, E, A, K, S], \
+         [S, T, R, O, B, E], [B, I, S, T, R, O], [F, L, I, C, K], [B, O, M, B, S], [B, R, E, A, K], [B, R, I, C, K], \
+         [S, T, E, A, K], [S, T, I, C, K], [V, E, C, T, O, R], [B, E, A, T, S]]
 
-def my_wait(time):
-    global finished, wait_1, wait_2, wait_end_liter, wait_end_word, wait_space
+top_end = (3 * width_screen//10, 8 * height_screen//10)
+size_end = (4 * width_screen//10, 1 * height_screen//10)
+#(2 * width_screen//10, 5 * height_screen//10), (6 * width_screen//10, 2 * height_screen//10)
+
+def random_word():
+    i = random.randint(0, len(words) - 1)
+    word_split = words[i]
+    return word_split, i
+
+def my_wait(time, i_word, elipce_tipe, screen, Mistake):
+    global wait_1, wait_2, wait_end_liter, wait_end_word, wait_space
+    finished = False
     screen.fill(White)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -57,29 +71,26 @@ def my_wait(time):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             x, y = pos[0], pos[1]
-            event_bottom(x, y)
+            event_bottom(x, y, screen)
+            Mistake = end(x, y, i_word, Mistake)
     pygame.time.wait(time)
-    draw_frequency(str(frequency))
-    draw_bottom()
-    draw_frequency_scale(frequency)
-    my_ellipse(elipce_tipe)
-    '''
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            x, y = pos[0], pos[1]
-            event_bottom(x, y)
-    '''
-
+    draw_frequency(str(frequency) + ' MHz', screen)
+    draw_bottom(screen)
+    draw_frequency_scale(frequency, screen)
+    draw_end(screen)
+    my_ellipse(elipce_tipe, screen)
     pygame.display.flip()
+    return finished, Mistake
 
-def my_super_wait(time):
+def my_super_wait(time, i_word, elipce_tipe, screen, Mistake):
+    finished = True
     for n in range(time // FPS):
-        my_wait(FPS)
+        finished, Mistake = my_wait(FPS, i_word, elipce_tipe, screen, Mistake)
         if finished:
             break
+    #if finished:
+     #   print('lox')
+    return finished, Mistake
 
 def split(word):
     end = ''
@@ -87,34 +98,35 @@ def split(word):
         end = end + i + '='
     return list(end)
 
-def my_ellipse(color):
+def my_ellipse(color, screen):
     pygame.draw.ellipse(screen, color, ((width_screen // 10, height_screen // 10), (width_screen // 3, height_screen // 10)))
     pygame.display.flip()
 
 
-def draw_frequency(text):
+def draw_frequency(text, screen):
     pygame.draw.rect(screen, Black, ((2 * width_screen//10, 5 * height_screen//10), (6 * width_screen//10, 2 * height_screen//10)))
     font = pygame.font.SysFont('serif', 48)
     text2 = font.render(text, 1, White)
-    screen.blit(text2, (2 * width_screen//10, 5 * height_screen//10))
+    rect = text2.get_rect(center=(5 * width_screen//10, 6*height_screen//10))
+    screen.blit(text2, rect)
 
-def event_bottom(x, y):
+def event_bottom(x, y, screen):
     global i, frequency
     if 1* width_screen // 10 - width_screen // 10 // 10 < x < 2 * width_screen // 10 + - width_screen // 10 // 10 \
-            and 5 * height_screen // 10 < y < 8* height_screen //10:
+            and 5 * height_screen // 10 < y < 7 * height_screen //10:
         i -= 1
         if i < 0:
             i = len(frequency_list) - 1
         frequency = frequency_list[i]
     if 8* width_screen // 10 + width_screen // 10 // 10 < x < 9 * width_screen // 10 + width_screen // 10 // 10 \
-            and 5 * height_screen // 10 < y < 8* height_screen //10:
+            and 5 * height_screen // 10 < y < 7 * height_screen //10:
 
         i += 1
         if i >= len(frequency_list):
             i = 0
         frequency = frequency_list[i]
 
-def draw_bottom():
+def draw_bottom(screen):
     pygame.draw.polygon(screen, Black, ((2 * width_screen // 10 - width_screen // 10 // 10, 5 * height_screen // 10),\
                                         (1 * width_screen // 10, (5+7) * height_screen // 20),\
                                         (2 * width_screen // 10 - width_screen // 10 // 10, 7 * height_screen // 10)))
@@ -122,36 +134,31 @@ def draw_bottom():
                                         (9 * width_screen // 10, (5 + 7) * height_screen // 20), \
                                         (8 * width_screen // 10 + width_screen // 10 // 10, 7 * height_screen // 10)))
 
-word_split = split([S, H, E, L, L])
-print(split([S,H,E,L,L]))
-def draw(word_split):
-    global elipce_tipe
+def draw_bulp(word, i_word, screen, Mistake):
+    #global elipce_tipe
+    word_split = split(word)
     for i in word_split:
         if i == '.':
-            #my_ellipse(Yellow)
             elipce_tipe = Yellow
-            my_super_wait(wait_1)
+            finished, Mistake = my_super_wait(wait_1, i_word, elipce_tipe, screen, Mistake)
 
-            #my_ellipse(Black)
             elipce_tipe = Black
-            my_super_wait(wait_space)
-
-
+            finished, Mistake = my_super_wait(wait_space, i_word, elipce_tipe, screen, Mistake)
 
         if i == '=':
             elipce_tipe = Black
-            my_super_wait(wait_end_liter)
-
+            finished, Mistake = my_super_wait(wait_end_liter, i_word, elipce_tipe, screen, Mistake)
 
         if i == '_':
             elipce_tipe = Yellow
-            my_super_wait(wait_2)
+            finished, Mistake = my_super_wait(wait_2, i_word, elipce_tipe, screen, Mistake)
 
             elipce_tipe = Black
-            my_super_wait(wait_space)
+            finished, Mistake = my_super_wait(wait_space, i_word, elipce_tipe, screen, Mistake)
+    return finished, Mistake
 
 
-def draw_frequency_scale(frequency):
+def draw_frequency_scale(frequency, screen):
     percent = int(frequency * 1000 % 1000 - 500)
     left = 1 * width_screen // 10
     right = 9 * width_screen // 10
@@ -159,33 +166,48 @@ def draw_frequency_scale(frequency):
     bottom = 4 * height_screen // 10
 
     pygame.draw.rect(screen, Black, (left, up, right - left, bottom - up), 5)
-    pygame.draw.rect(screen, Black, (left + (right - left)*(percent)//100, up, 20, bottom - up))
+    pygame.draw.rect(screen, Black, (left + (right - left)*(percent)//100 - 20, up, 20, bottom - up))
     n = 10
     for i in range(n):
         pygame.draw.rect(screen, Black, (left + (right - left)*(i) // n, up, 10, (bottom - up) // 4))
 
-clock = pygame.time.Clock()
-finished = False
-while not finished:
-    screen.fill(White)
-    clock.tick(FPS)
-    draw_frequency(str(frequency))
-    draw_bottom()
-    draw_frequency_scale(frequency)
-    '''
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            x, y = pos[0], pos[1]
-            event_bottom(x, y)
-    '''
-    my_super_wait(wait_end_word)
-    #my_ellipse(Black)
-    draw(word_split)
-    pygame.display.flip()
-    #my_super_wait(wait_end_word)
+def end(x, y, i_word, Mistake):
+    if top_end[0] < x < top_end[0] + size_end[0] and top_end[1] < y < top_end[1] + size_end[1]:
+        if i == i_word:
+            print('Ты выиграл')
+        else:
+            print('Нет')
+            Mistake += 1
+    return Mistake
 
+
+def draw_end(screen):
+    pygame.draw.rect(screen, Green, (top_end, size_end))
+    font = pygame.font.SysFont('serif', 48)
+    text2 = font.render('TX', 1, White)
+    rect = text2.get_rect(center = ((top_end[0] + size_end[0]//2) , (top_end[1] + size_end[1]//2)))
+    screen.blit(text2, rect)
+    pass
+
+def Manager( screen, finished = False):
+    Mistake = 0
+    clock = pygame.time.Clock()
+    word, i_word = random_word()
+    while not finished:
+        #screen.fill(White)
+        clock.tick(FPS)
+        #draw_frequency(str(frequency))
+        #draw_bottom()
+        #draw_frequency_scale(frequency)
+        finished, Mistake = my_super_wait(wait_end_word, i_word, elipce_tipe, screen, Mistake)
+        #my_ellipse(Black)
+        finished, Mistake = draw_bulp(word, i_word, screen, Mistake)
+        pygame.display.flip()
+        #my_super_wait(wait_end_word)
+    return Mistake
+
+
+
+mistake = Manager(surface)
+print(mistake)
 pygame.quit()
-
