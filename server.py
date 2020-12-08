@@ -1,7 +1,8 @@
+import pickle
 import socket
 from _thread import *
-from Player import Player
-import pickle
+
+from engine.Player import Player
 from settings import *
 
 server = ip

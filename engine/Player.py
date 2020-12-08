@@ -1,9 +1,7 @@
-from settings import *
-import pygame
 import numpy as np
-from ray_casting import mapping
-from map import *
-import math
+
+from engine.map import *
+from engine.ray_casting import mapping
 
 
 class Player:

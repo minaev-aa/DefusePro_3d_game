@@ -1,7 +1,5 @@
-import pygame
-from Player import *
-from map import *
-from ray_casting import *
+from engine.Player import *
+from engine.ray_casting import *
 
 
 def draw_minimap(player, screen):
@@ -26,10 +24,7 @@ def draw_minimap(player, screen):
         if map[(x, y)] == '0':
             pygame.draw.rect(screen, Red,
                              (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
-        if map[(x, y)] == ('1'):
-            pygame.draw.rect(screen, Green,
-                             (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
-        if map[(x, y)] == ('2'):
+        if map[(x, y)] in ['1', '2', '3', '4', '5']:
             pygame.draw.rect(screen, Green,
                              (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
         if map[(x, y)] in ['o', 'd', 't', 'c', 'p']:

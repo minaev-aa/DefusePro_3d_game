@@ -1,7 +1,10 @@
-import pygame as pg
-from Music_module import Audio_source
-from settings import *
 import time
+
+import pygame as pg
+
+from engine.Music_module import Audio_source
+from settings import *
+
 
 class Menu():
     def __init__(self, audio, sc):

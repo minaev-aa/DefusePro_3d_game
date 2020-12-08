@@ -1,8 +1,6 @@
-from settings import *
-import pygame
-from Player import *
 import numpy as np
-from map import *
+
+from engine.map import *
 
 
 class Sprite:

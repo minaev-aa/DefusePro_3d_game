@@ -1,9 +1,7 @@
-from map import *
-from Player import *
-from minigame import *
-from minigame2 import *
-from settings import *
-from letter import *
+from engine.Player import *
+from minigames.letter import *
+from minigames.minigame import *
+from minigames.minigame2 import *
 
 
 def active(player, timer_event, Time, Mistake):

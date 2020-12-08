@@ -1,6 +1,4 @@
-import pygame
-from settings import *
-from map import *
+from engine.map import *
 
 
 # from numba import njit

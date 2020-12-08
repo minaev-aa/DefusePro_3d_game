@@ -1,6 +1,4 @@
-import pygame
-from settings import *
-from ray_casting import *
+from engine.ray_casting import *
 
 
 class Planning:

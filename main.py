@@ -1,14 +1,9 @@
-import pygame
-from settings import *
-from Player import *
-from pygame.draw import *
-from map import *
-from texture import Planning
-from main_menu import Menu, Button, Load_cicle, Settings, Points_of_settings
-from minimap import *
-from network import Network
-from Sprite import *
-from active_wall import *
+from engine.Sprite import *
+from engine.active_wall import *
+from engine.minimap import *
+from engine.network import Network
+from engine.texture import Planning
+from minigames.main_menu import Load_cicle, Settings
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
