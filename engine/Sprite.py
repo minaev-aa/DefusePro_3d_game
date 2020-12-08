@@ -39,7 +39,7 @@ class Sprite:
         :return: размер спрайта
         '''
         distance_to_player = self.distance_to_player()
-        if distance_to_player ==0:
+        if distance_to_player == 0:
             distance_to_player = player_angle
         proec_size = int(proec_k / distance_to_player * self.scale * size_sprite)
         if distance_to_player > 30:
@@ -55,7 +55,7 @@ class Sprite:
         if not (angle_to_player < np.pi / 2 or angle_to_player > 3 / 2 * np.pi):
             guard_surf_new = pygame.transform.scale(self.surf, (int(self.size()), int(self.size())))
             guard_rect = guard_surf_new.get_rect(
-                    center=(width_screen // 2 - 4*distance * np.tan(angle_to_player), height_screen // 2 ))
+                    center=(width_screen // 2 - 4*distance * np.tan(angle_to_player), height_screen // 2))
             return guard_surf_new, guard_rect
         else:
             return (0, 0)

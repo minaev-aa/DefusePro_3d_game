@@ -52,20 +52,16 @@ class Player:
             self.Vx *= 2
         if pressed_keys[pygame.K_a]:
             self.is_move = True
-            # self.sound_of_steps()
             self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vx, self.y_player, -1 * self.Vy)
         if pressed_keys[pygame.K_d]:
             self.is_move = True
-            # self.sound_of_steps()
             self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vx, self.y_player, self.Vy)
         if pressed_keys[pygame.K_s]:
             self.is_move = True
-            # self.sound_of_steps()
             self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vy, self.y_player,
                                                                  -1 * self.Vx)
         if pressed_keys[pygame.K_w]:
             self.is_move = True
-            # self.sound_of_steps()
             self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vy, self.y_player, self.Vx)
 
         if pressed_keys[pygame.K_RIGHT]:
