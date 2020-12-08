@@ -4,7 +4,7 @@ from Player import *
 from pygame.draw import *
 from map import *
 from texture import Planning
-from main_menu import Menu, Button, Load_cicle
+from main_menu import Menu, Button, Load_cicle, Settings, Points_of_settings
 from minimap import *
 from network import Network
 from Sprite import *
@@ -18,6 +18,7 @@ Loader = Load_cicle(screen)
 
 
 # guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
+
 
 def Menu_func():
     """
@@ -61,36 +62,65 @@ def indificate_func(num_in_massive_of_buttoms):
     :param num_in_massive_of_buttoms: Номер нажатой кнопки в массиве.
     :return: None
     """
-    print(num_in_massive_of_buttoms)
     if num_in_massive_of_buttoms == 0:
         Main_game()
     elif num_in_massive_of_buttoms == 1:
         pass
+    elif num_in_massive_of_buttoms == 2:
+        Menu_of_settings()
     else:
         pass
 
 
+def Menu_of_settings():
+    """
+    Рисует окно настроек.
+    """
+    Set_Win = Settings(screen)
+    Set_Win.main()
+
+    finnish1 = False
+    while not finnish1:
+        for i in pygame.event.get():
+            if i.type == pygame.QUIT:
+                finnish1 = True
+            elif i.type == pygame.KEYDOWN:
+                if i.key == pygame.K_ESCAPE:
+                    finnish1 = True
+            elif i.type == pygame.MOUSEBUTTONDOWN:
+                mouse_position = pygame.mouse.get_pos()
+                Loader.audio.is_sounds_on = (Set_Win.points[0].is_point_down(mouse_position))
+        Set_Win.draw_set_win()
+        pygame.time.delay(60)
+        pygame.display.update()
+
+    Menu_func()
+
+
 def redrawWindow(win, player, player2, ModelPlayer, text):
+    '''
+    :param win: экран
+    :param player: основной игрок
+    :param player2: второй игрок
+    :param ModelPlayer: модель второго игрока
+    :param text: объект текста с оставшимся временем в таймер
+    :return: обновление экрана
+    '''
     pressed_keys = pygame.key.get_pressed()
     sc.sky(player.angle)
     sprite_surf, sprite_rect = ModelPlayer.draw()
     sprites = (ModelPlayer.distance_to_player(), sprite_surf, sprite_rect)
     sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
-    #ModelPlayer.draw()
     if pressed_keys[pygame.K_m]:
         draw_minimap(player, screen)
     if pressed_keys[pygame.K_t]:
-        global Time
         surf1 = pygame.Surface((300, 120))
         surf1.fill(White)
         text_rect = text.get_rect(center=surf1.get_rect().center)
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    # pygame.draw.circle(screen, Red, player.pos, 10)
-    # pygame.draw.circle(screen, Red, player2.pos, 10)
-    # pygame.draw.circle(screen, Green, (ModelPlayer.x_pos // scale_minimap, ModelPlayer.y_pos // scale_minimap), 5)
     pygame.display.flip()
 
 
@@ -119,7 +149,6 @@ def Main_game():
                 text = font.render(str(Time) + ' сек', True, Black)
                 if Time == 0:
                     All = True
-                    finished = True
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)

@@ -35,7 +35,7 @@ def game1(sc, sn):
     # print(sn)
     return (line, right)
 
-
+#TODO Сделать функцию возврата номера от числа
 def numer(line, color, num):
     m = 0
     if num == 3:
@@ -126,65 +126,49 @@ def correct(line, color, num, sn):
     if num == 3:
         if color[1] == 0:
             tline = linennum[1]
-            return tline
+
         if line[linennum[2]][1] == White:
             tline = linennum[2]
-            return tline
         if color[0] > 1:
             tline = linennum[0]
-            return tline
         else:
             tline = linennum[2]
-            return tline
     elif num == 4:
         if color[1] > 1:
             if sn % 2 == 1:
                 tline = linennum[0]
-                return tline
         if color[1] == 0:
             if line[linennum[3]][1] == Yellow:
                 tline = linennum[1]
-                return tline
         if color[0] == 1:
             tline = linennum[1]
-            return tline
         if color[4] > 1:
             tline = linennum[3]
-            return tline
         else:
             tline = linennum[2]
-            return tline
     elif num == 5:
         if line[linennum[4]][1] == Black:
             if sn % 2 == 1:
                 tline = linennum[3]
-                return tline
         if color[1] == 1:
             if color[4] > 1:
                 tline = linennum[1]
-                return tline
         if color[3] == 0:
             tline = linennum[2]
-            return tline
         else:
             tline = linennum[1]
-            return tline
     elif num == 6:
         if color[4] == 0:
             if sn % 2 == 1:
                 tline = linennum[0]
-                return tline
         if color[4] == 1:
             if color[2] > 1:
                 tline = linennum[1]
-                return tline
         if color[1] == 0:
             tline = linennum[2]
-            return tline
         else:
             tline = linennum[1]
-            return tline
-
+    return tline
 
 def line_print(line, sc):
     dog_surf = pygame.image.load('Resources/Textures/plata.png').convert()

@@ -17,49 +17,36 @@ class Audio_source():
     # Инициализация звуковых эффектов.
     def steps_init(self):
         self.steps = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\шаги - 2.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.steps_start_time = 0
 
     def running_init(self):
         self.running = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Бег - 6 шагов.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.running_start_time = 0
 
     def plus_anything_init(self):
         self.plus_anythings = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\плюсик.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.plus_anything_start_time = 0
 
     def sound_when_cursor_under_button_init(self):
         self.sound_when_cursor_under_button = pg.mixer.Sound(
                 'Resources\Music_and_sound\Format_ogg\Курсор_на_кнопке.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.sound_when_cursor_under_button_start_time = 0
 
     def sound_if_button_down_init(self):
         self.sound_if_button_down = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Нажатие_на_кнопку.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.sound_if_button_down_start_time = 0
 
     def shortness_init(self):
         self.shortness = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Отдышка.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.shortness_start_time = 0
 
     def exhalation_init(self):
         self.exhalation = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Довольный выдох.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.exhalation_start_time = 0
 
     def checkpoint_init(self):
         self.checkpoint = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Чекпоинт.ogg')
-        self.step_of_init += 1 / self.count_of_sound_effects
         self.checkpoint_start_time = 0
-
-    def check_init(self):
-        # Проверим работу подсчета данных для реализации окна загрузки игры.
-        assert self.step_of_init == 1  # Изменено кол-во данных в модуле звуков и мелодий,\
-        # нарушена работа подсчета этих данных.
 
     def Sound_play(self, Audio, duration, start_time):
         """

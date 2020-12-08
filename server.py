@@ -20,6 +20,10 @@ print("Waiting for a connection, Server Started")
 players = [Player(player_pos1), Player(player_pos2)]
 
 def threaded_client(conn, player):
+    '''
+    :param conn: подключение
+    :param player: номер игрока
+    '''
     conn.send(pickle.dumps(players[player]))
     reply = ""
     while True:
@@ -51,6 +55,5 @@ currentPlayer = 0
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
-
     start_new_thread(threaded_client, (conn, currentPlayer))
     currentPlayer += 1
