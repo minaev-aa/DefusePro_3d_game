@@ -76,7 +76,6 @@ class Player:
         :Vx: и :Vy: - Скорости по данным коодринатам.
         :return: Возращает скорочти по координатам cord_x и cord_yю
         """
-        collader_of_player = 10
         Vx_m = collader_of_player * Vx / math.fabs(Vx)
         Vy_m = collader_of_player * Vy / math.fabs(Vy)
         m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
