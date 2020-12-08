@@ -120,10 +120,8 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
 
 
 def Main_game():
-    global All, Time
+    global All, Time, Mistake
     minigames = [0] * count_of_minigame
-    timer_event = pygame.USEREVENT + 1
-    pygame.time.set_timer(timer_event, 1000)
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
@@ -139,26 +137,16 @@ def Main_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 All = True
-            if event.type == timer_event:
-                Time -= 1
-                text = font.render(str(Time) + ' сек', True, Black)
-                if Time == 0:
-                    All = True
+        text = font.render(str(Time - round(time.time()-TimeAll)) + ' сек', True, Black)
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
-        try:
-            ro = active(p, timer_event, Time, Mistake)
-            minigames[int(ro[0]) - 2], Time = ro[1]
-        except:
-            try:
-                ro = active(p, timer_event, Time, Mistake)
-                if ro!= None:
-                    Time = ro
-            except:
-                pass
+        ro = active(p, Mistake)
+        if type(ro) != type(None):
+            minigames[int(ro[0]) - 1], Mistake = ro[1]
+            print(minigames[int(ro[0]) - 1])
     #TODO Проверка времени, количесттва ошибок и выполненных заданий
     pygame.quit()
 

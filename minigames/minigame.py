@@ -43,6 +43,9 @@ def numer(line, num):
             if line[i][1] == Red:
                 n[7] = i
             m += 1
+        if m == 1:
+            if n[0] == None:
+                n[0] = i
         if m == 2:
             if n[1] == None:
                 n[1] = i
@@ -187,7 +190,7 @@ def mistake(Mistake):
     Mistake += 1
 
 
-def Manager(finished, timer_event, Time, sn, Mistake):
+def Manager(finished, sn, Mistake):
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     surf1 = pygame.Surface((300, 120))
@@ -216,23 +219,18 @@ def Manager(finished, timer_event, Time, sn, Mistake):
                     if cuts != -1:
                         if cuts != true:
                             mistake(Mistake)
-            if event.type == timer_event:
-                Time -= 1
-                text = font.render(str(Time) + ' сек', True, Black)
-                if Time == 0:
-                    finished = True
+        text = font.render(str(Time - round(time.time()-TimeAll)) + ' сек', True, Black)
+        if Time - round(time.time()-TimeAll) == 0:
+            finished = True
         text_rect = text.get_rect(center=surf1.get_rect().center)
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    return (result, Time, Mistake)
+    return (result, Mistake)
 
 
 if __name__ == '__main__':
-    timer_event = pygame.USEREVENT + 1
-    pygame.time.set_timer(timer_event, 1000)
-    print(Manager(False, timer_event, Time,
-                  sn,
+    print(Manager(False, sn,
                   Mistake))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
     print(Mistake)
     print(Time)

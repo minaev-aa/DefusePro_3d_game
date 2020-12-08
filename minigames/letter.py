@@ -13,7 +13,7 @@ class Letter:
     num :param номер подсказки
     '''
 
-    def __init__(self, sc, timer_event, Time, num):
+    def __init__(self, sc, num):
         self.sc = sc
         self.textures = {'o': pygame.image.load('Resources/Textures/game1.png').convert(),
                          'd': pygame.image.load('Resources/Textures/game2.png').convert(),
@@ -21,7 +21,6 @@ class Letter:
                          'c': pygame.image.load('Resources/Textures/game4.png').convert(),
                          'p': pygame.image.load('Resources/Textures/game5.png').convert(),
                          }
-        self.timer_event = timer_event
         self.Time = Time
         self.x, self.y = 0, 0
         self.num = num
@@ -61,20 +60,17 @@ class Letter:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.click():
                         finished = True
-                if event.type == self.timer_event:
-                    self.Time -= 1
-                    self.text = self.font.render(str(self.Time) + ' сек', True, Black)
-                    if self.Time == 0:
-                        finished = True
+            self.text = self.font.render(str(self.Time - round(time.time()-TimeAll)) + ' сек', True, Black)
+            if self.Time - round(time.time()-TimeAll) == 0:
+                finished = True
             text_rect = self.text.get_rect(center=surf1.get_rect().center)
             surf1.fill(White)
             surf1.blit(self.text, text_rect)
             self.sc.blit(surf1, (0, 0))
             pygame.display.update()
-        return (self.Time)
 
 
 if __name__ == '__main__':
     timer_event = pygame.USEREVENT + 1
     pygame.time.set_timer(timer_event, 1000)
-    Letter(screen, timer_event, Time, 'o').draw()
+    Letter(screen, 'o').draw()

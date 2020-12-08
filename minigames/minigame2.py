@@ -13,10 +13,9 @@ class game2:
     sn :param серийный номер
     Mistake :param количество ошибок
     '''
-    def __init__(self, timer_event, Time, sn, Mistake):
+    def __init__(self, sn, Mistake):
         self.sc = screen
         self.textures = pygame.image.load('Resources/Textures/tex6X6.png').convert()
-        self.timer_event = timer_event
         self.Time = Time
         self.x, self.y = 0, 0
         self.font = pygame.font.SysFont(None, 100)
@@ -68,8 +67,9 @@ class game2:
         :param n: определение соответствия последней цифры таймера
         :return:
         '''
-        if ((self.Time - (self.Time % 100) - (self.Time % 10)) / 100) == n or (
-            ((self.Time % 100) - (self.Time % 10)) / 10) == n or (self.Time % 10) == n:
+        timet = Time - round(time.time()-TimeAll)
+        if ((timet - (timet % 100) - (timet % 10)) / 100) == n or (
+            ((timet % 100) - (timet % 10)) / 10) == n or (timet % 10) == n:
             self.finished = True
             self.correct = 1
         else:
@@ -110,6 +110,7 @@ class game2:
         surf4.blit(button, (0, 0))
         self.sc.blit(surf4, (width_screen - 60, 0))
         while not self.finished:
+            timet = Time - round(time.time()-TimeAll)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.finished = True
@@ -120,36 +121,32 @@ class game2:
                         self.finished = True
                     else:
                         if (590 < self.x < 790) and (300 < self.y < 492):
-                            self.localtime = self.Time
+                            self.localtime = timet
                             self.right()
                 elif event.type == pygame.MOUSEBUTTONUP:
                     if self.holds == 1:
-                        if self.localtime > self.Time + 2:
+                        if self.localtime > timet + 2:
                             self.hold()
                         else:
                             self.mistake()
                     if self.holds == 2:
-                        if self.localtime < self.Time + 2:
+                        if self.localtime < timet + 2:
                             self.finished = True
                             self.correct = 1
                         else:
                             self.mistake()
-                if event.type == self.timer_event:
-                    self.Time -= 1
-                    self.text = self.font.render(str(self.Time) + ' сек', True, Black)
-                    if self.Time == 0:
-                        print(self.Time, self.localtime)
-                        self.finished = True
+            self.text = self.font.render(str(self.Time - round(time.time()-TimeAll)) + ' сек', True, Black)
+            if self.Time - round(time.time()-TimeAll) == 0:
+                print(self.Time, self.localtime)
+                self.finished = True
             text_rect = self.text.get_rect(center=surf1.get_rect().center)
             surf1.fill(White)
             surf1.blit(self.text, text_rect)
             self.sc.blit(surf1, (0, 0))
             pygame.display.update()
-        return (self.correct, self.Time, self.mistakes)
+        return (self.correct, self.mistakes)
 
 
 if __name__ == '__main__':
-    timer_event = pygame.USEREVENT + 1
-    pygame.time.set_timer(timer_event, 1000)
-    print(game2(timer_event, Time,
-                sn, Mistake).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+
+    print(game2(sn, Mistake).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
