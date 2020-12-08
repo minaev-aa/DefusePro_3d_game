@@ -1,6 +1,7 @@
 import pygame as pg
 from Music_module import Audio_source
 from settings import *
+import time
 
 class Menu():
     def __init__(self, audio, sc):
@@ -209,7 +210,10 @@ class Load_cicle():
         # Инициализация звуков.
         for num in range(len(Dict_of_audio_inits)):  # 4 - 11
             Dict_of_audio_inits.get(str(num))
-            self.__upd__main_load(count)
+            self.persent_of_load += 1 / count
+            self.draw_all_load()
+            time.sleep(0.4)
+            pg.display.update()
 
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
         Sets = file.readlines()
@@ -252,7 +256,7 @@ class Load_cicle():
         """
         Process of load.
         """
-        self.persent_of_load += 1 // count
+        self.persent_of_load += 1 / count
         self.draw_all_load()
         pg.display.update()
 
@@ -277,7 +281,12 @@ class Settings():
         self.x = width_screen // 2
         self.y = height_screen // 2
         self.a = self.size
-        self.setting_point('Звук', self.size)
+        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
+        Sets = open('Resources\Sets_saves\sets.txt', 'r').readlines()
+        parametr = int(Sets[0].split()[0])
+        file.close()
+        self.setting_point('Звук', self.size, parametr)
+
 
     def draw_set_win(self):
         """
@@ -297,12 +306,12 @@ class Settings():
         for num in range(len(self.points)):
             self.points[num].draw()
 
-    def setting_point(self, text, size):
+    def setting_point(self, text, size, parametr):
         """
         Добавляет настройку.
         """
         a = int(0.8 * size)
-        self.points.append(Points_of_settings(self.sc, 1))
+        self.points.append(Points_of_settings(self.sc, parametr))
         self.points[len(self.points) - 1].Text = text
         self.points[len(self.points) - 1].x = width_screen // 2 - a
         self.y0 += self.delta
@@ -386,7 +395,7 @@ if __name__ == '__main__':
 
     print('Проверка main_menu_init()')
     Loader.main_menu_init()
-    if Loader.persent_of_load > 1:
+    if 0 < Loader.persent_of_load > 1:
         print('FAIL/ОШИБКА - Число процедур загрузки больше, чем указано в начале функции.')
     else:
         print("ОК")
