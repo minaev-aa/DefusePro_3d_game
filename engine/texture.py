@@ -5,7 +5,6 @@ class Planning:
     '''
     Класс рисования текстур
     '''
-
     def __init__(self, sc):
         self.sc = sc
         self.textures = {'0': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
@@ -37,11 +36,11 @@ class Planning:
         '''
         :param player_pos: Координаты игрока
         :param player_angle: Положение угла камеры
-        :return: Рисует стены
+        :return: Рисует стены и спрайт с самого далёкого до самого ближнего
         '''
         walls = ray_casting(self.sc, player_pos, player_angle, self.textures)
         if not (sprites[2] == 0):
             walls.append(sprites)
-        walls = sorted(walls, key=lambda wall: wall[0], reverse=True)
+        walls = sorted(walls, key=lambda wall: wall[0], reverse=True)  # сортировка по расстоянию
         for wall in walls:
             self.sc.blit(wall[1], wall[2])

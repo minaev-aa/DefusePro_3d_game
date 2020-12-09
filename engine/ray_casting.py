@@ -14,7 +14,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
     :param player_pos: Положение игрока
     :param player_angle: Направеление угла камеры
     :param texturs: Передаёт изображение текстуры
-    :return: Бросает лучи и даёт проекцию изображения на экран
+    :return: Возвращает список текстур стен и расстояний до них в виде ((расстояние; текстура; прямоугольник)...)
     '''
     walls = []
     ox, oy = player_pos
