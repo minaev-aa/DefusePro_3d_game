@@ -121,7 +121,6 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
 
 def Main_game():
     global All, Time, Mistake
-    minigames = [0] * count_of_minigame
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
@@ -143,10 +142,10 @@ def Main_game():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
-        ro = active(p, Mistake)
+        ro = active(minigames, p, Mistake)
         if type(ro) != type(None):
             minigames[int(ro[0]) - 1], Mistake = ro[1]
-            print(minigames[int(ro[0]) - 1])
+
     #TODO Проверка времени, количесттва ошибок и выполненных заданий
     pygame.quit()
 

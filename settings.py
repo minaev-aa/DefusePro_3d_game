@@ -7,7 +7,8 @@ All = False
 TimeAll = time.time()
 Time = 600
 Mistake = 0
-count_of_minigame = 5
+count_of_minigames = 5
+minigames = [0] * count_of_minigames
 sn = random.randint(1000000000, 9999999999)
 
 width_screen = 1200
