@@ -5,6 +5,19 @@ from engine.map import *
 
 class Sprite:
     def __init__(self, scale, x_pos, y_pos, file, screen, player):
+        """
+
+        @param scale:
+        @type scale: float
+        @param x_pos: координата x спрайта
+        @type x_pos: int
+        @param y_pos: координата y спрайта
+        @type y_pos: int
+        @param file: картинка
+        @param screen: холт, где спрайт будет рисоваться.
+        @type screen: pygame.surface
+        @param player: игрок, который смотрит на спрайт
+        """
         self.scale = scale
         self.x_pos = x_pos
         self.y_pos = y_pos

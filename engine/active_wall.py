@@ -5,6 +5,9 @@ from minigames.minigame2 import *
 
 
 def active(player, Mistake):
+    """
+    Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
+    """
     for x, y in active_in_map:
         if player.x_player > x - active_size and player.x_player < x + cube + active_size \
                 and player.y_player > y - active_size and player.y_player < y + cube + active_size:

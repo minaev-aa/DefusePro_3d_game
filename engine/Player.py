@@ -47,6 +47,12 @@ class Player:
         self.is_move = False
         self.Vy = player_speed * np.cos(self.angle)
         self.Vx = player_speed * np.sin(self.angle)
+
+        if (pressed_keys[pygame.K_w] or pressed_keys[pygame.K_s]) \
+            and (pressed_keys[pygame.K_a] or pressed_keys[pygame.K_d]):
+                self.Vx *= 1/(2**(1/2))
+                self.Vy *= 1/(2**(1/2))
+
         if pressed_keys[pygame.K_LSHIFT]:
             self.Vy *= 2
             self.Vx *= 2
