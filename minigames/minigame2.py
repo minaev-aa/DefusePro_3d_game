@@ -9,7 +9,6 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class game2:
     '''
     Класс второй минии игры - кнопка
-    Time :param оставшееся время
     sn :param серийный номер
     Mistake :param количество ошибок
     '''

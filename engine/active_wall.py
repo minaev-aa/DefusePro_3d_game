@@ -2,7 +2,8 @@ from engine.Player import *
 from minigames.letter import *
 from minigames.minigame import *
 from minigames.minigame2 import *
-
+from minigames.minigame3 import *
+from minigames.minigame4 import *
 
 def active(player, Mistake):
     for x, y in active_in_map:
@@ -16,9 +17,11 @@ def active(player, Mistake):
                         A = game2(sn, Mistake).draw()
                         return ('2', A)
                     if active_in_map[x, y] == '3':
-                        pass
+                        B = Game3(Mistake).manager()
+                        return ('3', B)
                     if active_in_map[x, y] == '4':
-                        pass
+                        C = game4(Mistake).Manager()
+                        return ('4', C)
                     if active_in_map[x, y] == '5':
                         pass
                     if active_in_map[x, y] in ['o', 'd','t', 'c', 'p']:

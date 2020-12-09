@@ -1,14 +1,15 @@
-import pygame
-from settings import *
-from settings_for_minigame3 import *
 import random
 
+import pygame
+
+from minigames.settings_for_minigame3 import *
+
 pygame.init()
-surface = pygame.display.set_mode((width_screen, height_screen))
+screen = pygame.display.set_mode((width_screen, height_screen))
 
 
 class Game3:
-    def __init__(self, screen):
+    def __init__(self, Mistake):
         """
         @param screen: холст для рисования
         @type screen: pygame.surface
@@ -25,7 +26,7 @@ class Game3:
         self.elipce_tipe = Black  # цвет лампочки
         self.screen = screen
         self.finished = False
-        self.Mistake = 0
+        self.Mistake = Mistake
         self.i_frequency = 0  # номер частоты в списке частот
         self.result = 0
         self.random_word()
@@ -151,6 +152,7 @@ class Game3:
             if self.i_frequency == self.i_word:
                 print('Ты выиграл')
                 self.result = 1
+                self.finished = True
             else:
                 print('Нет')
                 self.Mistake += 1
@@ -212,10 +214,10 @@ class Game3:
             clock.tick(FPS)
             self.my_super_wait(self.wait_end_word)
             self.draw_bulp()
-        return self.Mistake, self.result
+        return (self.result, self.Mistake)
 
-
-Mn = Game3(surface)
-mistake, result = Mn.manager()
-print(mistake, result)
-pygame.quit()
+if __name__ == '__main__':
+    Mn = Game3(Mistake)
+    mistake, result = Mn.manager()
+    print(mistake, result)
+    pygame.quit()
