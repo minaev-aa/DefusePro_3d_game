@@ -7,7 +7,7 @@ All = False
 TimeAll = time.time()
 Time = 600
 Mistake = 0
-count_of_minigames = 5
+count_of_minigames = 4
 minigames = [0] * count_of_minigames
 sn = random.randint(1000000000, 9999999999)
 
@@ -44,7 +44,7 @@ player_length = 4  # длинна линии взгляда, которая то
 player_width = 2  # ширина линии взгляда
 collader_of_player = 27  # Размер коллаймера игрока, которым он стукается о стены.
 
-active_size = 1 * cube  # размеры активной области, где можно принимать задания
+active_size = 0.5 * cube  # размеры активной области, где можно принимать задания
 
 White = (255, 255, 255)
 Green = (0, 100, 0)
