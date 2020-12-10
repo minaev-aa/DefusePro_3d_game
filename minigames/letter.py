@@ -7,7 +7,7 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 
 class Letter:
     '''
-    Класс рисования текстур
+    Класс рисования подсказок
     sc :param определяет экран на котором рисуют
     Time :param время в игре таймер
     num :param номер подсказки
@@ -71,6 +71,4 @@ class Letter:
 
 
 if __name__ == '__main__':
-    timer_event = pygame.USEREVENT + 1
-    pygame.time.set_timer(timer_event, 1000)
     Letter(screen, 'o').draw()

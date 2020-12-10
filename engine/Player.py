@@ -1,5 +1,4 @@
 import numpy as np
-
 from engine.map import *
 from engine.ray_casting import mapping
 
@@ -8,13 +7,23 @@ class Player:
     '''
     Класс игрока
     player_pos :param Координаты игрока в кортеже
+    role :param Роль игрока
     '''
-    def __init__(self, player_pos):
+
+    def __init__(self, player_pos, role):
         self.x_player, self.y_player = player_pos
         self.angle = player_angle
+        self.finish = False
+        self.typefin = 1
+        self.role = role
+
 
     def audio_init(self, audio):
         self.audio = audio
+
+    def change(self, s, t):
+        self.finish = s
+        self.typefin = t
 
     def sound_of_steps(self):
         """
@@ -39,6 +48,13 @@ class Player:
         '''
         return (int(self.x_player), int(self.y_player))
 
+    @property
+    def status(self):
+        '''
+        :return: Позиция игрока
+        '''
+        return (self.finish, self.typefin)
+
     def move(self):
         '''
         :return: Движение игрока
@@ -49,9 +65,9 @@ class Player:
         self.Vx = player_speed * np.sin(self.angle)
 
         if (pressed_keys[pygame.K_w] or pressed_keys[pygame.K_s]) \
-            and (pressed_keys[pygame.K_a] or pressed_keys[pygame.K_d]):
-                self.Vx *= 1/(2**(1/2))
-                self.Vy *= 1/(2**(1/2))
+                and (pressed_keys[pygame.K_a] or pressed_keys[pygame.K_d]):
+            self.Vx *= 1 / (2 ** (1 / 2))
+            self.Vy *= 1 / (2 ** (1 / 2))
 
         if pressed_keys[pygame.K_LSHIFT]:
             self.Vy *= 2
@@ -86,7 +102,7 @@ class Player:
         Vy_m = collader_of_player * Vy / math.fabs(Vy)
         m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
         m_y = mapping(cord_x, cord_y + Vy_m)  # Создает кортеж координат.
-        m_d = mapping(cord_x + Vx_m, cord_y + Vy_m)
+        m_d = mapping(cord_x + Vx_m// 9, cord_y + Vy_m// 9)
         if m_x in map or m_y in map:
             if m_x in map:
                 Vx = 0

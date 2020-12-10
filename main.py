@@ -4,6 +4,7 @@ from engine.minimap import *
 from engine.network import Network
 from engine.texture import Planning
 from minigames.main_menu import Load_cicle, Settings
+from settings import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
@@ -15,7 +16,7 @@ Loader = Load_cicle(screen)
 # guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
 
 
-def Menu_func():
+def Menu_func(All, Mistake):
     """
     Запускает окно загрузки игры.
     Потом открывает главное меню.
@@ -47,18 +48,18 @@ def Menu_func():
                         = Loader.audio.check_sound(sound_if_button_down_duration,
                                                    Loader.audio.sound_if_button_down_start_time)
                     num_in_massive_of_buttoms_from_main_menu = is_one_of_buttons_on
-                    indificate_func(num_in_massive_of_buttoms_from_main_menu)
+                    indificate_func(num_in_massive_of_buttoms_from_main_menu, All, Mistake)
                     finished = True
 
 
-def indificate_func(num_in_massive_of_buttoms):
+def indificate_func(num_in_massive_of_buttoms, All, Mistake):
     """
     Проверяет, какая из кнопок была нажата и запускает команду соответствующую этой кнопке.
     :param num_in_massive_of_buttoms: Номер нажатой кнопки в массиве.
     :return: None
     """
     if num_in_massive_of_buttoms == 0:
-        Main_game()
+        Main_game(All, Mistake)
     elif num_in_massive_of_buttoms == 1:
         pass
     elif num_in_massive_of_buttoms == 2:
@@ -119,9 +120,7 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
     pygame.display.flip()
 
 
-def Main_game():
-    global All, Time, Mistake
-    minigames = [0] * count_of_minigame
+def Main_game(All, Mistake):
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
@@ -131,25 +130,37 @@ def Main_game():
     fr = 0
     while not All:
         pygame.time.Clock().tick(FPS)
-        fr += 0
-        if fr % 10 == 0:
-            p2 = n.send(p)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 All = True
+                p.change(True, 1)
         text = font.render(str(Time - round(time.time()-TimeAll)) + ' сек', True, Black)
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
-        ro = active(p, Mistake)
+        ro = active(minigames, p, Mistake)
         if type(ro) != type(None):
             minigames[int(ro[0]) - 1], Mistake = ro[1]
-            print(minigames[int(ro[0]) - 1])
-    #TODO Проверка времени, количесттва ошибок и выполненных заданий
+        if (Time - round(time.time()-TimeAll)) <= 0 or (Mistake > 3):
+            All = True
+            p.change(True, 1)
+            p2 = n.send(p)
+            fingame(1).draw()
+        try:
+            minigames.index(0)
+        except:
+            All = True
+            p.change(True, 2)
+            p2 = n.send(p)
+            fingame(2).draw()
+        if p2.status[0]:
+            All = True
+            fingame(p2.status[1]).draw()
+
+        p2 = n.send(p)
     pygame.quit()
 
-
 if __name__ == '__main__':
-    Menu_func()
+    Menu_func(All, Mistake)
