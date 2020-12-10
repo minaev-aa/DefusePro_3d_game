@@ -13,6 +13,7 @@ def game1(sc, sn):
     colors = [Blue, Red, White, Black, Yellow]
     k = random.randint(3, 6)
     num = k
+    #Первое зачение вкл/выкл провода, второе цвет провода, третье и четвёртое координаты начала и конца провода
     line = [[False, None, [408, 299], [797, 299]], [False, None, [408, 339],
                                                     [797, 339]], [False, None, [408, 379], [797, 379]],
             [False, None, [408, 419], [797, 419]], [False, None, [408, 459],
