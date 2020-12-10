@@ -164,6 +164,7 @@ class game4(SuperMinigame):
         while not self.finished:
             self.draw_time()
             for event in pygame.event.get():
+                self.esc_exit(event)
                 if event.type == pygame.QUIT:
                     self.finished = True
                 if event.type == pygame.MOUSEMOTION:

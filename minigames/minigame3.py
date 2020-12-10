@@ -170,8 +170,9 @@ class Game3(SuperMinigame):
         self.draw_exit()
         self.draw_time()
 
-
         for event in pygame.event.get():
+            self.esc_exit(event)
+
             if event.type == pygame.QUIT:
                 self.finished = True
 
