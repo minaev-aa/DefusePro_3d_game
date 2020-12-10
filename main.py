@@ -122,6 +122,12 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
 
 
 def wait(p, p2, n):
+    '''
+    :param p: Текущий игрок
+    :param p2: Второй игрок
+    :param n: сеть
+    :return: Зал ожидания
+    '''
     surf = pygame.Surface((width_screen, height_screen))
     surf.fill(White)
     f = pygame.font.SysFont('serif', 48)
@@ -129,6 +135,12 @@ def wait(p, p2, n):
         A = 'Вы охранник.'
         B = '   Ваша задача найти методички.'
         C = '           И объяснить напарнику, что делать.'
+        D = 'Запомните серийный номер, который вам сообщили:'
+        E = str(sn)
+        text3 = f.render(D, False, Black)
+        text4 = f.render(E, False, Black)
+        surf.blit(text3, (80, 370))
+        surf.blit(text4, (450, 420))
     if p.status[2] == 2:
         A = 'Вы электрик.'
         B = 'Ваша задача найти модули бомбы.'
@@ -137,7 +149,6 @@ def wait(p, p2, n):
     text0 = f.render(B, False, Black)
     text1 = f.render(C, False, Black)
     text2 = f.render('Нажмите любую кнопку по готовности.', False, Black)
-    # pygame.draw.rect(surf, Grey, (400, 600, 400, 100))
     surf.blit(text, (450, 200))
     surf.blit(text0, (270, 250))
     surf.blit(text1, (120, 300))
