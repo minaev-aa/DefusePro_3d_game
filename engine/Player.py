@@ -16,6 +16,7 @@ class Player:
         self.finish = False
         self.typefin = 1
         self.role = role
+        self.start = False
 
 
     def audio_init(self, audio):
@@ -51,9 +52,16 @@ class Player:
     @property
     def status(self):
         '''
-        :return: Позиция игрока
+        :return: Состояние игрока
         '''
-        return (self.finish, self.typefin)
+        return (self.finish, self.typefin, self.role)
+
+    @property
+    def starts(self):
+        '''
+        :return: Готов ли игрок
+        '''
+        return self.start
 
     def move(self):
         '''

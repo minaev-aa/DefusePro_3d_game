@@ -121,13 +121,47 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
     pygame.display.flip()
 
 
+def wait(p, p2, n):
+    surf = pygame.Surface((width_screen, height_screen))
+    surf.fill(White)
+    f = pygame.font.SysFont('serif', 48)
+    if p.status[2] == 1:
+        A = 'Вы охранник.'
+        B = '   Ваша задача найти методички.'
+        C = '           И объяснить напарнику, что делать.'
+    if p.status[2] == 2:
+        A = 'Вы электрик.'
+        B = 'Ваша задача найти модули бомбы.'
+        C = 'И обезвредить их, следуя указаниям напарника.'
+    text = f.render(A, False, Black)
+    text0 = f.render(B, False, Black)
+    text1= f.render(C, False, Black)
+    text2 = f.render('Нажмите любую кнопку по готовности.', False, Black)
+    #pygame.draw.rect(surf, Grey, (400, 600, 400, 100))
+    surf.blit(text, (450, 200))
+    surf.blit(text0, (270, 250))
+    surf.blit(text1, (120, 300))
+    surf.blit(text2, (190, 620))
+    screen.blit(surf, (0, 0))
+    pygame.display.update()
+    while (p2.starts == False) or (p.starts == False):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                Menu_func(All, Mistake)
+            if event.type == pygame.KEYDOWN:
+                p.start = True
+        p = n.getP()
+        p2 = n.send(p)
+
+
 def Main_game(All, Mistake):
     pygame.display.set_caption("DefusePro")
     font = pygame.font.SysFont(None, 100)
-    text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
     p = n.getP()
     p2 = n.send(p)
+    wait(p, p2, n)
+    TimeAll = time.time()
     ModelPlayer = Guard(1, p2.x_player, p2.y_player, screen, p)
     fr = 0
     while not All:

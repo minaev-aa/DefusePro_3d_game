@@ -4,7 +4,6 @@ import random
 import time
 
 All = False
-TimeAll = time.time()
 Time = 600
 Mistake = 0
 count_of_minigames = 4
