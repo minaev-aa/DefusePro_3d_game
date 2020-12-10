@@ -1,5 +1,5 @@
 import random
-
+from minigames.super_minigame import *
 import pygame
 
 from minigames.settings_for_minigame3 import *
@@ -8,12 +8,14 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class Game3:
+class Game3(SuperMinigame):
     def __init__(self, Mistake):
         """
         @param screen: холст для рисования
         @type screen: pygame.surface
         """
+        super().__init__(screen)
+        
         # длительность символов в азбуке Морзе
         self.wait_space = wait
         self.wait_1 = wait  # длительность '.' в азбуке Морзе
@@ -31,7 +33,6 @@ class Game3:
         self.result = 0
         self.random_word()
         self.split()
-        print(self.word)
 
     def random_word(self):
         """
@@ -54,8 +55,10 @@ class Game3:
         """
         Рисование элипса (лампочки) в зависимости от elipce_tipe (цвета)
         """
-        pygame.draw.ellipse(self.screen, self.elipce_tipe, ((width_screen // 10, height_screen // 10),
+        pygame.draw.ellipse(self.screen, self.elipce_tipe, ((3 * width_screen // 10, height_screen // 10),
                                                             (width_screen // 3, height_screen // 10)))
+        pygame.draw.ellipse(self.screen, Red, ((3 * width_screen // 10, height_screen // 10),
+                                                            (width_screen // 3, height_screen // 10)), 5)
         pygame.display.flip()
 
     def draw_frequency(self, text):
@@ -64,12 +67,8 @@ class Game3:
         @param text: текст частоты
         @type text: str
         """
-        pygame.draw.rect(self.screen, Black, ((2 * width_screen//10, 5 * height_screen//10),
-                                              (6 * width_screen//10, 2 * height_screen//10)))
-        font = pygame.font.SysFont('serif', 48)
-        text2 = font.render(text, 1, White)
-        rect = text2.get_rect(center=(5 * width_screen//10, 6*height_screen//10))
-        self.screen.blit(text2, rect)
+        self.text_box(text, White, 48, Black, (2 * width_screen//10, 5 * height_screen//10),
+                                              (6 * width_screen//10, 2 * height_screen//10))
 
     def event_bottom(self, x, y):
         """
@@ -150,22 +149,16 @@ class Game3:
         """
         if top_end[0] < x < top_end[0] + size_end[0] and top_end[1] < y < top_end[1] + size_end[1]:
             if self.i_frequency == self.i_word:
-                print('Ты выиграл')
                 self.result = 1
                 self.finished = True
             else:
-                print('Нет')
                 self.Mistake += 1
 
     def draw_end(self):
         """
         Рисование кнопки "TX"
         """
-        pygame.draw.rect(self.screen, Green, (top_end, size_end))
-        font = pygame.font.SysFont('serif', 48)
-        text2 = font.render('TX', 1, White)
-        rect = text2.get_rect(center = ((top_end[0] + size_end[0]//2) , (top_end[1] + size_end[1]//2)))
-        self.screen.blit(text2, rect)
+        self.text_box('TX', White, 48, Green, top_end, size_end)
 
     def my_wait(self, time):
         """ Следит за событиями. Рисует всё. Ждёт заданое количество времени
@@ -174,6 +167,10 @@ class Game3:
         @type time: int
         """
         self.screen.fill(White)
+        self.draw_exit()
+        self.draw_time()
+
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.finished = True
@@ -183,12 +180,14 @@ class Game3:
                 x, y = pos[0], pos[1]
                 self.event_bottom(x, y)
                 self.end(x, y)
+                self.click_exit(x, y)
         pygame.time.wait(time)
         self.draw_frequency(str(self.frequency) + ' MHz')
         self.draw_bottom()
         self.draw_frequency_scale()
         self.draw_end()
         self.my_ellipse()
+        #self.click_exit()
         pygame.display.flip()
 
     def my_super_wait(self, time):
@@ -219,5 +218,4 @@ class Game3:
 if __name__ == '__main__':
     Mn = Game3(Mistake)
     mistake, result = Mn.manager()
-    print(mistake, result)
     pygame.quit()
