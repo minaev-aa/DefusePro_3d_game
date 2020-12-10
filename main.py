@@ -22,6 +22,7 @@ def Menu_func(All, Mistake):
     Потом открывает главное меню.
     :return: Окно.
     """
+    pygame.display.set_caption("DefusePro")
     Loader.main_menu_init()
     # p.audio_init(Loader.audio)
     # Отрисовка меню.
@@ -63,12 +64,12 @@ def indificate_func(num_in_massive_of_buttoms, All, Mistake):
     elif num_in_massive_of_buttoms == 1:
         pass
     elif num_in_massive_of_buttoms == 2:
-        Menu_of_settings()
+        Menu_of_settings(All, Mistake)
     else:
         pass
 
 
-def Menu_of_settings():
+def Menu_of_settings(All, Mistake):
     """
     Рисует окно настроек.
     """
@@ -90,7 +91,7 @@ def Menu_of_settings():
         pygame.time.delay(60)
         pygame.display.update()
 
-    Menu_func()
+    Menu_func(All, Mistake)
 
 
 def redrawWindow(win, player, player2, ModelPlayer, text):
@@ -121,6 +122,7 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
 
 
 def Main_game(All, Mistake):
+    pygame.display.set_caption("DefusePro")
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     n = Network()
