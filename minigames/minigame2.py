@@ -1,24 +1,23 @@
 import pygame
 from settings import *
+from minigames.super_minigame import *
+
 import time
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game2:
+class game2(SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     sn :param серийный номер
     Mistake :param количество ошибок
     '''
     def __init__(self, sn, Mistake):
+        super().__init__(screen)
         self.sc = screen
-        self.textures = pygame.image.load('Resources/Textures/tex6X6.png').convert()
-        self.Time = Time
         self.x, self.y = 0, 0
-        self.font = pygame.font.SysFont(None, 100)
-        self.text = self.font.render(str(self.Time) + ' сек', True, Black)
         self.describe = (random.choices(['Detonate', '   Hold', '  Abort', '  Boom', ' Defuse']))[0]
         self.colorb = (random.choices([Blue, Red, White, Black, Yellow]))[0]
         self.colorl = (random.choices([Blue, Red, White, Black, Yellow]))[0]
@@ -92,10 +91,7 @@ class game2:
         :return: Отрисовка миниигры, кнопки и таймера
         '''
         self.sc.fill(White)
-        self.text = self.font.render(str(self.Time) + ' сек', True, Black)
-        surf1 = pygame.Surface((300, 120))
-        surf1.fill(White)
-        button = pygame.image.load('Resources\\Textures\\button.png')
+        self.draw_exit()
         self.surf2.fill(White)
         pygame.draw.rect(self.surf2, Grey, (0, 200, 600, 400))
         pygame.draw.circle(self.surf2, self.colorb, (400, 400), 150)
@@ -105,10 +101,8 @@ class game2:
         pygame.draw.rect(self.surf2, Grey, (50, 250, 50, 300))
         self.surf2.blit(text, (320, 365))
         self.sc.blit(self.surf2, (300, 0))
-        surf4 = pygame.Surface((50, 50))
-        surf4.blit(button, (0, 0))
-        self.sc.blit(surf4, (width_screen - 60, 0))
         while not self.finished:
+            self.draw_time()
             timet = Time - round(time.time()-TimeAll)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -134,14 +128,9 @@ class game2:
                             self.correct = 1
                         else:
                             self.mistake()
-            self.text = self.font.render(str(self.Time - round(time.time()-TimeAll)) + ' сек', True, Black)
             if self.Time - round(time.time()-TimeAll) == 0:
                 print(self.Time, self.localtime)
                 self.finished = True
-            text_rect = self.text.get_rect(center=surf1.get_rect().center)
-            surf1.fill(White)
-            surf1.blit(self.text, text_rect)
-            self.sc.blit(surf1, (0, 0))
             pygame.display.update()
         return (self.correct, self.mistakes)
 

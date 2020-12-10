@@ -1,21 +1,20 @@
 from settings import *
+from minigames.super_minigame import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game4:
+class game4(SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     Mistake :param количество ошибок
     '''
     def __init__(self, Mistake):
+        super().__init__(screen)
         self.sc = screen
         self.n = 1
-        self.Time = Time
         self.x, self.y = 0, 0
-        self.font = pygame.font.SysFont(None, 100)
-        self.text = self.font.render(str(self.Time) + ' сек', True, Black)
         self.t = (random.choices(['1', '2', '3', '4']))[0]
         self.code = ['1', '2', '3', '4']
         self.num = []
@@ -160,16 +159,10 @@ class game4:
         :return: Отрисовка миниигры, кнопки и таймера
         '''
         self.sc.fill(White)
-        self.text = self.font.render(str(self.Time) + ' сек', True, Black)
-        surf1 = pygame.Surface((300, 120))
-        surf1.fill(White)
         self.Dall()
-        button = pygame.image.load('Resources\\Textures\\button.png')
-        timet = Time - round(time.time() - TimeAll)
-        surf4 = pygame.Surface((50, 50))
-        surf4.blit(button, (0, 0))
-        self.sc.blit(surf4, (width_screen - 60, 0))
+        self.draw_exit()
         while not self.finished:
+            self.draw_time()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.finished = True
@@ -191,14 +184,9 @@ class game4:
             self.text = self.font.render(str(self.Time - round(time.time() - TimeAll)) + ' сек', True, Black)
             if self.Time - round(time.time() - TimeAll) == 0:
                 self.finished = True
-            text_rect = self.text.get_rect(center=surf1.get_rect().center)
-            surf1.fill(White)
-            surf1.blit(self.text, text_rect)
-            self.sc.blit(surf1, (0, 0))
             pygame.display.update()
         return (self.correct, self.mistakes)
 
 
 if __name__ == '__main__':
-    print(game4(sn,
-                Mistake).Manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    print(game4(Mistake).Manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
