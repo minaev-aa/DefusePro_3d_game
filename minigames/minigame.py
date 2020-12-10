@@ -1,7 +1,4 @@
-import pygame
-import random
 from settings import *
-import time
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
@@ -13,7 +10,7 @@ def game1(sc, sn):
     colors = [Blue, Red, White, Black, Yellow]
     k = random.randint(3, 6)
     num = k
-    #Первое зачение вкл/выкл провода, второе цвет провода, третье и четвёртое координаты начала и конца провода
+    # Первое зачение вкл/выкл провода, второе цвет провода, третье и четвёртое координаты начала и конца провода
     line = [[False, None, [408, 299], [797, 299]], [False, None, [408, 339],
                                                     [797, 339]], [False, None, [408, 379], [797, 379]],
             [False, None, [408, 419], [797, 419]], [False, None, [408, 459],
@@ -33,6 +30,7 @@ def game1(sc, sn):
     line_print(line, sc)
     right = correct(line, count, num, sn)
     return (line, right)
+
 
 def numer(line, num):
     m = 0
@@ -63,6 +61,7 @@ def numer(line, num):
             if n[5] == None:
                 n[5] = i
     return n
+
 
 def correct(line, color, num, sn):
     n = 0
@@ -116,6 +115,7 @@ def correct(line, color, num, sn):
         else:
             tline = linennum[3]
     return tline
+
 
 def line_print(line, sc):
     dog_surf = pygame.image.load('Resources/Textures/plata.png').convert()
@@ -191,7 +191,7 @@ def mistake(Mistake):
     Mistake += 1
 
 
-def Manager(finished, sn, Mistake):
+def Manager(finished, sn, Mistake, TimeAll):
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     surf1 = pygame.Surface((300, 120))
@@ -222,8 +222,8 @@ def Manager(finished, sn, Mistake):
                     if cuts != -1:
                         if cuts != true:
                             mistake(Mistake)
-        text = font.render(str(Time - round(time.time()-TimeAll)) + ' сек', True, Black)
-        if Time - round(time.time()-TimeAll) == 0:
+        text = font.render(str(Time - round(time.time() - TimeAll)) + ' сек', True, Black)
+        if Time - round(time.time() - TimeAll) == 0:
             finished = True
         text_rect = text.get_rect(center=surf1.get_rect().center)
         surf1.fill(White)
@@ -233,7 +233,9 @@ def Manager(finished, sn, Mistake):
 
 
 if __name__ == '__main__':
+    TimeAll = time.time()
     print(Manager(False, sn,
-                  Mistake))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+                  Mistake,
+                  TimeAll))  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
     print(Mistake)
     print(Time)

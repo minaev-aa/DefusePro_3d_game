@@ -1,4 +1,3 @@
-import pygame
 from minigames.super_minigame import *
 from settings import *
 
@@ -14,8 +13,8 @@ class Letter(SuperMinigame):
     num :param номер подсказки
     '''
 
-    def __init__(self, sc, num):
-        super().__init__(screen)
+    def __init__(self, sc, num, TimeAll):
+        super().__init__(screen, TimeAll)
         self.sc = sc
         self.textures = {'o': pygame.image.load('Resources/Textures/game1.png').convert(),
                          'd': pygame.image.load('Resources/Textures/game2.png').convert(),
@@ -43,11 +42,12 @@ class Letter(SuperMinigame):
                     self.x, self.y = event.pos
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.click_exit(self.x, self.y)
-            if self.Time - round(time.time()-TimeAll) == 0:
+            if self.Time - round(time.time() - self.TimeAll) == 0:
                 self.finished = True
             self.draw_time()
             pygame.display.update()
 
 
 if __name__ == '__main__':
-    Letter(screen, 'o').draw()
+    TimeAll = time.time()
+    Letter(screen, 'o', TimeAll).draw()

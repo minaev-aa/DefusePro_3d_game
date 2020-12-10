@@ -7,7 +7,7 @@ from minigames.minigame3 import *
 from minigames.minigame4 import *
 
 
-def active(minigames, player, Mistake):
+def active(minigames, player, Mistake, TimeAll):
     """
     Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
     """
@@ -18,22 +18,22 @@ def active(minigames, player, Mistake):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                     if player.role == 1:
                         if active_in_map[x, y] in ['o', 'd', 't', 'c', 'p']:
-                            return (Letter(screen, active_in_map[x, y]).draw())
+                            return (Letter(screen, active_in_map[x, y], TimeAll).draw())
                     if player.role == 2:
                         if active_in_map[x, y] not in ['o', 'd', 't', 'c', 'p']:
                             if minigames[int(active_in_map[x, y]) - 1] == 0:
                                 if active_in_map[x, y] == '1':
-                                    return ('1', Manager(False, sn, Mistake))
+                                    return ('1', Manager(False, sn, Mistake, TimeAll))
                                 if active_in_map[x, y] == '2':
-                                    A = game2(sn, Mistake).draw()
+                                    A = game2(sn, Mistake, TimeAll).draw()
                                     return ('2', A)
                                 if active_in_map[x, y] == '3':
-                                    B = Game3(Mistake).manager()
+                                    B = Game3(Mistake, TimeAll).manager()
                                     return ('3', B)
                                 if active_in_map[x, y] == '4':
-                                    C = game4(Mistake).Manager()
+                                    C = game4(Mistake, TimeAll).Manager()
                                     return ('4', C)
                                 if active_in_map[x, y] == '5':
                                     pass
                             if minigames[int(active_in_map[x, y]) - 1] == 1:
-                                fingame(0).draw()
+                                fingame(0, TimeAll).draw()

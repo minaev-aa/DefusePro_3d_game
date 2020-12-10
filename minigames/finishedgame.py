@@ -1,6 +1,4 @@
-from settings import *
 from minigames.super_minigame import *
-
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
@@ -11,8 +9,8 @@ class fingame(SuperMinigame):
     Класс рисования текстур
     '''
 
-    def __init__(self, n):
-        super().__init__(screen)
+    def __init__(self, n, TimeAll):
+        super().__init__(screen, TimeAll)
         self.n = n
         self.sc = screen
         self.x, self.y = 0, 0
@@ -42,10 +40,11 @@ class fingame(SuperMinigame):
                         self.click_exit(self.x, self.y)
             if self.n == 0:
                 self.draw_time()
-                if self.Time - round(time.time() - TimeAll) == 0:
+                if self.Time - round(time.time() - self.TimeAll) == 0:
                     self.finished = True
             pygame.display.update()
 
 
 if __name__ == '__main__':
-    fingame(0).draw()
+    TimeAll = time.time()
+    fingame(0, TimeAll).draw()

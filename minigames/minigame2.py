@@ -1,8 +1,6 @@
-import pygame
-from settings import *
-from minigames.super_minigame import *
-
 import time
+
+from minigames.super_minigame import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
@@ -14,8 +12,9 @@ class game2(SuperMinigame):
     sn :param серийный номер
     Mistake :param количество ошибок
     '''
-    def __init__(self, sn, Mistake):
-        super().__init__(screen)
+
+    def __init__(self, sn, Mistake, TimeAll):
+        super().__init__(screen, TimeAll)
         self.sc = screen
         self.x, self.y = 0, 0
         self.describe = (random.choices(['Detonate', '   Hold', '  Abort', '  Boom', ' Defuse']))[0]
@@ -65,9 +64,9 @@ class game2(SuperMinigame):
         :param n: определение соответствия последней цифры таймера
         :return:
         '''
-        timet = Time - round(time.time()-TimeAll)
+        timet = Time - round(time.time() - self.TimeAll)
         if ((timet - (timet % 100) - (timet % 10)) / 100) == n or (
-            ((timet % 100) - (timet % 10)) / 10) == n or (timet % 10) == n:
+                    ((timet % 100) - (timet % 10)) / 10) == n or (timet % 10) == n:
             self.finished = True
             self.correct = 1
         else:
@@ -103,7 +102,7 @@ class game2(SuperMinigame):
         self.sc.blit(self.surf2, (300, 0))
         while not self.finished:
             self.draw_time()
-            timet = Time - round(time.time()-TimeAll)
+            timet = Time - round(time.time() - self.TimeAll)
             for event in pygame.event.get():
                 self.esc_exit(event)
                 if event.type == pygame.QUIT:
@@ -129,7 +128,7 @@ class game2(SuperMinigame):
                             self.correct = 1
                         else:
                             self.mistake()
-            if self.Time - round(time.time()-TimeAll) == 0:
+            if self.Time - round(time.time() - self.TimeAll) == 0:
                 print(self.Time, self.localtime)
                 self.finished = True
             pygame.display.update()
@@ -137,5 +136,6 @@ class game2(SuperMinigame):
 
 
 if __name__ == '__main__':
-
-    print(game2(sn, Mistake).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    TimeAll = time.time()
+    print(game2(sn, Mistake,
+                TimeAll).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено

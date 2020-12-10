@@ -1,14 +1,18 @@
-from settings import *
-import pygame
 import time
 
+import pygame
+
+from settings import *
+
+
 class SuperMinigame():
-    def __init__(self, screen):
+    def __init__(self, screen, TimeAll):
         self.screen = screen
         self.Time = Time
         self.font = pygame.font.SysFont(None, 100)
         self.text = self.font.render(str(self.Time) + ' сек', True, Black)  # Текст таймера.
         self.finished = False
+        self.TimeAll = TimeAll
 
     def text_box(self, text, color_text, size_text, color_rect, top, size):
         """
@@ -50,7 +54,7 @@ class SuperMinigame():
         surf1 = pygame.Surface((300, 120))
         surf1.fill(White)
         text_rect = self.text.get_rect(center=surf1.get_rect().center)
-        self.text = self.font.render(str(self.Time - round(time.time() - TimeAll)) + ' сек', True, Black)
+        self.text = self.font.render(str(self.Time - round(time.time() - self.TimeAll)) + ' сек', True, Black)
         surf1.fill(White)
         surf1.blit(self.text, text_rect)
         self.screen.blit(surf1, (0, 0))
@@ -59,12 +63,12 @@ class SuperMinigame():
         """
         Если время вышло, то выключает миниигру.
         """
-        if self.Time - round(time.time() - TimeAll) == 0:
+        if self.Time - round(time.time() - self.TimeAll) == 0:
             self.finished = True
 
     def click_exit(self, x, y):
         '''
-        проверка нажатия на кнопку выхода
+        Проверка нажатия на кнопку выхода
         '''
         if 1140 < x < 1190:
             if 0 < y < 50:

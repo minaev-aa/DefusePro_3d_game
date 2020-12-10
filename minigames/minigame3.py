@@ -1,21 +1,20 @@
-import random
-from minigames.super_minigame import *
 import pygame
 
 from minigames.settings_for_minigame3 import *
+from minigames.super_minigame import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
 class Game3(SuperMinigame):
-    def __init__(self, Mistake):
+    def __init__(self, Mistake, TimeAll):
         """
         @param screen: холст для рисования
         @type screen: pygame.surface
         """
-        super().__init__(screen)
-        
+        super().__init__(screen, TimeAll)
+
         # длительность символов в азбуке Морзе
         self.wait_space = wait
         self.wait_1 = wait  # длительность '.' в азбуке Морзе
@@ -58,7 +57,7 @@ class Game3(SuperMinigame):
         pygame.draw.ellipse(self.screen, self.elipce_tipe, ((3 * width_screen // 10, height_screen // 10),
                                                             (width_screen // 3, height_screen // 10)))
         pygame.draw.ellipse(self.screen, Red, ((3 * width_screen // 10, height_screen // 10),
-                                                            (width_screen // 3, height_screen // 10)), 5)
+                                               (width_screen // 3, height_screen // 10)), 5)
         pygame.display.flip()
 
     def draw_frequency(self, text):
@@ -67,8 +66,8 @@ class Game3(SuperMinigame):
         @param text: текст частоты
         @type text: str
         """
-        self.text_box(text, White, 48, Black, (2 * width_screen//10, 5 * height_screen//10),
-                                              (6 * width_screen//10, 2 * height_screen//10))
+        self.text_box(text, White, 48, Black, (2 * width_screen // 10, 5 * height_screen // 10),
+                      (6 * width_screen // 10, 2 * height_screen // 10))
 
     def event_bottom(self, x, y):
         """
@@ -78,14 +77,14 @@ class Game3(SuperMinigame):
         @param y: y координата мышки
         @type y: int
         """
-        if 1* width_screen // 10 - width_screen // 10 // 10 < x < 2 * width_screen//10 + - width_screen // 10 // 10 \
-                and 5 * height_screen // 10 < y < 7 * height_screen//10:
+        if 1 * width_screen // 10 - width_screen // 10 // 10 < x < 2 * width_screen // 10 + - width_screen // 10 // 10 \
+                and 5 * height_screen // 10 < y < 7 * height_screen // 10:
             self.i_frequency -= 1
             if self.i_frequency < 0:
                 self.i_frequency = len(frequency_list) - 1
             self.frequency = frequency_list[self.i_frequency]
-        if 8* width_screen // 10 + width_screen // 10 // 10 < x < 9 * width_screen // 10 + width_screen // 10 // 10 \
-                and 5 * height_screen // 10 < y < 7 * height_screen //10:
+        if 8 * width_screen // 10 + width_screen // 10 // 10 < x < 9 * width_screen // 10 + width_screen // 10 // 10 \
+                and 5 * height_screen // 10 < y < 7 * height_screen // 10:
 
             self.i_frequency += 1
             if self.i_frequency >= len(frequency_list):
@@ -93,12 +92,14 @@ class Game3(SuperMinigame):
             self.frequency = frequency_list[self.i_frequency]
 
     def draw_bottom(self):
-        pygame.draw.polygon(self.screen, Black, ((2 * width_screen // 10 - width_screen // 10 // 10, 5 * height_screen // 10),
-                                            (1 * width_screen // 10, (5+7) * height_screen // 20),
-                                            (2 * width_screen // 10 - width_screen // 10 // 10, 7 * height_screen // 10)))
-        pygame.draw.polygon(self.screen, Black, ((8 * width_screen // 10 + width_screen // 10 // 10, 5 * height_screen // 10),
-                                            (9 * width_screen // 10, (5 + 7) * height_screen // 20),
-                                            (8 * width_screen // 10 + width_screen // 10 // 10, 7 * height_screen // 10)))
+        pygame.draw.polygon(self.screen, Black,
+                            ((2 * width_screen // 10 - width_screen // 10 // 10, 5 * height_screen // 10),
+                             (1 * width_screen // 10, (5 + 7) * height_screen // 20),
+                             (2 * width_screen // 10 - width_screen // 10 // 10, 7 * height_screen // 10)))
+        pygame.draw.polygon(self.screen, Black,
+                            ((8 * width_screen // 10 + width_screen // 10 // 10, 5 * height_screen // 10),
+                             (9 * width_screen // 10, (5 + 7) * height_screen // 20),
+                             (8 * width_screen // 10 + width_screen // 10 // 10, 7 * height_screen // 10)))
 
     def draw_bulp(self):
         """
@@ -134,10 +135,10 @@ class Game3(SuperMinigame):
         bottom = 4 * height_screen // 10
 
         pygame.draw.rect(self.screen, Black, (left, up, right - left, bottom - up), 5)
-        pygame.draw.rect(self.screen, Black, (left + (right - left) * percent//100 - 20, up, 20, bottom - up))
+        pygame.draw.rect(self.screen, Black, (left + (right - left) * percent // 100 - 20, up, 20, bottom - up))
         n = 10
         for i in range(n):
-            pygame.draw.rect(self.screen, Black, (left + (right - left)*i // n, up, 10, (bottom - up) // 4))
+            pygame.draw.rect(self.screen, Black, (left + (right - left) * i // n, up, 10, (bottom - up) // 4))
 
     def end(self, x, y):
         """
@@ -188,7 +189,7 @@ class Game3(SuperMinigame):
         self.draw_frequency_scale()
         self.draw_end()
         self.my_ellipse()
-        #self.click_exit()
+        # self.click_exit()
         pygame.display.flip()
 
     def my_super_wait(self, time):
@@ -197,7 +198,7 @@ class Game3(SuperMinigame):
         @param time: время ожидания
         @type time: int
         """
-        for n in range(time// FPS):
+        for n in range(time // FPS):
             if self.finished:
                 break
             self.my_wait(FPS)
@@ -216,7 +217,9 @@ class Game3(SuperMinigame):
             self.draw_bulp()
         return (self.result, self.Mistake)
 
+
 if __name__ == '__main__':
-    Mn = Game3(Mistake)
+    TimeAll = time.time()
+    Mn = Game3(Mistake, TimeAll)
     mistake, result = Mn.manager()
     pygame.quit()

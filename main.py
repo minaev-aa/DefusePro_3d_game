@@ -135,9 +135,9 @@ def wait(p, p2, n):
         C = 'И обезвредить их, следуя указаниям напарника.'
     text = f.render(A, False, Black)
     text0 = f.render(B, False, Black)
-    text1= f.render(C, False, Black)
+    text1 = f.render(C, False, Black)
     text2 = f.render('Нажмите любую кнопку по готовности.', False, Black)
-    #pygame.draw.rect(surf, Grey, (400, 600, 400, 100))
+    # pygame.draw.rect(surf, Grey, (400, 600, 400, 100))
     surf.blit(text, (450, 200))
     surf.blit(text0, (270, 250))
     surf.blit(text1, (120, 300))
@@ -170,33 +170,34 @@ def Main_game(All, Mistake):
             if event.type == pygame.QUIT:
                 All = True
                 p.change(True, 1)
-        text = font.render(str(Time - round(time.time()-TimeAll)) + ' сек', True, Black)
+        text = font.render(str(Time - round(time.time() - TimeAll)) + ' сек', True, Black)
         p.move()
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
-        ro = active(minigames, p, Mistake)
+        ro = active(minigames, p, Mistake, TimeAll)
         if type(ro) != type(None):
             minigames[int(ro[0]) - 1], Mistake = ro[1]
-        if (Time - round(time.time()-TimeAll)) <= 0 or (Mistake > 3):
+        if (Time - round(time.time() - TimeAll)) <= 0 or (Mistake > 3):
             All = True
             p.change(True, 1)
             p2 = n.send(p)
-            fingame(1).draw()
+            fingame(1, TimeAll).draw()
         try:
             minigames.index(0)
         except:
             All = True
             p.change(True, 2)
             p2 = n.send(p)
-            fingame(2).draw()
+            fingame(2, TimeAll).draw()
         if p2.status[0]:
             All = True
-            fingame(p2.status[1]).draw()
+            fingame(p2.status[1], TimeAll).draw()
 
         p2 = n.send(p)
     pygame.quit()
+
 
 if __name__ == '__main__':
     Menu_func(All, Mistake)

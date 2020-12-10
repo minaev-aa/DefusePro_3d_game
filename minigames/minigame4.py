@@ -1,4 +1,3 @@
-from settings import *
 from minigames.super_minigame import *
 
 pygame.init()
@@ -10,8 +9,9 @@ class game4(SuperMinigame):
     Класс второй минии игры - кнопка
     Mistake :param количество ошибок
     '''
-    def __init__(self, Mistake):
-        super().__init__(screen)
+
+    def __init__(self, Mistake, TimeAll):
+        super().__init__(screen, TimeAll)
         self.sc = screen
         self.n = 1
         self.x, self.y = 0, 0
@@ -182,12 +182,14 @@ class game4(SuperMinigame):
             if self.n == 6:
                 self.correct = 1
                 self.finished = True
-            self.text = self.font.render(str(self.Time - round(time.time() - TimeAll)) + ' сек', True, Black)
-            if self.Time - round(time.time() - TimeAll) == 0:
+            if self.Time - round(time.time() - self.TimeAll) == 0:
                 self.finished = True
             pygame.display.update()
         return (self.correct, self.mistakes)
 
 
 if __name__ == '__main__':
-    print(game4(Mistake).Manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    TimeAll = time.time()
+    print(game4(
+            Mistake,
+            TimeAll).Manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
