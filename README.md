@@ -23,6 +23,6 @@ E - начать обезвреживать бомбу или прочесть �
 
 ## Скриншоты
 
-![alt text](Resources/for_Readme/screen 1.jpg)
-![alt text](Resources/for_Readme/screen 2.jpg "Одна из записок с правилами")
-![alt text](Resources/for_Readme/screen 3.jpg "Одна из миниигр")
+![alt text](https://raw.githubusercontent.com/minaev-aa/pygame_sem_project/main/Resources/for_Readme/screen%201.jpg)
+![alt text](https://raw.githubusercontent.com/minaev-aa/pygame_sem_project/main/Resources/for_Readme/screen%202.jpg "Одна из записок с правилами")
+![alt text](https://github.com/minaev-aa/pygame_sem_project/blob/main/Resources/for_Readme/screen%203.jpg "Одна из миниигр")
