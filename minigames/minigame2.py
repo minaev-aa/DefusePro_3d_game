@@ -105,6 +105,7 @@ class game2(SuperMinigame):
             self.draw_time()
             timet = Time - round(time.time()-TimeAll)
             for event in pygame.event.get():
+                self.esc_exit(event)
                 if event.type == pygame.QUIT:
                     self.finished = True
                 if event.type == pygame.MOUSEMOTION:

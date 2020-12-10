@@ -205,6 +205,8 @@ def Manager(finished, sn, Mistake):
         clock.tick(FPS)
         drawglobal(screen, result, light)
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                finished = True
             if event.type == pygame.QUIT:
                 finished = True
             if event.type == pygame.MOUSEMOTION:

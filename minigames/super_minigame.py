@@ -69,3 +69,7 @@ class SuperMinigame():
         if 1140 < x < 1190:
             if 0 < y < 50:
                 self.finished = True
+
+    def esc_exit(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.finished = True
