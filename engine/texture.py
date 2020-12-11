@@ -10,11 +10,13 @@ class Planning:
     def __init__(self, sc):
         self.sc = sc
         self.textures = {'0': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),
-                         '1': pygame.image.load('Resources/Textures/tex6X6.png').convert(),
-                         '2': pygame.image.load('Resources/Textures/file.png').convert(),
+                         '1': pygame.image.load('Resources/Textures/9tex6X6.png').convert(),
+                         '2': pygame.image.load('Resources/Textures/8tex6X6.png').convert(),
                          '3': pygame.image.load('Resources/Textures/4tex6x6.png').convert(),
                          '4': pygame.image.load('Resources/Textures/5tex6x6.png').convert(),
-                         '5': pygame.image.load('Resources/Textures/notex.png').convert(),
+                         '5': pygame.image.load('Resources/Textures/7tex6x6.png').convert(),
+                         '6': pygame.image.load('Resources/Textures/tex6x6.png').convert(),
+                         '7': pygame.image.load('Resources/Textures/10tex6x6.png').convert(),
                          'S': pygame.image.load('Resources/Textures/stars.png').convert(),
                          'o': pygame.image.load('Resources/Textures/3.3tex6x6.png').convert(),
                          'd': pygame.image.load('Resources/Textures/3.3tex6x6.png').convert(),

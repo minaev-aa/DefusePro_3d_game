@@ -25,7 +25,7 @@ def draw_minimap(player, screen):
 
     # Рисование кубиков
     for x, y in map:
-        if map[(x, y)] == '0':
+        if map[(x, y)] in ['0', '6', '7']:
             pygame.draw.rect(screen, Red,
                              (x // scale_minimap, y // scale_minimap, cube // scale_minimap, cube // scale_minimap))
         if map[(x, y)] in ['1', '2', '3', '4', '5']:

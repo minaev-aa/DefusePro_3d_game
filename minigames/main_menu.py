@@ -23,7 +23,6 @@ class Menu():
         self.sc = sc
         # Создадим кнопок.
         self.but_init(self.W // 2, self.y_but, "Подключиться", self.but_size)
-        self.but_init(self.W // 2, self.y_but, "Создать свой сервер", self.but_size)
         self.but_init(self.W // 2, self.y_but, "Настройки", self.but_size)
         self.but_init(self.W // 2, self.y_but, "Выход", self.but_size)
 
@@ -126,7 +125,7 @@ class Button():
         """
         a = int(self.size / 2)
         if self.y - a / 2 < massive[1] < self.y + a / 2 and \
-                                                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
+                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
             self.COLOR = self.BUT_LOAD
             self.is_down = 1
             return self.is_down
@@ -140,6 +139,7 @@ class Load_cicle():
     """
     Это класс обьекта, являющегося индификатором процесса загрузки.
     """
+
     def __init__(self, sc):
         """
         Это конструктор класса загрузочный модуль.
@@ -204,7 +204,7 @@ class Load_cicle():
 
         Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
                                self.audio.sound_if_button_down_init(): '2',
-                               self.audio.steps_init():  '3',
+                               self.audio.steps_init(): '3',
                                self.audio.running_init(): '4',
                                self.audio.plus_anything_init(): '5',
                                self.audio.shortness_init(): '6',
@@ -215,8 +215,8 @@ class Load_cicle():
             Dict_of_audio_inits.get(str(num))
             self.persent_of_load += 1 / count
             self.draw_all_load()
-            time.sleep(0.4)
-            pg.display.update()
+            pygame.time.delay(2)
+            pygame.display.update()
 
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
         Sets = file.readlines()
@@ -237,13 +237,13 @@ class Load_cicle():
 
         # Массив начал игры звука.
         self.steps_starts = [self.audio.steps_start_time,
-                          self.audio.running_start_time,
-                          self.audio.plus_anything_start_time,
-                          self.audio.sound_when_cursor_under_button_start_time,
-                          self.audio.sound_if_button_down_start_time,
-                          self.audio.shortness_start_time,
-                          self.audio.exhalation_start_time,
-                          self.audio.checkpoint_start_time]
+                             self.audio.running_start_time,
+                             self.audio.plus_anything_start_time,
+                             self.audio.sound_when_cursor_under_button_start_time,
+                             self.audio.sound_if_button_down_start_time,
+                             self.audio.shortness_start_time,
+                             self.audio.exhalation_start_time,
+                             self.audio.checkpoint_start_time]
 
         # Массив длительностей звуков.
         self.durations = [steps_duration,
@@ -268,6 +268,7 @@ class Settings():
     """
     Этот класс отвечает за рисование окна настроек для главного меню.
     """
+
     def __init__(self, sc):
         self.size = height_screen // 3
         self.y0 = height_screen - self.size
@@ -290,7 +291,6 @@ class Settings():
         file.close()
         self.setting_point('Звук', self.size, parametr)
 
-
     def draw_set_win(self):
         """
         Рисует окно настроек.
@@ -300,10 +300,10 @@ class Settings():
         pygame.draw.rect(self.sc, BACK_LOAD, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 0)
         pygame.draw.rect(self.sc, Black, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 2)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
-        text = font.render('ВЫХОД', True, White)
+        text = font.render('ВЫХОД', True, Black)
         # Добавляет текст на нужных координатах x, y.
         self.sc.blit(text, [self.x + b, self.y - b - c])
-        text = font.render(' ESC', True, White)
+        text = font.render(' ESC', True, Black)
         # Добавляет еще текста сразу под предыдущим.
         self.sc.blit(text, [self.x + b, self.y - b - c + self.size_of_font])
         for num in range(len(self.points)):
@@ -325,6 +325,7 @@ class Points_of_settings():
     """
     Это класс отдельных настроек для окна настроек.
     """
+
     def __init__(self, sc, parametr):
         self.Text = "Настройка"
         self.y = 110
@@ -402,6 +403,3 @@ if __name__ == '__main__':
         print('FAIL/ОШИБКА - Число процедур загрузки больше, чем указано в начале функции.')
     else:
         print("ОК")
-
-
-

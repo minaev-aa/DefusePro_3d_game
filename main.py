@@ -65,8 +65,6 @@ def indificate_func(num_in_massive_of_buttoms, All, Mistake):
     if num_in_massive_of_buttoms == 0:
         Main_game(All, Mistake)
     elif num_in_massive_of_buttoms == 1:
-        pass
-    elif num_in_massive_of_buttoms == 2:
         Menu_of_settings(All, Mistake)
     else:
         pass
