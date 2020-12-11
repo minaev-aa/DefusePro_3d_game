@@ -1,5 +1,8 @@
-from engine.Sprite import *
-from engine.active_wall import *
+#from engine.Sprite import *
+import engine.Sprite
+#from engine.active_wall import *
+import engine.active_wall
+import minigames.finishedgame
 from engine.minimap import *
 from engine.network import Network
 from engine.texture import Planning
@@ -162,7 +165,7 @@ def Main_game(All, Mistake):
     p2 = n.send(p)
     wait(p, p2, n)
     TimeAll = time.time()
-    ModelPlayer = Guard(1, p2.x_player, p2.y_player, screen, p)
+    ModelPlayer = engine.Sprite.Guard(1, p2.x_player, p2.y_player, screen, p)
     fr = 0
     while not All:
         pygame.time.Clock().tick(FPS)
@@ -176,24 +179,24 @@ def Main_game(All, Mistake):
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
         redrawWindow(sc, p, p2, ModelPlayer, text)
-        ro = active(minigames, p, Mistake, TimeAll)
+        ro = engine.active_wall.active(minigames_set, p, Mistake, TimeAll)
         if type(ro) != type(None):
-            minigames[int(ro[0]) - 1], Mistake = ro[1]
+            minigames_set[int(ro[0]) - 1], Mistake = ro[1]
         if (Time - round(time.time() - TimeAll)) <= 0 or (Mistake > 3):
             All = True
             p.change(True, 1)
             p2 = n.send(p)
-            fingame(1, TimeAll).draw()
+            minigames.finishedgame.fingame(1, TimeAll).draw()
         try:
-            minigames.index(0)
+            minigames_set.index(0)
         except:
             All = True
             p.change(True, 2)
             p2 = n.send(p)
-            fingame(2, TimeAll).draw()
+            minigames.finishedgame.fingame(2, TimeAll).draw()
         if p2.status[0]:
             All = True
-            fingame(p2.status[1], TimeAll).draw()
+            minigames.finishedgame.fingame(p2.status[1], TimeAll).draw()
 
         p2 = n.send(p)
     pygame.quit()

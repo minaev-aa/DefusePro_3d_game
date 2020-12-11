@@ -7,7 +7,7 @@ All = False
 Time = 600
 Mistake = 0
 count_of_minigames = 4
-minigames = [0] * count_of_minigames
+minigames_set = [0] * count_of_minigames
 sn = random.randint(1000000000, 9999999999)
 
 width_screen = 1200
@@ -15,6 +15,8 @@ height_screen = 800
 FPS = 60
 cube = 100
 ip = "localhost"
+screen = pygame.display.set_mode((width_screen, height_screen))
+
 
 fov = math.pi / 3
 pol_fov = fov / 2

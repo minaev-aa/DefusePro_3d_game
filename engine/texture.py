@@ -1,4 +1,6 @@
-from engine.ray_casting import *
+#from engine.ray_casting import *
+import engine.ray_casting
+from settings import *
 
 
 class Planning:
@@ -38,7 +40,7 @@ class Planning:
         :param player_angle: Положение угла камеры
         :return: Рисует стены и спрайт с самого далёкого до самого ближнего
         '''
-        walls = ray_casting(self.sc, player_pos, player_angle, self.textures)
+        walls = engine.ray_casting.ray_casting(self.sc, player_pos, player_angle, self.textures)
         if not (sprites[2] == 0):
             walls.append(sprites)
         walls = sorted(walls, key=lambda wall: wall[0], reverse=True)  # сортировка по расстоянию

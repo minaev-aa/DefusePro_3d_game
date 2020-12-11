@@ -1,11 +1,11 @@
-from minigames.super_minigame import *
 from settings import *
+import minigames.super_minigame
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class Letter(SuperMinigame):
+class Letter(minigames.super_minigame.SuperMinigame):
     '''
     Класс рисования подсказок
     sc :param определяет экран на котором рисуют

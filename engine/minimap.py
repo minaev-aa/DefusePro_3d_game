@@ -1,5 +1,9 @@
-from engine.Player import *
-from engine.ray_casting import *
+#from engine.Player import *
+#import engine.Player
+from engine.map import *
+import numpy as np
+#from engine.ray_casting import *
+#import engine.ray_casting
 
 
 def draw_minimap(player, screen):

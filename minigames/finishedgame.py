@@ -1,10 +1,11 @@
-from minigames.super_minigame import *
+import minigames.super_minigame
+from settings import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class fingame(SuperMinigame):
+class fingame(minigames.super_minigame.SuperMinigame):
     '''
     Класс рисования текстур
     '''

@@ -1,10 +1,11 @@
-from minigames.super_minigame import *
+import minigames.super_minigame
+from settings import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game4(SuperMinigame):
+class game4(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     Mistake :param количество ошибок

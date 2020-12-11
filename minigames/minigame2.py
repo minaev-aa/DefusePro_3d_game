@@ -1,12 +1,12 @@
 import time
-
-from minigames.super_minigame import *
+import minigames.super_minigame
+from settings import *
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game2(SuperMinigame):
+class game2(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     sn :param серийный номер

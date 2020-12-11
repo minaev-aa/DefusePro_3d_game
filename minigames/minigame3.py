@@ -1,13 +1,13 @@
 import pygame
 
 from minigames.settings_for_minigame3 import *
-from minigames.super_minigame import *
+import minigames.super_minigame
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class Game3(SuperMinigame):
+class Game3(minigames.super_minigame.SuperMinigame):
     def __init__(self, Mistake, TimeAll):
         """
         @param screen: холст для рисования
