@@ -1,7 +1,5 @@
 import numpy as np
-
-from engine.map import *
-
+from settings import *
 
 class Sprite:
     def __init__(self, scale, x_pos, y_pos, file, screen, player):

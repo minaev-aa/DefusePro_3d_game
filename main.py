@@ -1,23 +1,18 @@
-#from engine.Sprite import *
 import engine.Sprite
-#from engine.active_wall import *
 import engine.active_wall
 import minigames.finishedgame
-from engine.minimap import *
+import engine.minimap
 from engine.network import Network
 from engine.texture import Planning
 from minigames.main_menu import Load_cicle, Settings
 from settings import *
+
 
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
 # Инициализация загрузчика.
 Loader = Load_cicle(screen)
-
-
-# guard1_data = (1, width_screen, height_screen, 'Resources\\Sprayt\\guard_good.png') # Маштаб, х, y, файл
-
 
 def Menu_func(All, Mistake):
     """
@@ -111,7 +106,7 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
     sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
     if pressed_keys[pygame.K_m]:
-        draw_minimap(player, screen)
+        engine.minimap.draw_minimap(player, screen)
     if pressed_keys[pygame.K_t]:
         surf1 = pygame.Surface((300, 120))
         surf1.fill(White)

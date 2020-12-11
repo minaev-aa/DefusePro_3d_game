@@ -1,6 +1,4 @@
-#from engine.Player import *
-#import engine.Player
-from engine.map import *
+import engine.map
 import minigames.finishedgame
 import minigames.letter
 import minigames.minigame
@@ -15,6 +13,7 @@ def active(minigames_list, player, Mistake, TimeAll):
     """
     Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
     """
+    map, active_in_map = engine.map.map_create(engine.map.text_map)
     for x, y in active_in_map:
         if player.x_player > x - active_size and player.x_player < x + cube + active_size \
                 and player.y_player > y - active_size and player.y_player < y + cube + active_size:
@@ -27,7 +26,7 @@ def active(minigames_list, player, Mistake, TimeAll):
                         if active_in_map[x, y] not in ['o', 'd', 't', 'c', 'p']:
                             if minigames_list[int(active_in_map[x, y]) - 1] == 0:
                                 if active_in_map[x, y] == '1':
-                                    F = minigames.minigame.Manager(False, screen, Mistake, TimeAll)
+                                    F = minigames.minigame.Manager(False, sn, Mistake, TimeAll)
 
                                 if active_in_map[x, y] == '2':
                                     F = minigames.minigame2.game2(sn, Mistake, TimeAll).draw()

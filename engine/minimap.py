@@ -1,9 +1,6 @@
-#from engine.Player import *
-#import engine.Player
-from engine.map import *
+import engine.map
 import numpy as np
-#from engine.ray_casting import *
-#import engine.ray_casting
+from settings import *
 
 
 def draw_minimap(player, screen):
@@ -14,7 +11,7 @@ def draw_minimap(player, screen):
     '''
     # Рисование бэкграунда
     pygame.draw.rect(screen, Black,
-                     ((0, 0), (len(text_map[1]) * cube // scale_minimap, len(text_map) * cube // scale_minimap)))
+                     ((0, 0), (len(engine.map.text_map[1]) * cube // scale_minimap, len(engine.map.text_map) * cube // scale_minimap)))
     # Рисование игрока
     x_pl = int(player.x_player) // scale_minimap
     y_pl = int(player.y_player) // scale_minimap
@@ -24,6 +21,7 @@ def draw_minimap(player, screen):
                       y_pl + player_length * np.sin(player.angle)), player_width)
 
     # Рисование кубиков
+    map, active_in_map = engine.map.map_create(engine.map.text_map)
     for x, y in map:
         if map[(x, y)] in ['0', '6', '7']:
             pygame.draw.rect(screen, Red,

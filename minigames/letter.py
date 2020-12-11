@@ -38,6 +38,7 @@ class Letter(minigames.super_minigame.SuperMinigame):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.finished = True
+                self.esc_exit(event)
                 if event.type == pygame.MOUSEMOTION:
                     self.x, self.y = event.pos
                 if event.type == pygame.MOUSEBUTTONDOWN:

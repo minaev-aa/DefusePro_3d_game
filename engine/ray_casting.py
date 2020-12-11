@@ -1,9 +1,7 @@
-from engine.map import *
+import engine.map
+from settings import *
 
 
-# from numba import njit
-
-# @njit(fastmath=True, cache=True)
 def mapping(a, b):
     return (a // cube) * cube, (b // cube) * cube
 
@@ -16,6 +14,7 @@ def ray_casting(sc, player_pos, player_angle, texturs):
     :param texturs: Передаёт изображение текстуры
     :return: Возвращает список текстур стен и расстояний до них в виде ((расстояние; текстура; прямоугольник)...)
     '''
+    map, active_in_map = engine.map.map_create(engine.map.text_map)
     walls = []
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
