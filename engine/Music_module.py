@@ -1,11 +1,27 @@
 import pygame as pg
+import sys
 import time
 
 
 class Audio_source():
     def __init__(self):
         """
-        Этот обьект делает звук.
+        Этот обьект инициализирует звук.
+        self.background_volume        Уровень громкости фона.
+        self.volume                   Уровень громкости звуков.
+        self.step_of_init             степень подгрузки данных.
+        self.is_background_music_on   Проверка на включенность фоновой мелодии.
+        self.is_sounds_on             Проверка на включенность звуков.
+        self.count_of_sound_effects   Количество шагов подгрузки данных.
+        steps_init()
+        running_init()
+        plus_anything_init()
+        sound_when_cursor_under_button_init()
+        shortness_init()
+        exhalation_init()
+        sound_if_button_down_init()
+        checkpoint_init()
+        Sound_play(Audio, duration, start_time)
         """
         self.background_volume = 1  # Уровень громкости фона.
         self.volume = 1  # Уровень громкости звуков.
@@ -74,7 +90,7 @@ class Audio_source():
 
     def Background_music_on_AfraidSound(self):
         """
-        Меняет фоновый звук на керамический гул, если включен фоновый звук в настройках.
+        Этот  метод меняет фоновый звук на керамический гул, если включен фоновый звук в настройках.
         :return: Смена фонового звука, если он включен в настройках.
         """
         if self.is_background_music_on:
@@ -125,8 +141,6 @@ def test(obj, obj1):
 if __name__ == '__main__':
     print("Эта функция позволяет оценить работу модуля звука "
           " и разобраться в работе функций фонового звука и сторонних звуков.")
-    import pygame as pg
-    import sys
 
     pg.init()
     sc = pg.display.set_mode((400, 300))

@@ -110,7 +110,7 @@ class Player:
         Vy_m = collader_of_player * Vy / math.fabs(Vy)
         m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
         m_y = mapping(cord_x, cord_y + Vy_m)  # Создает кортеж координат.
-        m_d = mapping(cord_x + Vx_m// 9, cord_y + Vy_m// 9)
+        m_d = mapping(cord_x + Vx_m // 9, cord_y + Vy_m // 9)
         if m_x in map or m_y in map:
             if m_x in map:
                 Vx = 0

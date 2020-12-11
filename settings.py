@@ -6,7 +6,7 @@ import time
 All = False
 Time = 600
 Mistake = 0
-count_of_minigames = 4
+count_of_minigames = 5
 minigames_set = [0] * count_of_minigames
 sn = random.randint(1000000000, 9999999999)
 
@@ -53,6 +53,7 @@ Black = (0, 0, 0)
 Yellow = (255, 255, 0)
 Blue = (0, 0, 255)
 Red = (255, 0, 0)
+DarkRed = (200, 0, 0)
 Grey = (40, 40, 40)
 BACK_LOAD = (250, 235, 205)
 SET_BUT = (105, 115, 105)
