@@ -57,6 +57,7 @@ DarkRed = (200, 0, 0)
 Grey = (40, 40, 40)
 BACK_LOAD = (250, 235, 205)
 SET_BUT = (105, 115, 105)
+Grey_for_slider = (193, 193, 193)
 
 # Длительность звуковых файлов.
 steps_duration = 1.5

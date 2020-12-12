@@ -111,11 +111,9 @@ class Button():
         pg.draw.arc(sc, self.COLOR,
                     (x - 3 * a, y - a / 2, 6 * a, a),
                     0, 2 * self.pi, 13)
-        font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
-        text = font.render(self.Text, True, (255, 255, 255))
-        # Добавляет текст на кнопку на координатах x, y.
-        sc.blit(text, [x - int((len(self.Text) / 2) * self.size_of_font // 3),
-                       y - int(self.size_of_font / 3)])
+        text_blit(x - int((len(self.Text) / 2) * self.size_of_font // 3),
+                  y - int(self.size_of_font / 3),
+                  self.Text, White, self.size_of_font)
 
     def is_but_down(self, massive):
         """
@@ -221,6 +219,7 @@ class Load_cicle():
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
         Sets = file.readlines()
         self.audio.is_sounds_on = int(Sets[0].split()[0])
+        self.sensitivity = int(Sets[0].split()[1])
         file.close()
         self.__upd__main_load(count)
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
@@ -276,20 +275,28 @@ class Settings():
         self.sc = sc
         self.size_of_font = 30
         self.points = []
+        self.fractional_points = []
 
     def main(self):
         """
         Определяет размеры и настроки для окна настроек.
-        Здесь можно добавить пунктов настройки фунцией self.setting_point.
+        Здесь можно добавить пунктов бинарной настройки фунцией self.setting_point().
+        Можно добавить промежуточных настроек типа позунок функцией self.fractional_point_init().
+        А после, добавить её в списке настроек settings_list.
         """
         self.x = width_screen // 2
         self.y = height_screen // 2
         self.a = self.size
-        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
-        Sets = open('Resources\Sets_saves\sets.txt', 'r').readlines()
-        parametr = int(Sets[0].split()[0])
+        # Список настроек. Здсь сверху вниз 1 - бинарная настройка, 2 - дробная.
+        self.settings_list = [(1, 'Звук'), (2, 'Скорость поворота')]
+        file = open('Resources\Sets_saves\sets.txt', 'r')
+        Sets = file.readlines()
         file.close()
-        self.setting_point('Звук', self.size, parametr)
+        for i in range(len(self.settings_list)):
+            if self.settings_list[i][0] == 1:
+                self.setting_point(self.settings_list[i][1], self.size, int(Sets[0].split()[i]))
+            elif self.settings_list[i][0] == 2:
+                self.fractional_point_init(self.settings_list[i][1], self.size, int(Sets[0].split()[i]))
 
     def draw_set_win(self):
         """
@@ -308,10 +315,12 @@ class Settings():
         self.sc.blit(text, [self.x + b, self.y - b - c + self.size_of_font])
         for num in range(len(self.points)):
             self.points[num].draw()
+        for num in range(len(self.fractional_points)):
+            self.fractional_points[num].draw()
 
     def setting_point(self, text, size, parametr):
         """
-        Добавляет настройку.
+        Добавляет бинарную настройку.
         """
         a = int(0.8 * size)
         self.points.append(Points_of_settings(self.sc, parametr))
@@ -319,6 +328,18 @@ class Settings():
         self.points[len(self.points) - 1].x = width_screen // 2 - a
         self.y0 += self.delta
         self.points[len(self.points) - 1].y = self.y0 - a
+
+    def fractional_point_init(self, text, size, parametr):
+        """
+        Добавляет настройку - ползунок (slider).
+        """
+        a = int(0.8 * size)
+        self.fractional_points.append(Fractional_settings(self.sc, parametr))
+        self.fractional_points[len(self.points) - 1].Text = text
+        self.fractional_points[len(self.points) - 1].x = width_screen // 2 - a
+        self.y0 += self.delta
+        self.fractional_points[len(self.points) - 1].y = self.y0 - a
+        self.y0 += self.delta
 
 
 class Points_of_settings():
@@ -355,10 +376,11 @@ class Points_of_settings():
         # Добавляет текст на нухных координатах x, y.
         sc.blit(text, [x + a, y - b])
 
-    def is_point_down(self, massive):
+    def is_point_down(self, massive, number):
         """
         Проверяет, нажали ли на настройку.
-        :massive: это массив данных о положении курсора на экране.
+        :massive: Это массив данных о положении курсора на экране.
+        :number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
         Возращает ПАРАМЕТР, если курсор нажал на настройку и если не нажал.
         Меняет параметр, если настройка изменена.
         """
@@ -371,13 +393,100 @@ class Points_of_settings():
                 self.parametr = False
             else:
                 self.parametr = True
-            try:
-                with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
-                    out_file.write(str(int(self.parametr)))
-            except:
-                raise FileNotFoundError("Файл с настройками не найден. Проверьте Resources\Sets_saves\sets.txt")
+            save_sets_in_file(number, self.parametr)
 
         return self.parametr
+
+
+class Fractional_settings(Points_of_settings):
+    """
+    Это класс отдельных настроек для окна настроек.
+    Он реализует использование настроек, у который можно выбрать градации значений.
+    """
+
+    def __init__(self, sc, parametr):
+        super(Fractional_settings, self).__init__(sc, parametr)
+        self.lenght_of_slider = 220
+
+    def draw(self):
+        """
+        Рисует ползунок.
+        """
+        pg.draw.rect(screen, (15, 25, 50), (self.x, self.y + self.size_of_font,
+                                            self.lenght_of_slider, self.size // 3), 0)
+        x = int(self.x + self.lenght_of_slider * self.parametr / 100)
+        self.__draw_endings(Green)
+        self.__draw_curcle(x)
+        text_blit(self.x + 1.5 * self.size, self.y,
+                  self.Text, SET_BUT, self.size_of_font)
+        y = self.y + self.size_of_font + self.size
+        text_blit(self.x, y, 'Медленнее', SET_BUT, self.size_of_font // 2)
+        __text = 'Быстрее'
+        x = self.x + self.lenght_of_slider - self.size_of_font * len(__text) // 5
+        text_blit(x, y, __text, SET_BUT, self.size_of_font // 2)
+
+    def __draw_endings(self, Colour):
+        """
+        Рисует законцовки.
+        """
+        pg.draw.rect(screen, Colour, (self.x, self.y + self.size_of_font,
+                                      self.size // 3, self.size // 3), 0)
+        pg.draw.rect(screen, Colour, (self.x + self.lenght_of_slider,
+                                      self.y + self.size_of_font,
+                                      self.size // 3, self.size // 3), 0)
+
+    def __draw_curcle(self, x):
+        """
+        Рисует кружочек, показывающий состояние настройки.
+        x: Координата Х, на которой распожен центр этого кружочка.
+        """
+        pg.draw.circle(screen, Grey_for_slider, (x, self.y + self.size_of_font), self.size, 0)
+        pg.draw.circle(screen, Green, (x, self.y + self.size_of_font), self.size, 1)
+
+    def is_slider_down(self, massive, number):
+        """
+        Проверяет, наведен ли курсор на настройку.
+        Сохраняет новое значение параметра в файле с настройками.
+        :massive: Это массив данных о положении курсора на экране.
+        :number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
+        :return: Новое значение параметра.
+        """
+        a = self.size * 1.5
+        c = self.lenght_of_slider
+        if self.x <= massive[0] <= self.x + c and \
+                self.y + a <= massive[1] <= self.y + 3 * a:
+            self.parametr = int((massive[0] - self.x) / c * 100)
+            save_sets_in_file(number, self.parametr)
+        return self.parametr
+
+
+def text_blit(x, y, text, colour, size_of_font):
+    """
+    Добавяет текст на экран.
+    x: Координата Х верней левой точки области с текстом.
+    y: Координата У верней левой точки области с текстом.
+    text: Текст, который буде выведен на экране.
+    colour: Цвет шрифта.
+    size_of_font: Размер шрифта.
+    """
+    font = pg.font.Font(None, size_of_font)  # Задает шрифт.
+    text = font.render(text, True, colour)
+    # Добавляет текст на кнопку на координатах x, y.
+    screen.blit(text, [x, y])
+
+
+def save_sets_in_file(number, parametr):
+    try:
+        with open("Resources\Sets_saves\sets.txt", 'r') as file:
+            Sets = file.readlines()[0].split()
+            Sets[number] = str(int(parametr))
+        with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
+            line_with_sets = ''
+            for i in range(len(Sets)):
+                line_with_sets += Sets[i] + ' '
+            out_file.write(line_with_sets)
+    except:
+        raise FileNotFoundError("Файл с настройками поврежден. Проверьте Resources\Sets_saves\sets.txt")
 
 
 if __name__ == '__main__':

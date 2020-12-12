@@ -18,7 +18,7 @@ class Player:
         self.typefin = 1
         self.role = role
         self.start = False
-
+        self.sensitivity = 0
 
     def audio_init(self, audio):
         self.audio = audio
@@ -96,9 +96,9 @@ class Player:
             self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vy, self.y_player, self.Vx)
 
         if pressed_keys[pygame.K_RIGHT]:
-            self.angle += player_angle_change_speed
+            self.angle += player_angle_change_speed * (1 + self.sensitivity / 100)
         if pressed_keys[pygame.K_LEFT]:
-            self.angle -= player_angle_change_speed
+            self.angle -= player_angle_change_speed * (1 + self.sensitivity / 100)
 
     def is_player_in_colader(self, cord_x, Vx, cord_y, Vy):
         """
