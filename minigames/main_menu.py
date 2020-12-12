@@ -156,6 +156,7 @@ class Load_cicle():
         self.H = height_screen  # Ширина для модуля главного меню.
         self.pi = 3.14
 
+
     def draw_cicle(self, x, y):
         """
         Рисует шкалу загрузки.
@@ -166,9 +167,9 @@ class Load_cicle():
         r = int(self.size / 2)
         pg.draw.arc(sc, self.GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    self.opposite_persent_of_load, 2 * self.pi * self.persent_of_load / 100, 13)
+                    self.opposite_persent_of_load, 2 * self.pi * self.persent_of_load, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
-        text = font.render(str(int(self.persent_of_load)) + "%", True, (255, 255, 255))
+        text = font.render(str(int(self.persent_of_load * 100)) + "%", True, Grey)
         # Добавляет текст на шкалу на координатах x, y.
         sc.blit(text, [int(x - self.size_of_font / 3), int(y - self.size_of_font / 3)])
 
@@ -199,7 +200,6 @@ class Load_cicle():
 
         self.menu = Menu(self.audio, self.sc)  # 3
         self.__upd__main_load(count)
-
         Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
                                self.audio.sound_if_button_down_init(): '2',
                                self.audio.steps_init(): '3',
@@ -208,22 +208,6 @@ class Load_cicle():
                                self.audio.shortness_init(): '6',
                                self.audio.exhalation_init(): '7',
                                self.audio.checkpoint_init(): '8'}
-        # Инициализация звуков.
-        for num in range(len(Dict_of_audio_inits)):  # 4 - 11
-            Dict_of_audio_inits.get(str(num))
-            self.persent_of_load += 1 / count
-            self.draw_all_load()
-            pygame.time.delay(2)
-            pygame.display.update()
-
-        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
-        Sets = file.readlines()
-        self.audio.is_sounds_on = int(Sets[0].split()[0])
-        self.sensitivity = int(Sets[0].split()[1])
-        file.close()
-        self.__upd__main_load(count)
-        # Помни, что нужно увеличить count, если добавил процедур загрузки.
-
         # Массив звуков.
         self.Audios = [self.audio.steps,
                        self.audio.running,
@@ -233,7 +217,6 @@ class Load_cicle():
                        self.audio.shortness,
                        self.audio.exhalation,
                        self.audio.checkpoint]
-
         # Массив начал игры звука.
         self.steps_starts = [self.audio.steps_start_time,
                              self.audio.running_start_time,
@@ -243,7 +226,6 @@ class Load_cicle():
                              self.audio.shortness_start_time,
                              self.audio.exhalation_start_time,
                              self.audio.checkpoint_start_time]
-
         # Массив длительностей звуков.
         self.durations = [steps_duration,
                           running_duration,
@@ -253,6 +235,18 @@ class Load_cicle():
                           shortness_duration,
                           exhalation_duration,
                           checkpoint_duration]
+        # Инициализация звуков.
+        for num in range(len(self.Audios)):  # 4 - 11
+            Dict_of_audio_inits.get(str(num))
+            time.sleep(0.05)
+            self.__upd__main_load(count)
+        # Загрузка настроек.
+        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
+        Sets = file.readlines()
+        self.audio.is_sounds_on = int(Sets[0].split()[0])
+        file.close()
+        self.__upd__main_load(count)
+        # Помни, что нужно увеличить count, если добавил процедур загрузки.
 
     def __upd__main_load(self, count):
         """
