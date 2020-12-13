@@ -187,10 +187,11 @@ class Load_cicle():
         Паралельно отрисовывает процесс загрузки.
         :return: Главное меню и процесс его загрузки.
         """
-        count = 12
+        count = 13
         self.persent_of_load = 0
         self.draw_all_load()  # 0 - номер процедуры подгрузки.
         pg.display.update()
+
 
         self.LK = pg.image.load('Resources\Textures\ЛК.jpg')  # 1
         self.__upd__main_load(count)
@@ -200,6 +201,10 @@ class Load_cicle():
 
         self.menu = Menu(self.audio, self.sc)  # 3
         self.__upd__main_load(count)
+
+        self.Set_Win = Settings(screen)
+        self.__upd__main_load(count)
+
         Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
                                self.audio.sound_if_button_down_init(): '2',
                                self.audio.steps_init(): '3',
@@ -217,28 +222,10 @@ class Load_cicle():
                        self.audio.shortness,
                        self.audio.exhalation,
                        self.audio.checkpoint]
-        # Массив начал игры звука.
-        self.steps_starts = [self.audio.steps_start_time,
-                             self.audio.running_start_time,
-                             self.audio.plus_anything_start_time,
-                             self.audio.sound_when_cursor_under_button_start_time,
-                             self.audio.sound_if_button_down_start_time,
-                             self.audio.shortness_start_time,
-                             self.audio.exhalation_start_time,
-                             self.audio.checkpoint_start_time]
-        # Массив длительностей звуков.
-        self.durations = [steps_duration,
-                          running_duration,
-                          plus_anything_duration,
-                          sound_when_cursor_under_button_duration,
-                          sound_if_button_down_duration,
-                          shortness_duration,
-                          exhalation_duration,
-                          checkpoint_duration]
+
         # Инициализация звуков.
         for num in range(len(self.Audios)):  # 4 - 11
-            Dict_of_audio_inits.get(str(num))
-            time.sleep(0.05)
+            Dict_of_audio_inits.get(str(num + 1))
             self.__upd__main_load(count)
         # Загрузка настроек.
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
@@ -253,6 +240,7 @@ class Load_cicle():
         Process of load.
         """
         self.persent_of_load += 1 / count
+        time.sleep(0.05)
         self.draw_all_load()
         pg.display.update()
 
@@ -270,6 +258,7 @@ class Settings():
         self.size_of_font = 30
         self.points = []
         self.fractional_points = []
+        self.main()
 
     def main(self):
         """
@@ -339,8 +328,8 @@ class Settings():
 class Points_of_settings():
     """
     Это класс отдельных настроек для окна настроек.
+    Он реализует использование бинарных настроек.
     """
-
     def __init__(self, sc, parametr):
         self.Text = "Настройка"
         self.y = 110
@@ -397,7 +386,6 @@ class Fractional_settings(Points_of_settings):
     Это класс отдельных настроек для окна настроек.
     Он реализует использование настроек, у который можно выбрать градации значений.
     """
-
     def __init__(self, sc, parametr):
         super(Fractional_settings, self).__init__(sc, parametr)
         self.lenght_of_slider = 220
@@ -421,13 +409,13 @@ class Fractional_settings(Points_of_settings):
 
     def __draw_endings(self, Colour):
         """
-        Рисует законцовки.
+        Рисует законцовки на краях плолоски настроек.
         """
-        pg.draw.rect(screen, Colour, (self.x, self.y + self.size_of_font,
-                                      self.size // 3, self.size // 3), 0)
+        pg.draw.rect(screen, Colour, (self.x, self.y + self.size_of_font - self.size // 3,
+                                      self.size // 3, self.size), 0)
         pg.draw.rect(screen, Colour, (self.x + self.lenght_of_slider,
-                                      self.y + self.size_of_font,
-                                      self.size // 3, self.size // 3), 0)
+                                      self.y + self.size_of_font - self.size // 3,
+                                      self.size // 3, self.size), 0)
 
     def __draw_curcle(self, x):
         """

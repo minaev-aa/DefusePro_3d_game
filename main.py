@@ -13,8 +13,6 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
 # Инициализация загрузчика.
 Loader = Load_cicle(screen)
-Set_Win = Settings(screen)
-Set_Win.main()
 
 
 def Menu_func(All, Mistake):
@@ -82,9 +80,9 @@ def Menu_of_settings(All, Mistake):
                     finnish1 = True
             elif i.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                Loader.audio.is_sounds_on = (Set_Win.points[0].is_point_down(mouse_position, 0))
-                Set_Win.fractional_points[0].is_slider_down(mouse_position, 1)
-        Set_Win.draw_set_win()
+                Loader.audio.is_sounds_on = (Loader.Set_Win.points[0].is_point_down(mouse_position, 0))
+                Loader.Set_Win.fractional_points[0].is_slider_down(mouse_position, 1)
+        Loader.Set_Win.draw_set_win()
         pygame.time.delay(60)
         pygame.display.update()
 
@@ -167,7 +165,7 @@ def Main_game(All, Mistake):
     font = pygame.font.SysFont(None, 100)
     n = Network()
     p = n.getP()
-    p.sensitivity = Set_Win.fractional_points[0].parametr
+    p.sensitivity = Loader.Set_Win.fractional_points[0].parametr
     p2 = n.send(p)
     wait(p, p2, n)
     TimeAll = time.time()
