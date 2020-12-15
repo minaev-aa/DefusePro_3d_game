@@ -50,7 +50,6 @@ class Audio_source():
         # Проверка на включение звуков в настройках игры.
         if self.is_sounds_on and start_time + duration <= time.time():
             start_time = time.time()
-
         return start_time
 
 

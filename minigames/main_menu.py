@@ -98,15 +98,12 @@ class Button():
         :param x и y: Координаты центра кнопки.
         :return: кнопку на экране.
         """
-        sc = self.sc
-        x = self.x
-        y = self.y
         a = int(self.size / 2)
-        pg.draw.arc(sc, self.COLOR,
-                    (x - 3 * a, y - a / 2, 6 * a, a),
+        pg.draw.arc(self.sc, self.COLOR,
+                    (self.x - 3 * a, self.y - a / 2, 6 * a, a),
                     0, 2 * math.pi, 13)
-        text_blit(x - int((len(self.Text) / 2) * self.size_of_font // 3),
-                  y - int(self.size_of_font / 3),
+        text_blit(self.x - int((len(self.Text) / 2) * self.size_of_font // 3),
+                  self.y - int(self.size_of_font / 3),
                   self.Text, White, self.size_of_font)
 
     def is_but_down(self, massive):
@@ -151,15 +148,14 @@ class Load_cicle():
         :param x и y: Координаты центра экрана, на котором рисуется шкала.
         :return: шкалу загрузки на экране.
         """
-        sc = self.sc
         r = int(self.size / 2)
-        pg.draw.arc(sc, GREEN_LOAD,
+        pg.draw.arc(self.sc, GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
                     self.opposite_persent_of_load, 2 * math.pi * self.persent_of_load, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load * 100)) + "%", True, Grey)
         # Добавляет текст на шкалу на координатах x, y.
-        sc.blit(text, [int(x - self.size_of_font / 3), int(y - self.size_of_font / 3)])
+        self.sc.blit(text, [int(x - self.size_of_font / 3), int(y - self.size_of_font / 3)])
 
     def draw_all_load(self):
         """
@@ -204,6 +200,7 @@ class Load_cicle():
         for num in range(len(self.Audios)):  # 4 - 7
             Dict_of_audio_inits.get(str(num + 1))
             self.__upd__main_load(count)
+
         # Загрузка настроек.
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 8
         Sets = file.readlines()
@@ -214,7 +211,7 @@ class Load_cicle():
 
     def __upd__main_load(self, count):
         """
-        Process of load.
+        Обновление экрана процесса загрузки.
         """
         self.persent_of_load += 1 / count
         time.sleep(0.05)
@@ -235,19 +232,16 @@ class Settings():
         self.size_of_font = 30
         self.points = []
         self.fractional_points = []
-        self.main()
 
-    def main(self):
-        """
-        Определяет размеры и настроки для окна настроек.
-        Здесь можно добавить пунктов бинарной настройки или
-        Промежуточных настроек типа позунок.
-        Достаточно добавить её в списке настроек settings_list в формате (тип настройки, Текст настроки).
-        """
         self.x = width_screen // 2
         self.y = height_screen // 2
         self.a = self.size
-        # Список настроек. Здсь сверху вниз 1 - бинарная настройка, 2 - дробная.
+        """
+        Здесь можно добавить пунктов бинарной настройки или
+        Промежуточных настроек типа позунок.
+        Достаточно добавить её в списке настроек settings_list в формате (тип настройки, Текст настроки).
+        1 - бинарная настройка, 2 - дробная
+        """
         self.settings_list = [(1, 'Звук'), (2, 'Скорость поворота')]
         file = open('Resources\Sets_saves\sets.txt', 'r')
         Sets = file.readlines()
@@ -268,9 +262,11 @@ class Settings():
         pygame.draw.rect(self.sc, Black, (self.x - self.a, self.y - self.a, 2 * self.a, 2 * self.a), 2)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render('ВЫХОД', True, Black)
+
         # Добавляет текст на нужных координатах x, y.
         self.sc.blit(text, [self.x + b, self.y - b - c])
         text = font.render(' ESC', True, Black)
+
         # Добавляет еще текста сразу под предыдущим.
         self.sc.blit(text, [self.x + b, self.y - b - c + self.size_of_font])
         for num in range(len(self.points)):
@@ -322,20 +318,17 @@ class Points_of_settings():
         """
         Рисует настройку.
         """
-        sc = self.sc
-        x = self.x
-        y = self.y
         a = int(1.5 * self.size)
         b = self.size_of_font // 3
 
-        pg.draw.circle(self.sc, Black, (x, y), self.size, self.size // 6)
+        pg.draw.circle(self.sc, Black, (self.x, self.y), self.size, self.size // 6)
         if self.parametr:
-            pg.draw.circle(self.sc, Green, (x, y), self.size // 3, 0)
+            pg.draw.circle(self.sc, Green, (self.x, self.y), self.size // 3, 0)
 
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(self.Text, True, SET_BUT)
         # Добавляет текст на нухных координатах x, y.
-        sc.blit(text, [x + a, y - b])
+        self.sc.blit(text, [self.x + a, self.y - b])
 
     def is_point_down(self, massive, number):
         """
@@ -355,7 +348,6 @@ class Points_of_settings():
             else:
                 self.parametr = True
             save_sets_in_file(number, self.parametr)
-
         return self.parametr
 
 
@@ -364,7 +356,6 @@ class Fractional_settings(Points_of_settings):
     Это класс отдельных настроек для окна настроек.
     Он реализует использование настроек, у который можно выбрать градации значений.
     """
-
     def __init__(self, sc, parametr):
         super(Fractional_settings, self).__init__(sc, parametr)
         self.lenght_of_slider = 220
@@ -424,11 +415,11 @@ class Fractional_settings(Points_of_settings):
 def text_blit(x, y, text, colour, size_of_font):
     """
     Добавяет текст на экран.
-    x: Координата Х верней левой точки области с текстом.
-    y: Координата У верней левой точки области с текстом.
-    text: Текст, который буде выведен на экране.
-    colour: Цвет шрифта.
-    size_of_font: Размер шрифта.
+    :param x: Координата Х верней левой точки области с текстом.
+    :param y: Координата У верней левой точки области с текстом.
+    :param text: Текст, который буде выведен на экране.
+    :param colour: Цвет шрифта.
+    :param size_of_font: Размер шрифта.
     """
     font = pg.font.Font(None, size_of_font)  # Задает шрифт.
     text = font.render(text, True, colour)
@@ -441,8 +432,8 @@ def save_sets_in_file(number, parametr):
     Сохраняет в файлы настройку номер number из массива настроек изменяя ее значение в файле.
     Если такой настройки в файле нет, то выдает ошибку:
     "Файл с настройками поврежден. Проверьте Resources\Sets_saves\sets.txt".
-    :number: Номер насройки в файле начиная с нуля.
-    :parametr: Новое значение настройки.
+    :param number: Номер насройки в файле начиная с нуля.
+    :param parametr: Новое значение настройки.
     """
     try:
         with open("Resources\Sets_saves\sets.txt", 'r') as file:

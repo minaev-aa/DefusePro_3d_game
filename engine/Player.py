@@ -33,10 +33,10 @@ class Player:
         self.typefin = t
 
     def sound_of_steps(self):
-        """
+        '''
         Включает звук ходьбы для персонажа.
         :return: звук.
-        """
+        '''
         self.audio.Sound_play(self.audio.steps, steps_duration, self.audio.steps_start_time)
         self.audio.steps_start_time = self.audio.check_sound(steps_duration, self.audio.steps_start_time)
 
@@ -45,7 +45,7 @@ class Player:
         '''
         :return: Позиция игрока
         '''
-        return (int(self.x_player), int(self.y_player))
+        return int(self.x_player), int(self.y_player)
 
     @property
     def status(self):
@@ -97,12 +97,12 @@ class Player:
             self.angle -= player_angle_change_speed * (1 + self.sensitivity / 100)
 
     def is_player_in_colader(self, cord_x, Vx, cord_y, Vy):
-        """
+        '''
         Проверяет, попадет ли игрок в следующем кадре в текстуры.
-        :cord_x:  и :cord_y:  Координаты, по которым считается перемещение.
-        :Vx: и :Vy: - Скорости по данным коодринатам.
+        :param cord_x  и cord_y:  Координаты, по которым считается перемещение.
+        :param Vx и Vy: - Скорости по данным коодринатам.
         :return: Возращает скорочти по координатам cord_x и cord_yю
-        """
+        '''
         Vx_m = collader_of_player * Vx / math.fabs(Vx)
         Vy_m = collader_of_player * Vy / math.fabs(Vy)
         m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
@@ -119,14 +119,14 @@ class Player:
         return Vx, Vy
 
     def __mover_player__(self, cord_x, Vx, cord_y, Vy):
-        """
+        '''
         Меняет координаты игрока.
         Проверяет, может ли он идти дальше (проверка на текстутры).
         Меняет переменную, в которой отмечено, есть ли движение.
-        :cord_x: и :cord_y:  Координаты, по которым считается перемещение.
-        :Vx: и :Vy: - Скорости по данным коодринатам.
+        :param cord_x и cord_y:  Координаты, по которым считается перемещение.
+        :param Vx и Vy: - Скорости по данным коодринатам.
         :return: Новую коодринату.
-        """
+        '''
         self.is_move = True
         Vx, Vy = self.is_player_in_colader(cord_x, Vx, cord_y, Vy)
         cord_x += Vx

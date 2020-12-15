@@ -16,7 +16,6 @@ def active(minigames_list, player, mistake, TimeAll):
     :param mistake: Количество ошибок
     :param TimeAll: Время начала программы
     :return: Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
-
     '''
     map, active_in_map = engine.map.map_create(engine.map.text_map)
     for x, y in active_in_map:
