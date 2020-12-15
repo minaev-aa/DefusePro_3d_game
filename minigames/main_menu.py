@@ -1,7 +1,5 @@
 import time
-
 import pygame as pg
-
 from engine.Music_module import Audio_source
 from settings import *
 
@@ -156,7 +154,6 @@ class Load_cicle():
         self.H = height_screen  # Ширина для модуля главного меню.
         self.pi = 3.14
 
-
     def draw_cicle(self, x, y):
         """
         Рисует шкалу загрузки.
@@ -187,13 +184,12 @@ class Load_cicle():
         Паралельно отрисовывает процесс загрузки.
         :return: Главное меню и процесс его загрузки.
         """
-        count = 13
+        count = 8
         self.persent_of_load = 0
         self.draw_all_load()  # 0 - номер процедуры подгрузки.
         pg.display.update()
 
-
-        self.LK = pg.image.load('Resources\Textures\ЛК.jpg')  # 1
+        self.LK = pg.image.load('Resources\Textures\LK.jpg')  # 1
         self.__upd__main_load(count)
 
         self.audio = Audio_source()  # 2
@@ -207,28 +203,18 @@ class Load_cicle():
 
         Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
                                self.audio.sound_if_button_down_init(): '2',
-                               self.audio.steps_init(): '3',
-                               self.audio.running_init(): '4',
-                               self.audio.plus_anything_init(): '5',
-                               self.audio.shortness_init(): '6',
-                               self.audio.exhalation_init(): '7',
-                               self.audio.checkpoint_init(): '8'}
+                               self.audio.steps_init(): '3'}
         # Массив звуков.
         self.Audios = [self.audio.steps,
-                       self.audio.running,
-                       self.audio.plus_anythings,
                        self.audio.sound_when_cursor_under_button,
-                       self.audio.sound_if_button_down,
-                       self.audio.shortness,
-                       self.audio.exhalation,
-                       self.audio.checkpoint]
+                       self.audio.sound_if_button_down]
 
         # Инициализация звуков.
-        for num in range(len(self.Audios)):  # 4 - 11
+        for num in range(len(self.Audios)):  # 4 - 7
             Dict_of_audio_inits.get(str(num + 1))
             self.__upd__main_load(count)
         # Загрузка настроек.
-        file = open('Resources\Sets_saves\sets.txt', 'r')  # 12
+        file = open('Resources\Sets_saves\sets.txt', 'r')  # 8
         Sets = file.readlines()
         self.audio.is_sounds_on = int(Sets[0].split()[0])
         file.close()
@@ -263,9 +249,9 @@ class Settings():
     def main(self):
         """
         Определяет размеры и настроки для окна настроек.
-        Здесь можно добавить пунктов бинарной настройки фунцией self.setting_point().
-        Можно добавить промежуточных настроек типа позунок функцией self.fractional_point_init().
-        А после, добавить её в списке настроек settings_list.
+        Здесь можно добавить пунктов бинарной настройки или
+        Промежуточных настроек типа позунок.
+        Достаточно добавить её в списке настроек settings_list в формате (тип настройки, Текст настроки).
         """
         self.x = width_screen // 2
         self.y = height_screen // 2
@@ -330,6 +316,7 @@ class Points_of_settings():
     Это класс отдельных настроек для окна настроек.
     Он реализует использование бинарных настроек.
     """
+
     def __init__(self, sc, parametr):
         self.Text = "Настройка"
         self.y = 110
@@ -386,6 +373,7 @@ class Fractional_settings(Points_of_settings):
     Это класс отдельных настроек для окна настроек.
     Он реализует использование настроек, у который можно выбрать градации значений.
     """
+
     def __init__(self, sc, parametr):
         super(Fractional_settings, self).__init__(sc, parametr)
         self.lenght_of_slider = 220
@@ -409,7 +397,7 @@ class Fractional_settings(Points_of_settings):
 
     def __draw_endings(self, Colour):
         """
-        Рисует законцовки на краях плолоски настроек.
+        Рисует законцовки на краях полоски настроек.
         """
         pg.draw.rect(screen, Colour, (self.x, self.y + self.size_of_font - self.size // 3,
                                       self.size // 3, self.size), 0)
@@ -458,6 +446,13 @@ def text_blit(x, y, text, colour, size_of_font):
 
 
 def save_sets_in_file(number, parametr):
+    """
+    Сохраняет в файлы настройку номер number из массива настроек изменяя ее значение в файле.
+    Если такой настройки в файле нет, то выдает ошибку:
+    "Файл с настройками поврежден. Проверьте Resources\Sets_saves\sets.txt".
+    :number: Номер насройки в файле начиная с нуля.
+    :parametr: Новое значение настройки.
+    """
     try:
         with open("Resources\Sets_saves\sets.txt", 'r') as file:
             Sets = file.readlines()[0].split()
