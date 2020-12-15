@@ -29,15 +29,15 @@ class Audio_source():
         self.sound_if_button_down = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Button_down.ogg')
         self.sound_if_button_down_start_time = 0
 
-    def Sound_play(self, Audio, duration, start_time):
+    def sound_play(self, audio, duration, start_time):
         """
         Включает звук.
-        :param Audio: переменная, в которой лежит звук, который необходимо включить.
+        :param audio: переменная, в которой лежит звук, который необходимо включить.
         :return:  Включение звука, если это разрешено в настройках игры, время старта.
         """
         # Проверка на включение звуков в настройках игры.
         if self.is_sounds_on and start_time + duration <= time.time():
-            Audio.play()
+            audio.play()
 
     def check_sound(self, duration, start_time):
         """

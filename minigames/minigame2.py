@@ -78,8 +78,6 @@ class Game2(minigames.super_minigame.SuperMinigame):
         '''
         if self.colorl == Blue:
             self.check(4)
-        elif self.colorl == White:
-            self.check(1)
         elif self.colorl == Yellow:
             self.check(5)
         else:

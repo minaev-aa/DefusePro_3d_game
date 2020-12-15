@@ -35,7 +35,7 @@ class Menu():
             # Проверка на наведение курсора, и на то, что это первый кадр, когда курсор на кнопке
             if self.buts[num].is_down != self.buts[num].is_but_down(pos_of_mouse) and \
                     self.buts[num].is_but_down(pos_of_mouse):
-                self.audio.Sound_play(self.audio.sound_when_cursor_under_button,
+                self.audio.sound_play(self.audio.sound_when_cursor_under_button,
                                       sound_when_cursor_under_button_duration,
                                       self.audio.sound_when_cursor_under_button_start_time)
                 self.audio.sound_when_cursor_under_button_start_time \
@@ -82,7 +82,7 @@ class Button():
         """
         self.size_of_font = 30
         self.size = size
-        self.Text = "Введите текст"
+        self.text = "Введите текст"
         self.y = y
         self.x = x
         self.sc = sc
@@ -102,9 +102,9 @@ class Button():
         pg.draw.arc(self.sc, self.COLOR,
                     (self.x - 3 * a, self.y - a / 2, 6 * a, a),
                     0, 2 * math.pi, 13)
-        text_blit(self.x - int((len(self.Text) / 2) * self.size_of_font // 3),
+        text_blit(self.x - int((len(self.text) / 2) * self.size_of_font // 3),
                   self.y - int(self.size_of_font / 3),
-                  self.Text, White, self.size_of_font)
+                  self.text, White, self.size_of_font)
 
     def is_but_down(self, massive):
         """
@@ -185,26 +185,26 @@ class Load_cicle():
         self.menu = Menu(self.audio, self.sc)  # 3
         self.__upd__main_load(count)
 
-        self.Set_Win = Settings(screen)
+        self.set_win = Settings(screen)
         self.__upd__main_load(count)
 
-        Dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
+        dict_of_audio_inits = {self.audio.sound_when_cursor_under_button_init(): '1',
                                self.audio.sound_if_button_down_init(): '2',
                                self.audio.steps_init(): '3'}
         # Массив звуков.
-        self.Audios = [self.audio.steps,
+        self.audios = [self.audio.steps,
                        self.audio.sound_when_cursor_under_button,
                        self.audio.sound_if_button_down]
 
         # Инициализация звуков.
-        for num in range(len(self.Audios)):  # 4 - 7
-            Dict_of_audio_inits.get(str(num + 1))
+        for num in range(len(self.audios)):  # 4 - 7
+            dict_of_audio_inits.get(str(num + 1))
             self.__upd__main_load(count)
 
         # Загрузка настроек.
         file = open('Resources\Sets_saves\sets.txt', 'r')  # 8
-        Sets = file.readlines()
-        self.audio.is_sounds_on = int(Sets[0].split()[0])
+        sets = file.readlines()
+        self.audio.is_sounds_on = int(sets[0].split()[0])
         file.close()
         self.__upd__main_load(count)
         # Помни, что нужно увеличить count, если добавил процедур загрузки.
@@ -244,13 +244,13 @@ class Settings():
         """
         self.settings_list = [(1, 'Звук'), (2, 'Скорость поворота')]
         file = open('Resources\Sets_saves\sets.txt', 'r')
-        Sets = file.readlines()
+        sets = file.readlines()
         file.close()
         for i in range(len(self.settings_list)):
             if self.settings_list[i][0] == 1:
-                self.setting_point(self.settings_list[i][1], self.size, int(Sets[0].split()[i]))
+                self.setting_point(self.settings_list[i][1], self.size, int(sets[0].split()[i]))
             elif self.settings_list[i][0] == 2:
-                self.fractional_point_init(self.settings_list[i][1], self.size, int(Sets[0].split()[i]))
+                self.fractional_point_init(self.settings_list[i][1], self.size, int(sets[0].split()[i]))
 
     def draw_set_win(self):
         """
@@ -305,7 +305,7 @@ class Points_of_settings():
     """
 
     def __init__(self, sc, parametr):
-        self.Text = "Настройка"
+        self.text = "Настройка"
         self.y = 110
         self.x = 110
         self.sc = sc
@@ -326,7 +326,7 @@ class Points_of_settings():
             pg.draw.circle(self.sc, Green, (self.x, self.y), self.size // 3, 0)
 
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
-        text = font.render(self.Text, True, SET_BUT)
+        text = font.render(self.text, True, SET_BUT)
         # Добавляет текст на нухных координатах x, y.
         self.sc.blit(text, [self.x + a, self.y - b])
 
@@ -340,7 +340,7 @@ class Points_of_settings():
         """
         a = self.size / 2
         c = self.size_of_font / 2
-        leng = self.size_of_font * len(self.Text)
+        leng = self.size_of_font * len(self.text)
         if self.x - c <= massive[0] <= self.x + leng and \
                 self.y - a <= massive[1] <= self.y + a:
             if self.parametr:
@@ -370,20 +370,20 @@ class Fractional_settings(Points_of_settings):
         self.__draw_endings(Green)
         self.__draw_curcle(x)
         text_blit(self.x + 1.5 * self.size, self.y,
-                  self.Text, SET_BUT, self.size_of_font)
+                  self.text, SET_BUT, self.size_of_font)
         y = self.y + self.size_of_font + self.size
         text_blit(self.x, y, 'Медленнее', SET_BUT, self.size_of_font // 2)
         __text = 'Быстрее'
         x = self.x + self.lenght_of_slider - self.size_of_font * len(__text) // 5
         text_blit(x, y, __text, SET_BUT, self.size_of_font // 2)
 
-    def __draw_endings(self, Colour):
+    def __draw_endings(self, colour):
         """
         Рисует законцовки на краях полоски настроек.
         """
-        pg.draw.rect(screen, Colour, (self.x, self.y + self.size_of_font - self.size // 3,
+        pg.draw.rect(screen, colour, (self.x, self.y + self.size_of_font - self.size // 3,
                                       self.size // 3, self.size), 0)
-        pg.draw.rect(screen, Colour, (self.x + self.lenght_of_slider,
+        pg.draw.rect(screen, colour, (self.x + self.lenght_of_slider,
                                       self.y + self.size_of_font - self.size // 3,
                                       self.size // 3, self.size), 0)
 
@@ -437,12 +437,12 @@ def save_sets_in_file(number, parametr):
     """
     try:
         with open("Resources\Sets_saves\sets.txt", 'r') as file:
-            Sets = file.readlines()[0].split()
-            Sets[number] = str(int(parametr))
+            sets = file.readlines()[0].split()
+            sets[number] = str(int(parametr))
         with open("Resources\Sets_saves\sets.txt", 'w') as out_file:
             line_with_sets = ''
-            for i in range(len(Sets)):
-                line_with_sets += Sets[i] + ' '
+            for i in range(len(sets)):
+                line_with_sets += sets[i] + ' '
             out_file.write(line_with_sets)
     except:
         raise FileNotFoundError("Файл с настройками поврежден. Проверьте Resources\Sets_saves\sets.txt")

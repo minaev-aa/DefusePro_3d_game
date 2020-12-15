@@ -37,7 +37,7 @@ class Player:
         Включает звук ходьбы для персонажа.
         :return: звук.
         '''
-        self.audio.Sound_play(self.audio.steps, steps_duration, self.audio.steps_start_time)
+        self.audio.sound_play(self.audio.steps, steps_duration, self.audio.steps_start_time)
         self.audio.steps_start_time = self.audio.check_sound(steps_duration, self.audio.steps_start_time)
 
     @property
@@ -67,70 +67,70 @@ class Player:
         '''
         pressed_keys = pygame.key.get_pressed()
         self.is_move = False
-        self.Vy = player_speed * np.cos(self.angle)
-        self.Vx = player_speed * np.sin(self.angle)
+        self.vy = player_speed * np.cos(self.angle)
+        self.vx = player_speed * np.sin(self.angle)
 
         if (pressed_keys[pygame.K_w] or pressed_keys[pygame.K_s]) \
                 and (pressed_keys[pygame.K_a] or pressed_keys[pygame.K_d]):
-            self.Vx *= 1 / (2 ** 0.5)
-            self.Vy *= 1 / (2 ** 0.5)
+            self.vx *= 1 / (2 ** 0.5)
+            self.vy *= 1 / (2 ** 0.5)
 
         if pressed_keys[pygame.K_LSHIFT]:
-            self.Vy *= 2
-            self.Vx *= 2
+            self.vy *= 2
+            self.vx *= 2
 
         if pressed_keys[pygame.K_a]:
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vx,
-                                                                 self.y_player, -1 * self.Vy)
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.vx,
+                                                                 self.y_player, -1 * self.vy)
         if pressed_keys[pygame.K_d]:
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vx,
-                                                                 self.y_player, self.Vy)
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.vx,
+                                                                 self.y_player, self.vy)
         if pressed_keys[pygame.K_s]:
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vy,
-                                                                 self.y_player, -1 * self.Vx)
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.vy,
+                                                                 self.y_player, -1 * self.vx)
         if pressed_keys[pygame.K_w]:
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vy,
-                                                                 self.y_player, self.Vx)
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.vy,
+                                                                 self.y_player, self.vx)
         if pressed_keys[pygame.K_RIGHT]:
             self.angle += player_angle_change_speed * (1 + self.sensitivity / 100)
         if pressed_keys[pygame.K_LEFT]:
             self.angle -= player_angle_change_speed * (1 + self.sensitivity / 100)
 
-    def is_player_in_colader(self, cord_x, Vx, cord_y, Vy):
+    def is_player_in_colader(self, cord_x, vx, cord_y, vy):
         '''
         Проверяет, попадет ли игрок в следующем кадре в текстуры.
         :param cord_x  и cord_y:  Координаты, по которым считается перемещение.
-        :param Vx и Vy: - Скорости по данным коодринатам.
+        :param vx и vy: - Скорости по данным коодринатам.
         :return: Возращает скорочти по координатам cord_x и cord_yю
         '''
-        Vx_m = collader_of_player * Vx / math.fabs(Vx)
-        Vy_m = collader_of_player * Vy / math.fabs(Vy)
-        m_x = mapping(cord_x + Vx_m, cord_y)  # Создает кортеж координат.
-        m_y = mapping(cord_x, cord_y + Vy_m)  # Создает кортеж координат.
-        m_d = mapping(cord_x + Vx_m // 9, cord_y + Vy_m // 9)
+        vx_m = collader_of_player * vx / math.fabs(vx)
+        vy_m = collader_of_player * vy / math.fabs(vy)
+        m_x = mapping(cord_x + vx_m, cord_y)  # Создает кортеж координат.
+        m_y = mapping(cord_x, cord_y + vy_m)  # Создает кортеж координат.
+        m_d = mapping(cord_x + vx_m // 9, cord_y + vy_m // 9)
         map, active_map = engine.map.map_create(engine.map.text_map)
         if m_x in map:
-            Vx = 0
+            vx = 0
         if m_y in map:
-            Vy = 0
+            vy = 0
         if m_d in map and not (m_x in map and m_y in map):
-            Vx = 0
-            Vy = 0
-        return Vx, Vy
+            vx = 0
+            vy = 0
+        return vx, vy
 
-    def __mover_player__(self, cord_x, Vx, cord_y, Vy):
+    def __mover_player__(self, cord_x, vx, cord_y, vy):
         '''
         Меняет координаты игрока.
         Проверяет, может ли он идти дальше (проверка на текстутры).
         Меняет переменную, в которой отмечено, есть ли движение.
         :param cord_x и cord_y:  Координаты, по которым считается перемещение.
-        :param Vx и Vy: - Скорости по данным коодринатам.
+        :param vx и vy: - Скорости по данным коодринатам.
         :return: Новую коодринату.
         '''
         self.is_move = True
-        Vx, Vy = self.is_player_in_colader(cord_x, Vx, cord_y, Vy)
-        cord_x += Vx
-        cord_y += Vy
+        vx, vy = self.is_player_in_colader(cord_x, vx, cord_y, vy)
+        cord_x += vx
+        cord_y += vy
         return cord_x, cord_y
 
     def is_player_move(self):

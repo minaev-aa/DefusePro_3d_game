@@ -39,7 +39,7 @@ def Menu_func(All, Mistake):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 is_one_of_buttons_on = Loader.menu.is_one_of_buttons_on()
                 if is_one_of_buttons_on != -1:
-                    Loader.audio.Sound_play(Loader.audio.sound_if_button_down,
+                    Loader.audio.sound_play(Loader.audio.sound_if_button_down,
                                             sound_if_button_down_duration,
                                             Loader.audio.sound_if_button_down_start_time)
                     Loader.audio.sound_if_button_down_start_time \
@@ -76,9 +76,9 @@ def Menu_of_settings(All, Mistake):
                     finnish1 = True
             elif i.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                Loader.audio.is_sounds_on = (Loader.Set_Win.points[0].is_point_down(mouse_position, 0))
-                Loader.Set_Win.fractional_points[0].is_slider_down(mouse_position, 1)
-        Loader.Set_Win.draw_set_win()
+                Loader.audio.is_sounds_on = (Loader.set_Win.points[0].is_point_down(mouse_position, 0))
+                Loader.set_Win.fractional_points[0].is_slider_down(mouse_position, 1)
+        Loader.set_Win.draw_set_win()
         pygame.time.delay(60)
         pygame.display.update()
 
@@ -184,7 +184,7 @@ def Main_game(All, Mistake):
         minigames.finishedgame.Fingame(3, TimeAll).manager()
         return 0
 
-    p.sensitivity = Loader.Set_Win.fractional_points[0].parametr
+    p.sensitivity = Loader.set_Win.fractional_points[0].parametr
     p2 = n.send(p)
     wait(p, p2, n)
     TimeAll = time.time()
@@ -203,7 +203,7 @@ def Main_game(All, Mistake):
         p.move()
 
         if p.is_player_move():
-            Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
+            Loader.audio.sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
 
         redrawWindow(sc, p, p2, ModelPlayer, text)
