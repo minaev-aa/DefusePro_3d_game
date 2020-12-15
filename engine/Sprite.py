@@ -74,6 +74,19 @@ class Sprite:
 class Guard(Sprite):
     def __init__(self, scale, x_pos, y_pos, screen, player):
         super().__init__(scale, x_pos, y_pos, 'Resources\\Sprayt\\guard_good.png', screen, player)
+        self.if_good = True
+        self.bad_serf = pygame.image.load('Resources\\Sprayt\\quard_bad.png')
+        self.good_serf = pygame.image.load('Resources\\Sprayt\\guard_good.png')
+
+    def change_mood(self):
+        '''
+        Меняет спрайт охранника.
+        '''
+        if not(self.if_good):
+            self.surf = self.bad_serf
+        else:
+            self.surf = self.good_serf
+        self.if_good = not(self.if_good)
 
     def move(self, x, y):
         self.x_pos = x

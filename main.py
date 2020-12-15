@@ -159,6 +159,15 @@ def wait(p, p2, n):
         p = n.getP()
         p2 = n.send(p)
 
+def change_mod(p1, p2, event):
+    """Меняет настроение охраннику (меняет спрайт).
+    :param p1: текущий игрок
+    :param p2: модель второго игрока
+    :param event: событые
+    """
+    if ((p1.x_player - p2.x_pos)**2 + (p2.y_pos - p1.y_player)**2)**(1/2) < distance_interaction \
+            and event.type == pygame.KEYDOWN and event.key == pygame.K_g:
+        p2.change_mood()
 
 def Main_game(All, Mistake):
     pygame.display.set_caption("DefusePro")
@@ -173,6 +182,7 @@ def Main_game(All, Mistake):
     while not All:
         pygame.time.Clock().tick(FPS)
         for event in pygame.event.get():
+            change_mod(p, ModelPlayer, event)
             if event.type == pygame.QUIT:
                 All = True
                 p.change(True, 1)
