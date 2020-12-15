@@ -7,9 +7,9 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 
 class Game4(minigames.super_minigame.SuperMinigame):
     '''
-    Класс второй минии игры - кнопка
-    :param mistake количество ошибок
-    :param TimeAll: время начала игры
+    Класс второй минии игры - кнопка.
+    :param mistake количество ошибок.
+    :param TimeAll: время начала игры.
     '''
 
     def __init__(self, mistake, TimeAll):
@@ -28,7 +28,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def click(self):
         '''
-        :return: проверка нажатия на кнопку выхода
+        :return: проверка нажатия на кнопку выхода.
         '''
         if 1140 < self.x < 1190 and 0 < self.y < 50:
             return True
@@ -43,7 +43,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def mistake(self):
         '''
-        :return: Добавление ошибки
+        :return: Добавление ошибки.
         '''
         self.num.clear()
         self.n = 0
@@ -54,7 +54,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def right(self):
         '''
-        :return: Проверка на правильность выбоа. Отрисовка номера раунда
+        :return: Проверка на правильность выбора. Отрисовка номера раунда.
         '''
         if self.n == 1:
             if (int(self.num[0]) == 2) and (int(self.t) == 1) or int(self.num[0]) == int(self.t):
@@ -108,7 +108,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def change(self):
         '''
-        :return: Изменение числа на экране
+        :return: Изменение числа на экране.
         '''
         pygame.draw.rect(self.surf2, White, (50, 200, 400, 150))
         f = pygame.font.SysFont('serif', 128)
@@ -120,7 +120,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def Dall(self):
         '''
-        :return: Отрисовка игры. Изменение номеров кнопок
+        :return: Отрисовка игры. Изменение номеров кнопок.
         '''
         self.surf2.fill(White)
         random.shuffle(self.code)
@@ -150,7 +150,7 @@ class Game4(minigames.super_minigame.SuperMinigame):
 
     def manager(self):
         '''
-        :return: Отрисовка миниигры, кнопки и таймера
+        :return: Отрисовка миниигры, кнопки и таймера.
         '''
         self.sc.fill(White)
         self.Dall()
