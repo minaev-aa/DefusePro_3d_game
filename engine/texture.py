@@ -1,4 +1,3 @@
-# from engine.ray_casting import *
 import engine.ray_casting
 from settings import *
 

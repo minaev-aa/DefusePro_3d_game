@@ -5,7 +5,7 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class fingame(minigames.super_minigame.SuperMinigame):
+class Fingame(minigames.super_minigame.SuperMinigame):
     '''
     Класс рисования текстур
     :param  n: номер текстовой концовки
@@ -19,12 +19,13 @@ class fingame(minigames.super_minigame.SuperMinigame):
         self.sc = screen
         self.x, self.y = 0, 0
 
-    def draw(self):
+    def manager(self):
         '''
         :return: Рисует подсказку, кнопку, и таймер
         '''
         self.sc.fill(White)
         f2 = pygame.font.SysFont('serif', 80)
+
         if self.n == 0:
             text1 = f2.render('Задание успешно выполнено', False, Black)
             self.draw_exit()
@@ -35,6 +36,7 @@ class fingame(minigames.super_minigame.SuperMinigame):
         if self.n == 3:
             text1 = f2.render('Сервер не включен.', False, Black)
         self.sc.blit(text1, (100, 330))
+
         while not self.finished:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -53,4 +55,4 @@ class fingame(minigames.super_minigame.SuperMinigame):
 
 if __name__ == '__main__':
     TimeAll = time.time()
-    fingame(0, TimeAll).draw()
+    Fingame(0, TimeAll).manager()

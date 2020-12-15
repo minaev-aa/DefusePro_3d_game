@@ -4,6 +4,7 @@ from _thread import *
 
 from engine.Player import Player
 from settings import *
+
 pygame.quit()
 
 server = ip
@@ -20,6 +21,7 @@ s.listen(2)
 print("Waiting for a connection, Server Started")
 
 players = [Player(player_pos1, 1), Player(player_pos2, 2)]
+
 
 def threaded_client(conn, player):
     '''

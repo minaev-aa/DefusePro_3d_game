@@ -10,8 +10,8 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class Game3(minigames.super_minigame.SuperMinigame):
     def __init__(self, mistake, TimeAll):
         """
-        @param screen: холст для рисования
-        @type screen: pygame.surface
+        :param screen: холст для рисования
+        :param TimeAll: время начала игры
         """
         super().__init__(screen, TimeAll)
 
@@ -63,8 +63,7 @@ class Game3(minigames.super_minigame.SuperMinigame):
     def draw_frequency(self, text):
         """
         Рисование окошка с текстом частоты
-        @param text: текст частоты
-        @type text: str
+        :param text: текст частоты
         """
         self.text_box(text, White, 48, Black, (2 * width_screen // 10, 5 * height_screen // 10),
                       (6 * width_screen // 10, 2 * height_screen // 10))
@@ -72,10 +71,8 @@ class Game3(minigames.super_minigame.SuperMinigame):
     def event_bottom(self, x, y):
         """
         Создание активной области кнопки. Изменение частоты
-        @param x: x координата мышки
-        @type x: int
-        @param y: y координата мышки
-        @type y: int
+        :param x: x координата мышки
+        :param y: y координата мышки
         """
         if 1 * width_screen // 10 - width_screen // 10 // 10 < x < 2 * width_screen // 10 + - width_screen // 10 // 10 \
                 and 5 * height_screen // 10 < y < 7 * height_screen // 10:
@@ -143,10 +140,8 @@ class Game3(minigames.super_minigame.SuperMinigame):
     def end(self, x, y):
         """
         нажатие на кнопка "TX" - проверка правильно ли выбрана частота.
-        @param x: x координата мышки
-        @type x: int
-        @param y: y координата мышки
-        @type y: int
+        :param x: x координата мышки
+        :param y: y координата мышки
         """
         if top_end[0] < x < top_end[0] + size_end[0] and top_end[1] < y < top_end[1] + size_end[1]:
             if self.i_frequency == self.i_word:
@@ -164,8 +159,7 @@ class Game3(minigames.super_minigame.SuperMinigame):
     def my_wait(self, time):
         """ Следит за событиями. Рисует всё. Ждёт заданое количество времени
 
-        @param time: время, на которое pygame будет не активен.
-        @type time: int
+        :param time: время, на которое pygame будет не активен.
         """
         self.screen.fill(White)
         self.draw_exit()
@@ -195,8 +189,7 @@ class Game3(minigames.super_minigame.SuperMinigame):
     def my_super_wait(self, time):
         """
         Ждёт заданое количество времени, но с возможностью нажатия на клавиши во время этого ожидания. Рисует всё.
-        @param time: время ожидания
-        @type time: int
+        :param time: время ожидания
         """
         for n in range(time // FPS):
             if self.finished:
@@ -205,10 +198,8 @@ class Game3(minigames.super_minigame.SuperMinigame):
 
     def manager(self):
         """
-        @return Mistake: количество ошибок
-        @return result: выиграл (1) или нет (0)
-        @rtype Mistake: int
-        @rtype result: int
+        :return Mistake: количество ошибок
+        :return result: выиграл (1) или нет (0)
         """
         clock = pygame.time.Clock()
         while not self.finished:

@@ -4,7 +4,7 @@ import minigames.super_minigame
 import random
 
 
-class game5(minigames.super_minigame.SuperMinigame):
+class Game5(minigames.super_minigame.SuperMinigame):
     def __init__(self, mistake, TimeAll):
         """
         Класс миниигры номер 5.
@@ -70,14 +70,14 @@ class game5(minigames.super_minigame.SuperMinigame):
     def draw_text_on_display(self):
         """
         Рисует текст (символы) на диплее.
-        num: Номер символа на экране.
+        :param num: Номер символа на экране.
         """
         for i in range(len(self.writed_on_display)):
             x = self.display_x + i * self.delta_disp
             y = self.display_y
             self.screen.blit(self.symbols[self.writed_on_display[i] - 1], (x, y))  # Нарисуем символ на экране.
 
-    def main(self):
+    def manager(self):
         self.finished = False
         while not self.finished:
             mouse_position = pygame.mouse.get_pos()
@@ -131,8 +131,8 @@ class game5(minigames.super_minigame.SuperMinigame):
 
     def choose_element(self, num, used):
         """
-        num - Номер элемента в кортеже елементов столбца.
-        used - Массив уже выведенных значений.
+        :param num: Номер элемента в кортеже елементов столбца.
+        :param used: Массив уже выведенных значений.
         :return: Выводит номер элемента в кортеже элементов столбца, среди еще не выведенных.
          Пример: если (1, 2, 4, 5) - кортеж, num = 1, а элемент 2 уже был выведен (есть в used).
                 Тогда функция проверит номер первого элемента 0 != 1, а 1 в used нет =>
@@ -207,7 +207,7 @@ class game5(minigames.super_minigame.SuperMinigame):
     def is_buts_dawn(self, massive):
         """
         Проверяет, есть ди курсор над мышкой, или нет.
-        massive: Массив положения мышки.
+        :param massive: Массив положения мышки.
         return: возравращает номер кнопки, если над кнопками, -1, если нет.
         """
         but_down = -1
@@ -275,7 +275,7 @@ class Button():
     def is_button_down(self, massive):
         """
         Проверяет, наведет ли курсор на кнопку.
-        massive: Массив положения мышки.
+        :param massive: Массив положения мышки.
         return: возравращает 1, если над кнопками, 0, если нет.
         """
         if self.x <= massive[0] <= self.x + self.size and \
@@ -316,13 +316,12 @@ if __name__ == '__main__':
             # Проверим, повтряется ли функция (не должна).
             coincidences = 0
             for num_of_el2 in range(len(massive)):
-                if num_of_el != num_of_el2:
-                    if massive[num_of_el] == massive[num_of_el2]:
-                        coincidences += 1
-                        errors += 1
+                if num_of_el != num_of_el2 and massive[num_of_el] == massive[num_of_el2]:
+                    coincidences += 1
+                    errors += 1
             if coincidences > 0:
                 print("Выбор элементов работает неверно.")
 
     print("Ошибок с функцией choose_elements_in_column() необнаружено.")
 
-    g.main()
+    g.manager()

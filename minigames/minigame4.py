@@ -5,7 +5,7 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game4(minigames.super_minigame.SuperMinigame):
+class Game4(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     :param mistake количество ошибок
@@ -30,21 +30,16 @@ class game4(minigames.super_minigame.SuperMinigame):
         '''
         :return: проверка нажатия на кнопку выхода
         '''
-        if 1140 < self.x < 1190:
-            if 0 < self.y < 50:
-                return True
-        if 350 < self.x < 545:
-            if 400 < self.y < 500:
-                return '1'
-        if 350 < self.x < 545:
-            if 520 < self.y < 620:
-                return '3'
-        if 555 < self.x < 750:
-            if 400 < self.y < 500:
-                return '2'
-        if 555 < self.x < 750:
-            if 520 < self.y < 620:
-                return '4'
+        if 1140 < self.x < 1190 and 0 < self.y < 50:
+            return True
+        if 350 < self.x < 545 and 400 < self.y < 500:
+            return '1'
+        if 350 < self.x < 545 and 520 < self.y < 620:
+            return '3'
+        if 555 < self.x < 750 and 400 < self.y < 500:
+            return '2'
+        if 555 < self.x < 750 and 520 < self.y < 620:
+            return '4'
 
     def mistake(self):
         '''
@@ -62,10 +57,7 @@ class game4(minigames.super_minigame.SuperMinigame):
         :return: Проверка на правильность выбоа. Отрисовка номера раунда
         '''
         if self.n == 1:
-            if (int(self.num[0]) == 2) and (int(self.t) == 1):
-                pygame.draw.rect(self.surf2, Green, (485, 535, 80, 50))
-                self.sc.blit(self.surf2, (300, 0))
-            elif int(self.num[0]) == int(self.t):
+            if (int(self.num[0]) == 2) and (int(self.t) == 1) or int(self.num[0]) == int(self.t):
                 pygame.draw.rect(self.surf2, Green, (485, 535, 80, 50))
                 self.sc.blit(self.surf2, (300, 0))
             else:
@@ -156,7 +148,7 @@ class game4(minigames.super_minigame.SuperMinigame):
         self.surf2.blit(text4, (335, 530))
         self.sc.blit(self.surf2, (300, 0))
 
-    def Manager(self):
+    def manager(self):
         '''
         :return: Отрисовка миниигры, кнопки и таймера
         '''
@@ -192,6 +184,6 @@ class game4(minigames.super_minigame.SuperMinigame):
 
 if __name__ == '__main__':
     TimeAll = time.time()
-    print(game4(
+    print(Game4(
             Mistake,
-            TimeAll).Manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+            TimeAll).manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено

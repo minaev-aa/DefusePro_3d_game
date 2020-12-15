@@ -26,7 +26,7 @@ class Letter(minigames.super_minigame.SuperMinigame):
         self.x, self.y = 0, 0
         self.num = num
 
-    def draw(self):
+    def manager(self):
         '''
         :return: Рисует подсказку, кнопку, и таймер
         '''
@@ -52,4 +52,4 @@ class Letter(minigames.super_minigame.SuperMinigame):
 
 if __name__ == '__main__':
     TimeAll = time.time()
-    Letter(screen, 'o', TimeAll).draw()
+    Letter(screen, 'o', TimeAll).manager()

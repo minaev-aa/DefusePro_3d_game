@@ -22,7 +22,6 @@ def Menu_func(All, Mistake):
     """
     pygame.display.set_caption("DefusePro")
     Loader.main_menu_init()
-    # p.audio_init(Loader.audio)
     # Отрисовка меню.
     finished = False
     while not finished:
@@ -61,8 +60,6 @@ def indificate_func(num_in_massive_of_buttoms, All, Mistake):
         Main_game(All, Mistake)
     elif num_in_massive_of_buttoms == 1:
         Menu_of_settings(All, Mistake)
-    else:
-        pass
 
 
 def Menu_of_settings(All, Mistake):
@@ -103,8 +100,10 @@ def redrawWindow(win, player, player2, ModelPlayer, text):
     sprites = (ModelPlayer.distance_to_player(), sprite_surf, sprite_rect)
     sc.plan(player.pos, player.angle, sprites)
     ModelPlayer.move(player2.x_player, player2.y_player)
+
     if pressed_keys[pygame.K_m]:
         engine.minimap.draw_minimap(player, screen)
+
     if pressed_keys[pygame.K_t]:
         surf1 = pygame.Surface((300, 120))
         surf1.fill(White)
@@ -125,23 +124,26 @@ def wait(p, p2, n):
     surf = pygame.Surface((width_screen, height_screen))
     surf.fill(White)
     f = pygame.font.SysFont('serif', 48)
+
     if p.status[2] == 1:
-        A = 'Вы охранник.'
-        B = '   Ваша задача найти методички.'
-        C = '           И объяснить напарнику, что делать.'
-        D = 'Запомните серийный номер, который вам сообщили:'
-        E = str(sn)
-        text3 = f.render(D, False, Black)
-        text4 = f.render(E, False, Black)
+        text01 = 'Вы охранник.'
+        text02 = '   Ваша задача найти методички.'
+        text03 = '           И объяснить напарнику, что делать.'
+        text04 = 'Запомните серийный номер, который вам сообщили:'
+        text05 = str(sn)
+        text3 = f.render(text04, False, Black)
+        text4 = f.render(text05, False, Black)
         surf.blit(text3, (80, 370))
         surf.blit(text4, (450, 420))
+
     if p.status[2] == 2:
-        A = 'Вы электрик.'
-        B = 'Ваша задача найти модули бомбы.'
-        C = 'И обезвредить их, следуя указаниям напарника.'
-    text = f.render(A, False, Black)
-    text0 = f.render(B, False, Black)
-    text1 = f.render(C, False, Black)
+        text01 = 'Вы электрик.'
+        text02 = 'Ваша задача найти модули бомбы.'
+        text03 = 'И обезвредить их, следуя указаниям напарника.'
+
+    text = f.render(text01, False, Black)
+    text0 = f.render(text02, False, Black)
+    text1 = f.render(text03, False, Black)
     text2 = f.render('Нажмите любую кнопку по готовности.', False, Black)
     surf.blit(text, (450, 200))
     surf.blit(text0, (270, 250))
@@ -149,6 +151,7 @@ def wait(p, p2, n):
     surf.blit(text2, (190, 620))
     screen.blit(surf, (0, 0))
     pygame.display.update()
+
     while (p2.starts == False) or (p.starts == False):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -158,15 +161,17 @@ def wait(p, p2, n):
         p = n.getP()
         p2 = n.send(p)
 
+
 def change_mod(p1, p2, event):
     """Меняет настроение охраннику (меняет спрайт).
     :param p1: текущий игрок
     :param p2: модель второго игрока
     :param event: событые
     """
-    if ((p1.x_player - p2.x_pos)**2 + (p2.y_pos - p1.y_player)**2)**(1/2) < distance_interaction \
+    if ((p1.x_player - p2.x_pos) ** 2 + (p2.y_pos - p1.y_player) ** 2) ** (0.5) < distance_interaction \
             and event.type == pygame.KEYDOWN and event.key == pygame.K_g:
         p2.change_mood()
+
 
 def Main_game(All, Mistake):
     pygame.display.set_caption("DefusePro")
@@ -174,45 +179,56 @@ def Main_game(All, Mistake):
     n = Network()
     p = n.getP()
     TimeAll = 0
+
     if type(p) == type(None):
-        minigames.finishedgame.fingame(3, TimeAll).draw()
+        minigames.finishedgame.Fingame(3, TimeAll).manager()
         return 0
+
     p.sensitivity = Loader.Set_Win.fractional_points[0].parametr
     p2 = n.send(p)
     wait(p, p2, n)
     TimeAll = time.time()
     ModelPlayer = engine.Sprite.Guard(1, p2.x_player, p2.y_player, screen, p)
+
     while not All:
         pygame.time.Clock().tick(FPS)
+
         for event in pygame.event.get():
             change_mod(p, ModelPlayer, event)
             if event.type == pygame.QUIT:
                 All = True
                 p.change(True, 1)
+
         text = font.render(str(Time - round(time.time() - TimeAll)) + ' сек', True, Black)
         p.move()
+
         if p.is_player_move():
             Loader.audio.Sound_play(Loader.audio.steps, steps_duration, Loader.audio.steps_start_time)
             Loader.audio.steps_start_time = Loader.audio.check_sound(steps_duration, Loader.audio.steps_start_time)
+
         redrawWindow(sc, p, p2, ModelPlayer, text)
         ro = engine.active_wall.active(minigames_set, p, Mistake, TimeAll)
+
         if type(ro) != type(None):
             minigames_set[int(ro[0]) - 1], Mistake = ro[1]
+
         if (Time - round(time.time() - TimeAll)) <= 0 or (Mistake > 3):
             All = True
             p.change(True, 1)
             p2 = n.send(p)
-            minigames.finishedgame.fingame(1, TimeAll).draw()
+            minigames.finishedgame.Fingame(1, TimeAll).manager()
+
         try:
             minigames_set.index(0)
         except:
             All = True
             p.change(True, 2)
             p2 = n.send(p)
-            minigames.finishedgame.fingame(2, TimeAll).draw()
+            minigames.finishedgame.Fingame(2, TimeAll).manager()
+
         if p2.status[0]:
             All = True
-            minigames.finishedgame.fingame(p2.status[1], TimeAll).draw()
+            minigames.finishedgame.Fingame(p2.status[1], TimeAll).manager()
 
         p2 = n.send(p)
     pygame.quit()

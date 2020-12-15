@@ -22,7 +22,7 @@ class Audio_source():
 
     def sound_when_cursor_under_button_init(self):
         self.sound_when_cursor_under_button = pg.mixer.Sound(
-            'Resources\Music_and_sound\Format_ogg\Cursor_under_button.ogg')
+                'Resources\Music_and_sound\Format_ogg\Cursor_under_button.ogg')
         self.sound_when_cursor_under_button_start_time = 0
 
     def sound_if_button_down_init(self):
@@ -35,9 +35,9 @@ class Audio_source():
         :param Audio: переменная, в которой лежит звук, который необходимо включить.
         :return:  Включение звука, если это разрешено в настройках игры, время старта.
         """
-        if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
-            if start_time + duration <= time.time():
-                Audio.play()
+        # Проверка на включение звуков в настройках игры.
+        if self.is_sounds_on and start_time + duration <= time.time():
+            Audio.play()
 
     def check_sound(self, duration, start_time):
         """
@@ -47,9 +47,9 @@ class Audio_source():
         :param start_time: Последнее время включения.
         :return: Новое время старта.
         """
-        if self.is_sounds_on:  # Проверка на включение звуков в настройках игры.
-            if start_time + duration <= time.time():
-                start_time = time.time()
+        # Проверка на включение звуков в настройках игры.
+        if self.is_sounds_on and start_time + duration <= time.time():
+            start_time = time.time()
 
         return start_time
 

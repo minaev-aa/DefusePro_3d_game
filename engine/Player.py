@@ -80,8 +80,8 @@ class Player:
 
         if (pressed_keys[pygame.K_w] or pressed_keys[pygame.K_s]) \
                 and (pressed_keys[pygame.K_a] or pressed_keys[pygame.K_d]):
-            self.Vx *= 1 / (2 ** (1 / 2))
-            self.Vy *= 1 / (2 ** (1 / 2))
+            self.Vx *= 1 / (2 ** 0.5)
+            self.Vy *= 1 / (2 ** 0.5)
 
         if pressed_keys[pygame.K_LSHIFT]:
             self.Vy *= 2

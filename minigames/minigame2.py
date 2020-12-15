@@ -6,7 +6,7 @@ pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 
-class game2(minigames.super_minigame.SuperMinigame):
+class Game2(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
     :param sn: серийный номер
@@ -33,9 +33,8 @@ class game2(minigames.super_minigame.SuperMinigame):
         '''
         :return: проверка нажатия на кнопку выхода
         '''
-        if 1140 < self.x < 1190:
-            if 0 < self.y < 50:
-                return True
+        if 1140 < self.x < 1190 and 0 < self.y < 50:
+            return True
 
     def right(self):
         '''
@@ -86,7 +85,7 @@ class game2(minigames.super_minigame.SuperMinigame):
         else:
             self.check(1)
 
-    def draw(self):
+    def manager(self):
         '''
         :return: Отрисовка миниигры, кнопки и таймера
         '''
@@ -138,5 +137,5 @@ class game2(minigames.super_minigame.SuperMinigame):
 
 if __name__ == '__main__':
     TimeAll = time.time()
-    print(game2(sn, Mistake,
-                TimeAll).draw())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено
+    print(Game2(sn, Mistake,
+                TimeAll).manager())  # Изменяет время и количество ошибок гловально. Выдаёт статус задания 1 значит выполнено

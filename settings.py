@@ -8,7 +8,7 @@ Time = 600
 Mistake = 0
 count_of_minigames = 5
 minigames_set = [0] * count_of_minigames
-sn = random.randint(1000000000, 9999999999)
+sn = random.randint(10 ** 10, 10 ** 11 - 1)
 
 width_screen = 1200
 height_screen = 800
@@ -25,7 +25,7 @@ d_angle = fov / count_ray
 distance = count_ray / (2 * math.tan(pol_fov))
 proec_k = 3 * distance * cube
 size = width_screen // count_ray
-min_alpha = 0.000001
+min_alpha = 10 ** (-5)
 
 player_speed = 6
 player_angle = min_alpha  # начальный угол смотрит вверх по миникарте

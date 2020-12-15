@@ -51,24 +51,8 @@ def numer(line):
             if line[i][1] == Red:
                 n[7] = i
             m += 1
-        if m == 1:
-            if n[0] == None:
-                n[0] = i
-        if m == 2:
-            if n[1] == None:
-                n[1] = i
-        if m == 3:
-            if n[2] == None:
-                n[2] = i
-        if m == 4:
-            if n[3] == None:
-                n[3] = i
-        if m == 5:
-            if n[4] == None:
-                n[4] = i
-        if m == 6:
-            if n[5] == None:
-                n[5] = i
+        if n[m - 1] == None:
+            n[m - 1] = i
     return n
 
 
@@ -80,10 +64,6 @@ def correct(line, color, num, sn):
     :param sn: серийный номер
     :return: определение верного провода
     '''
-    n = 0
-    for i in range(6):
-        if line[i][0]:
-            n += 1
     tline = 0
     linennum = numer(line)
     if num == 3:
@@ -96,12 +76,10 @@ def correct(line, color, num, sn):
         else:
             tline = linennum[2]
     if num == 4:
-        if color[1] > 1:
-            if sn % 2 == 1:
-                tline = linennum[7]
-        if color[1] == 0:
-            if line[linennum[3]][1] == Yellow:
-                tline = linennum[0]
+        if color[1] > 1 and sn % 2 == 1:
+            line = linennum[7]
+        if color[1] == 0 and line[linennum[3]][1] == Yellow:
+            tline = linennum[0]
         if color[0] == 1:
             tline = linennum[0]
         if color[4] > 1:
@@ -109,23 +87,19 @@ def correct(line, color, num, sn):
         else:
             tline = linennum[1]
     if num == 5:
-        if line[linennum[4]][1] == Black:
-            if sn % 2 == 1:
-                tline = linennum[3]
-        if color[1] == 1:
-            if color[4] > 1:
-                tline = linennum[0]
+        if line[linennum[4]][1] == Black and sn % 2 == 1:
+            tline = linennum[3]
+        if color[1] == 1 and color[4] > 1:
+            tline = linennum[0]
         if color[3] == 0:
             tline = linennum[1]
         else:
             tline = linennum[0]
     if num == 6:
-        if color[4] == 0:
-            if sn % 2 == 1:
-                tline = linennum[2]
-        if color[4] == 1:
-            if color[2] > 1:
-                tline = linennum[3]
+        if color[4] == 0 and sn % 2 == 1:
+            tline = linennum[2]
+        if color[4] == 1 and color[2] > 1:
+            tline = linennum[3]
         if color[1] == 0:
             tline = linennum[5]
         else:
@@ -177,14 +151,13 @@ def cut(sc, out, x, y):
     surf = pygame.Surface((389, 2 * k))
     if 408 < x < 797:
         for i in range(6):
-            if 299 + (40 * i) - k < y < 299 + (40 * i) + k:
-                if out[i][0]:
-                    surf.fill((8, 217, 131))
-                    pygame.draw.line(surf, out[i][1], (0, k), (x - out[i][2][0] - rez, k), 20)
-                    pygame.draw.line(surf, out[i][1], (x - out[i][2][0] + rez, k), (389, k), 20)
-                    sc.blit(surf, (408, 300 + (40 * i) - k))
-                    pygame.display.update()
-                    return i
+            if 299 + (40 * i) - k < y < 299 + (40 * i) + k and out[i][0]:
+                surf.fill((8, 217, 131))
+                pygame.draw.line(surf, out[i][1], (0, k), (x - out[i][2][0] - rez, k), 20)
+                pygame.draw.line(surf, out[i][1], (x - out[i][2][0] + rez, k), (389, k), 20)
+                sc.blit(surf, (408, 300 + (40 * i) - k))
+                pygame.display.update()
+                return i
         return -1
 
 
@@ -221,9 +194,8 @@ def click(x, y):
     :param y: позиция мышки по y
     :return: проверка нажатия на крестик
     '''
-    if 1140 < x < 1190:
-        if 0 < y < 50:
-            return True
+    if 1140 < x < 1190 and 0 < y < 50:
+        return True
 
 
 def Manager(finished, sn, mistake, TimeAll):
@@ -260,10 +232,8 @@ def Manager(finished, sn, mistake, TimeAll):
                 cuts = cut(screen, out[0], x, y)
                 if cuts == true:
                     result = 1
-                if cuts != None:
-                    if cuts != -1:
-                        if cuts != true:
-                            mistake += 1
+                if cuts != None and cuts != -1 and cuts != true:
+                    mistake += 1
         text = font.render(str(Time - round(time.time() - TimeAll)) + ' сек', True, Black)
         if Time - round(time.time() - TimeAll) == 0:
             finished = True

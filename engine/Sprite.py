@@ -37,8 +37,8 @@ class Sprite:
         '''
         :return: Вычисление расстояния до игрока
         '''
-        distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (
-        1 / 2)
+        distance_to_player = (
+                             (self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** 0.5
         return distance_to_player
 
     def size(self):
@@ -79,11 +79,11 @@ class Guard(Sprite):
         '''
         Меняет спрайт охранника.
         '''
-        if not(self.if_good):
+        if not (self.if_good):
             self.surf = self.bad_serf
         else:
             self.surf = self.good_serf
-        self.if_good = not(self.if_good)
+        self.if_good = not (self.if_good)
 
     def move(self, x, y):
         self.x_pos = x

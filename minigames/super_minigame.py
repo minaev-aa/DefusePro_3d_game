@@ -21,19 +21,12 @@ class SuperMinigame():
     def text_box(self, text, color_text, size_text, color_rect, top, size):
         """
         Рисует окошко с текстом посередине.
-
-        @param text: текст
-        @type text: str
-        @param color_text: цвет текста
-        @type color_text: RGB (int, int, int)
-        @param size_text: размер шрифта
-        @type size_text: int
-        @param color_rect: цвет окоша
-        @type color_rect: RGB (int, int, int)
-        @param top: Верхняя левая вершина
-        @type top: (int, int)
-        @param size: Размер: (ширина, высота)
-        @type size: (int, int)
+        :param text: текст
+        :param color_text: цвет текста
+        :param size_text: размер шрифта
+        :param color_rect: цвет окоша
+        :param top: Верхняя левая вершина
+        :param size: Размер: (ширина, высота)
         """
         pygame.draw.rect(self.screen, color_rect, (top, size))
         font = pygame.font.SysFont('serif', size_text)
@@ -74,9 +67,8 @@ class SuperMinigame():
         '''
         Проверка нажатия на кнопку выхода
         '''
-        if 1140 < x < 1190:
-            if 0 < y < 50:
-                self.finished = True
+        if 1140 < x < 1190 and 0 < y < 50:
+            self.finished = True
 
     def esc_exit(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
