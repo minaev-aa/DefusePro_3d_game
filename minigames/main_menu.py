@@ -333,8 +333,8 @@ class Points_of_settings():
     def is_point_down(self, massive, number):
         """
         Проверяет, нажали ли на настройку.
-        :massive: Это массив данных о положении курсора на экране.
-        :number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
+        :param massive: Это массив данных о положении курсора на экране.
+        :param number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
         Возращает ПАРАМЕТР, если курсор нажал на настройку и если не нажал.
         Меняет параметр, если настройка изменена.
         """
@@ -390,7 +390,7 @@ class Fractional_settings(Points_of_settings):
     def __draw_curcle(self, x):
         """
         Рисует кружочек, показывающий состояние настройки.
-        x: Координата Х, на которой распожен центр этого кружочка.
+        :param x: Координата Х, на которой распожен центр этого кружочка.
         """
         pg.draw.circle(screen, Grey_for_slider, (x, self.y + self.size_of_font), self.size, 0)
         pg.draw.circle(screen, Green, (x, self.y + self.size_of_font), self.size, 1)
@@ -399,8 +399,8 @@ class Fractional_settings(Points_of_settings):
         """
         Проверяет, наведен ли курсор на настройку.
         Сохраняет новое значение параметра в файле с настройками.
-        :massive: Это массив данных о положении курсора на экране.
-        :number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
+        :param massive: Это массив данных о положении курсора на экране.
+        :param number: Это номер настройки в списке settings_list класса Settings (начиная с нуля).
         :return: Новое значение параметра.
         """
         a = self.size * 1.5
