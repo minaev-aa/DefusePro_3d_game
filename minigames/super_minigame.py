@@ -4,6 +4,12 @@ from settings import *
 
 
 class SuperMinigame():
+    '''
+    Главный класс миниигр рисует окно времени и кнопку выхода
+    :param screen: экран
+    :param TimeAll: время начала игры
+    '''
+
     def __init__(self, screen, TimeAll):
         self.screen = screen
         self.Time = Time

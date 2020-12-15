@@ -8,10 +8,11 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class game4(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
-    Mistake :param количество ошибок
+    :param mistake количество ошибок
+    :param TimeAll: время начала игры
     '''
 
-    def __init__(self, Mistake, TimeAll):
+    def __init__(self, mistake, TimeAll):
         super().__init__(screen, TimeAll)
         self.sc = screen
         self.n = 1
@@ -20,7 +21,7 @@ class game4(minigames.super_minigame.SuperMinigame):
         self.code = ['1', '2', '3', '4']
         self.num = []
         self.znach = []
-        self.mistakes = Mistake
+        self.mistakes = mistake
         self.finished = False
         self.correct = 0
         self.surf2 = pygame.Surface((800, 800))

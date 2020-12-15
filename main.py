@@ -7,7 +7,6 @@ from engine.texture import Planning
 from minigames.main_menu import Load_cicle, Settings
 from settings import *
 
-
 pygame.init()
 screen = pygame.display.set_mode((width_screen, height_screen))
 sc = Planning(screen)
@@ -174,6 +173,10 @@ def Main_game(All, Mistake):
     font = pygame.font.SysFont(None, 100)
     n = Network()
     p = n.getP()
+    TimeAll = 0
+    if type(p) == type(None):
+        minigames.finishedgame.fingame(3, TimeAll).draw()
+        return 0
     p.sensitivity = Loader.Set_Win.fractional_points[0].parametr
     p2 = n.send(p)
     wait(p, p2, n)

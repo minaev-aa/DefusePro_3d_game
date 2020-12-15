@@ -17,7 +17,6 @@ cube = 100
 ip = "localhost"
 screen = pygame.display.set_mode((width_screen, height_screen))
 
-
 fov = math.pi / 3
 pol_fov = fov / 2
 count_ray = 300
@@ -65,4 +64,3 @@ Grey_for_slider = (193, 193, 193)
 steps_duration = 1.5
 sound_when_cursor_under_button_duration = 0.2
 sound_if_button_down_duration = 1.2
-

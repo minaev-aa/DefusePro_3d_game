@@ -7,8 +7,13 @@ from engine.ray_casting import mapping
 class Player:
     '''
     Класс игрока
-    player_pos :param Координаты игрока в кортеже
-    role :param Роль игрока
+    :param player_pos:  Координаты игрока в кортеже
+    :param role:  Роль игрока
+    :param angle:  Угол поворота камеры
+    :param finish:  Завершена ли игра
+    :param typefin:  Тип концовки
+    :param start:  Статус начала игры
+    :param sensitivity: Чувствительность поворота
     '''
 
     def __init__(self, player_pos, role):

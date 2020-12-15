@@ -121,7 +121,7 @@ class Button():
         """
         a = int(self.size / 2)
         if self.y - a / 2 < massive[1] < self.y + a / 2 and \
-                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
+                                                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
             self.COLOR = self.BUT_LOAD
             self.is_down = 1
             return self.is_down
@@ -358,7 +358,7 @@ class Points_of_settings():
         c = self.size_of_font / 2
         leng = self.size_of_font * len(self.Text)
         if self.x - c <= massive[0] <= self.x + leng and \
-                self.y - a <= massive[1] <= self.y + a:
+                                        self.y - a <= massive[1] <= self.y + a:
             if self.parametr:
                 self.parametr = False
             else:
@@ -424,7 +424,7 @@ class Fractional_settings(Points_of_settings):
         a = self.size * 1.5
         c = self.lenght_of_slider
         if self.x <= massive[0] <= self.x + c and \
-                self.y + a <= massive[1] <= self.y + 3 * a:
+                                        self.y + a <= massive[1] <= self.y + 3 * a:
             self.parametr = int((massive[0] - self.x) / c * 100)
             save_sets_in_file(number, self.parametr)
         return self.parametr

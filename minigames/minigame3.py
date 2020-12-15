@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 
 
 class Game3(minigames.super_minigame.SuperMinigame):
-    def __init__(self, Mistake, TimeAll):
+    def __init__(self, mistake, TimeAll):
         """
         @param screen: холст для рисования
         @type screen: pygame.surface
@@ -27,7 +27,7 @@ class Game3(minigames.super_minigame.SuperMinigame):
         self.elipce_tipe = Black  # цвет лампочки
         self.screen = screen
         self.finished = False
-        self.Mistake = Mistake
+        self.Mistake = mistake
         self.i_frequency = 0  # номер частоты в списке частот
         self.result = 0
         self.random_word()

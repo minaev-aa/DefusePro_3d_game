@@ -8,6 +8,9 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class fingame(minigames.super_minigame.SuperMinigame):
     '''
     Класс рисования текстур
+    :param  n: номер текстовой концовки
+    :param  sc: экран
+    :param  x, y: координаты положения мыши
     '''
 
     def __init__(self, n, TimeAll):
@@ -29,6 +32,8 @@ class fingame(minigames.super_minigame.SuperMinigame):
             text1 = f2.render('Вы проигали', False, Black)
         if self.n == 2:
             text1 = f2.render('Вы Победили', False, Black)
+        if self.n == 3:
+            text1 = f2.render('Сервер не включен.', False, Black)
         self.sc.blit(text1, (100, 330))
         while not self.finished:
             for event in pygame.event.get():

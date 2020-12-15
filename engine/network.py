@@ -5,6 +5,10 @@ from settings import *
 
 class Network:
     def __init__(self):
+        '''
+        :param server: ip
+        :param port: port
+        '''
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server = ip
         self.port = 5555

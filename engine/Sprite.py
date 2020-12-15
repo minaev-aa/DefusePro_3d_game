@@ -1,20 +1,16 @@
 import numpy as np
 from settings import *
 
+
 class Sprite:
     def __init__(self, scale, x_pos, y_pos, file, screen, player):
         """
-
-        @param scale:
-        @type scale: float
-        @param x_pos: координата x спрайта
-        @type x_pos: int
-        @param y_pos: координата y спрайта
-        @type y_pos: int
-        @param file: картинка
-        @param screen: холт, где спрайт будет рисоваться.
-        @type screen: pygame.surface
-        @param player: игрок, который смотрит на спрайт
+        :param scale: масштаб картинки
+        :param x_pos: координата x спрайта
+        :param y_pos: координата y спрайта
+        :param file: картинка
+        :param screen: холт, где спрайт будет рисоваться.
+        :param player: игрок, который смотрит на спрайт
         """
         self.scale = scale
         self.x_pos = x_pos
@@ -41,7 +37,8 @@ class Sprite:
         '''
         :return: Вычисление расстояния до игрока
         '''
-        distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (1 / 2)
+        distance_to_player = ((self.x_pos - self.player.x_player) ** 2 + (self.y_pos - self.player.y_player) ** 2) ** (
+        1 / 2)
         return distance_to_player
 
     def size(self):
@@ -53,7 +50,7 @@ class Sprite:
         if distance_to_player == 0:
             distance_to_player = player_angle
         proec_size = int(proec_k / distance_to_player * self.scale * size_sprite)
-        if not(distance_to_player > 30):
+        if not (distance_to_player > 30):
             proec_size = 0
         return proec_size
 
@@ -65,7 +62,7 @@ class Sprite:
         if not (angle_to_player < np.pi / 2 or angle_to_player > 3 / 2 * np.pi):
             guard_surf_new = pygame.transform.scale(self.surf, (int(self.size()), int(self.size())))
             guard_rect = guard_surf_new.get_rect(
-                    center=(width_screen // 2 - 4*distance * np.tan(angle_to_player), height_screen // 2))
+                    center=(width_screen // 2 - 4 * distance * np.tan(angle_to_player), height_screen // 2))
         else:
             guard_surf_new, guard_rect = (0, 0)
         return guard_surf_new, guard_rect

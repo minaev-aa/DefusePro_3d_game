@@ -1,4 +1,4 @@
-#from engine.ray_casting import *
+# from engine.ray_casting import *
 import engine.ray_casting
 from settings import *
 
@@ -6,7 +6,10 @@ from settings import *
 class Planning:
     '''
     Класс рисования текстур
+    :param  sc: экран
+    :param textures: словарь с загрузкой png картинки текстуры
     '''
+
     def __init__(self, sc):
         self.sc = sc
         self.textures = {'0': pygame.image.load('Resources/Textures/2tex6x6.png').convert(),

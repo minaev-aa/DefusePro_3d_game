@@ -8,9 +8,10 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class Letter(minigames.super_minigame.SuperMinigame):
     '''
     Класс рисования подсказок
-    sc :param определяет экран на котором рисуют
-    Time :param время в игре таймер
-    num :param номер подсказки
+    :param sc: определяет экран на котором рисуют
+    :param TimeAll: время начала игры
+    :param num: номер подсказки
+    :param  textures: словарь с картинками подсказок
     '''
 
     def __init__(self, sc, num, TimeAll):

@@ -9,11 +9,12 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 class game2(minigames.super_minigame.SuperMinigame):
     '''
     Класс второй минии игры - кнопка
-    sn :param серийный номер
-    Mistake :param количество ошибок
+    :param sn: серийный номер
+    :param Mistake: количество ошибок
+    :param TimeAll: время начала игры
     '''
 
-    def __init__(self, sn, Mistake, TimeAll):
+    def __init__(self, sn, mistake, TimeAll):
         super().__init__(screen, TimeAll)
         self.sc = screen
         self.x, self.y = 0, 0
@@ -22,7 +23,7 @@ class game2(minigames.super_minigame.SuperMinigame):
         self.colorl = (random.choices([Blue, Red, White, Black, Yellow]))[0]
         self.sn = sn
         self.localtime = 0
-        self.mistakes = Mistake
+        self.mistakes = mistake
         self.finished = False
         self.correct = 0
         self.surf2 = pygame.Surface((800, 800))

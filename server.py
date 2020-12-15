@@ -4,6 +4,7 @@ from _thread import *
 
 from engine.Player import Player
 from settings import *
+pygame.quit()
 
 server = ip
 port = 5555
