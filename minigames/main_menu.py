@@ -54,7 +54,7 @@ class Menu():
         """
         self.buts.append(Button(size, x, y, self.audio, self.sc))
         l = len(self.buts)
-        self.buts[l - 1].Text = text
+        self.buts[l - 1].text = text
         self.y_but += int(0.7 * size)
 
     def is_one_of_buttons_on(self):
@@ -280,7 +280,7 @@ class Settings():
         """
         a = int(0.8 * size)
         self.points.append(Points_of_settings(self.sc, parametr))
-        self.points[len(self.points) - 1].Text = text
+        self.points[len(self.points) - 1].text = text
         self.points[len(self.points) - 1].x = width_screen // 2 - a
         self.y0 += self.delta
         self.points[len(self.points) - 1].y = self.y0 - a
@@ -291,7 +291,7 @@ class Settings():
         """
         a = int(0.8 * size)
         self.fractional_points.append(Fractional_settings(self.sc, parametr))
-        self.fractional_points[len(self.points) - 1].Text = text
+        self.fractional_points[len(self.points) - 1].text = text
         self.fractional_points[len(self.points) - 1].x = width_screen // 2 - a
         self.y0 += self.delta
         self.fractional_points[len(self.points) - 1].y = self.y0 - a

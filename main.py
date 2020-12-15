@@ -76,9 +76,9 @@ def Menu_of_settings(All, Mistake):
                     finnish1 = True
             elif i.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                Loader.audio.is_sounds_on = (Loader.set_Win.points[0].is_point_down(mouse_position, 0))
-                Loader.set_Win.fractional_points[0].is_slider_down(mouse_position, 1)
-        Loader.set_Win.draw_set_win()
+                Loader.audio.is_sounds_on = (Loader.set_win.points[0].is_point_down(mouse_position, 0))
+                Loader.set_win.fractional_points[0].is_slider_down(mouse_position, 1)
+        Loader.set_win.draw_set_win()
         pygame.time.delay(60)
         pygame.display.update()
 
@@ -184,7 +184,7 @@ def Main_game(All, Mistake):
         minigames.finishedgame.Fingame(3, TimeAll).manager()
         return 0
 
-    p.sensitivity = Loader.set_Win.fractional_points[0].parametr
+    p.sensitivity = Loader.set_win.fractional_points[0].parametr
     p2 = n.send(p)
     wait(p, p2, n)
     TimeAll = time.time()
