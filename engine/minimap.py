@@ -11,7 +11,8 @@ def draw_minimap(player, screen):
     '''
     # Рисование бэкграунда
     pygame.draw.rect(screen, Black,
-                     ((0, 0), (len(engine.map.text_map[1]) * cube // scale_minimap, len(engine.map.text_map) * cube // scale_minimap)))
+                     ((0, 0), (len(engine.map.text_map[1]) * cube // scale_minimap,
+                               len(engine.map.text_map) * cube // scale_minimap)))
     # Рисование игрока
     x_pl = int(player.x_player) // scale_minimap
     y_pl = int(player.y_player) // scale_minimap

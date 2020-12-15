@@ -5,14 +5,16 @@ import random
 
 
 class game5(minigames.super_minigame.SuperMinigame):
-    def __init__(self, Mistake, TimeAll):
+    def __init__(self, mistake, TimeAll):
         """
         Класс миниигры номер 5.
+        :param mistake количество ошибок
+        :param TimeAll: время начала игры
         """
         minigames.super_minigame.SuperMinigame.__init__(self, screen, TimeAll)
         self.W = width_screen
         self.H = height_screen
-        self.mistakes = Mistake
+        self.mistakes = mistake
         self.symbols = []
         self.len_of_alpabet = 27
         # Подтянем текстуры кнопок.
@@ -277,7 +279,7 @@ class Button():
         return: возравращает 1, если над кнопками, 0, если нет.
         """
         if self.x <= massive[0] <= self.x + self.size and \
-                self.y <= massive[1] <= self.y + self.size:
+                                self.y <= massive[1] <= self.y + self.size:
             return 1
         else:
             return 0

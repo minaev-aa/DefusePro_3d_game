@@ -9,10 +9,15 @@ import minigames.minigame5
 from settings import *
 
 
-def active(minigames_list, player, Mistake, TimeAll):
-    """
-    Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
-    """
+def active(minigames_list, player, mistake, TimeAll):
+    '''
+    :param minigames_list: список завершённых миниигр
+    :param player: игрок
+    :param mistake: Количество ошибок
+    :param TimeAll: Время начала программы
+    :return: Если подойти к определённым стенам и нажать 'E', то запуститься миниигра.
+
+    '''
     map, active_in_map = engine.map.map_create(engine.map.text_map)
     for x, y in active_in_map:
         if player.x_player > x - active_size and player.x_player < x + cube + active_size \
@@ -26,20 +31,19 @@ def active(minigames_list, player, Mistake, TimeAll):
                         if active_in_map[x, y] not in ['o', 'd', 't', 'c', 'p']:
                             if minigames_list[int(active_in_map[x, y]) - 1] == 0:
                                 if active_in_map[x, y] == '1':
-                                    F = minigames.minigame.Manager(False, sn, Mistake, TimeAll)
+                                    F = minigames.minigame.Manager(False, sn, mistake, TimeAll)
 
                                 if active_in_map[x, y] == '2':
-                                    F = minigames.minigame2.game2(sn, Mistake, TimeAll).draw()
+                                    F = minigames.minigame2.game2(sn, mistake, TimeAll).draw()
 
                                 if active_in_map[x, y] == '3':
-                                    F = minigames.minigame3.Game3(Mistake, TimeAll).manager()
+                                    F = minigames.minigame3.Game3(mistake, TimeAll).manager()
 
                                 if active_in_map[x, y] == '4':
-                                    F = minigames.minigame4.game4(Mistake, TimeAll).Manager()
+                                    F = minigames.minigame4.game4(mistake, TimeAll).Manager()
 
                                 if active_in_map[x, y] == '5':
-                                    F = minigames.minigame5.game5(Mistake, TimeAll).main()
-
+                                    F = minigames.minigame5.game5(mistake, TimeAll).main()
                                 return (active_in_map[x, y], F)
                             if minigames_list[int(active_in_map[x, y]) - 1] == 1:
                                 minigames.finishedgame.fingame(0, TimeAll).draw()

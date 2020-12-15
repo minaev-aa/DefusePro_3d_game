@@ -21,7 +21,8 @@ class Audio_source():
         self.steps_start_time = 0
 
     def sound_when_cursor_under_button_init(self):
-        self.sound_when_cursor_under_button = pg.mixer.Sound('Resources\Music_and_sound\Format_ogg\Cursor_under_button.ogg')
+        self.sound_when_cursor_under_button = pg.mixer.Sound(
+            'Resources\Music_and_sound\Format_ogg\Cursor_under_button.ogg')
         self.sound_when_cursor_under_button_start_time = 0
 
     def sound_if_button_down_init(self):

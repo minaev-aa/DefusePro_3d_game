@@ -6,6 +6,11 @@ FPS = 30
 
 
 def game1(sc, sn):
+    '''
+    :param sc: экран
+    :param sn: серийный номер
+    :return: вотриовка и поределение верности действий игрока
+    '''
     count = [0, 0, 0, 0, 0]
     colors = [Blue, Red, White, Black, Yellow]
     k = random.randint(3, 6)
@@ -32,7 +37,11 @@ def game1(sc, sn):
     return (line, right)
 
 
-def numer(line, num):
+def numer(line):
+    '''
+    :param line: случайнная сгенерированные данные проводов
+    :return: сохраняет позиции проводов
+    '''
     m = 0
     n = [None] * 8
     for i in range(6):
@@ -64,12 +73,19 @@ def numer(line, num):
 
 
 def correct(line, color, num, sn):
+    '''
+    :param line: случайнная сгенерированные данные проводов
+    :param color: список цветов количество
+    :param num: количество проводов
+    :param sn: серийный номер
+    :return: определение верного провода
+    '''
     n = 0
     for i in range(6):
         if line[i][0]:
             n += 1
     tline = 0
-    linennum = numer(line, num)
+    linennum = numer(line)
     if num == 3:
         if color[1] == 0:
             tline = linennum[1]
@@ -118,6 +134,11 @@ def correct(line, color, num, sn):
 
 
 def line_print(line, sc):
+    '''
+    :param line: объект проводов
+    :param sc: экран
+    :return: рисует сами провода
+    '''
     dog_surf = pygame.image.load('Resources/Textures/plata.png').convert()
     dog_surf.set_colorkey((255, 255, 255))
     scale = pygame.transform.scale(
@@ -144,6 +165,13 @@ def line_print(line, sc):
 
 
 def cut(sc, out, x, y):
+    '''
+    :param sc: экран
+    :param out: входные данные о проводах
+    :param x: позиция мышки по x
+    :param y: позиция мышки по y
+    :return: обрезает провод(рисует)
+    '''
     k = 8
     rez = 10
     surf = pygame.Surface((389, 2 * k))
@@ -161,6 +189,12 @@ def cut(sc, out, x, y):
 
 
 def drawglobal(sc, result, light):
+    '''
+    :param sc: экран
+    :param result: состояние завершения
+    :param light: объект лампочки
+    :return: рисует фон
+    '''
     button = pygame.image.load('Resources\\Textures\\button.png')
     surf4 = pygame.Surface((50, 50))
     surf4.blit(button, (0, 0))
@@ -182,16 +216,24 @@ def drawglobal(sc, result, light):
 
 
 def click(x, y):
+    '''
+    :param x: позиция мышки по x
+    :param y: позиция мышки по y
+    :return: проверка нажатия на крестик
+    '''
     if 1140 < x < 1190:
         if 0 < y < 50:
             return True
 
 
-def mistake(Mistake):
-    Mistake += 1
-
-
-def Manager(finished, sn, Mistake, TimeAll):
+def Manager(finished, sn, mistake, TimeAll):
+    '''
+    :param finished: состояние завершённости
+    :param sn: серийный номер
+    :param mistake: количество ошибок
+    :param TimeAll: время начала работы
+    :return: управление миниигрой
+    '''
     font = pygame.font.SysFont(None, 100)
     text = font.render(str(Time) + ' сек', True, Black)
     surf1 = pygame.Surface((300, 120))
@@ -221,7 +263,7 @@ def Manager(finished, sn, Mistake, TimeAll):
                 if cuts != None:
                     if cuts != -1:
                         if cuts != true:
-                            mistake(Mistake)
+                            mistake += 1
         text = font.render(str(Time - round(time.time() - TimeAll)) + ' сек', True, Black)
         if Time - round(time.time() - TimeAll) == 0:
             finished = True
@@ -229,7 +271,7 @@ def Manager(finished, sn, Mistake, TimeAll):
         surf1.fill(White)
         surf1.blit(text, text_rect)
         screen.blit(surf1, (0, 0))
-    return (result, Mistake)
+    return (result, mistake)
 
 
 if __name__ == '__main__':
