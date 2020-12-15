@@ -40,14 +40,6 @@ class Player:
         self.audio.Sound_play(self.audio.steps, steps_duration, self.audio.steps_start_time)
         self.audio.steps_start_time = self.audio.check_sound(steps_duration, self.audio.steps_start_time)
 
-    def sound_of_running(self):
-        """
-        Включает звук бега для персонажа.
-        :return: звук.
-        """
-        self.audio.Sound_play(self.audio.running, running_duration, self.audio.running_start_time)
-        self.audio.running_start_time = self.audio.check_sound(running_duration, self.audio.running_start_time)
-
     @property
     def pos(self):
         '''
@@ -86,20 +78,19 @@ class Player:
         if pressed_keys[pygame.K_LSHIFT]:
             self.Vy *= 2
             self.Vx *= 2
-        if pressed_keys[pygame.K_a]:
-            self.is_move = True
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vx, self.y_player, -1 * self.Vy)
-        if pressed_keys[pygame.K_d]:
-            self.is_move = True
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vx, self.y_player, self.Vy)
-        if pressed_keys[pygame.K_s]:
-            self.is_move = True
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vy, self.y_player,
-                                                                 -1 * self.Vx)
-        if pressed_keys[pygame.K_w]:
-            self.is_move = True
-            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vy, self.y_player, self.Vx)
 
+        if pressed_keys[pygame.K_a]:
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vx,
+                                                                 self.y_player, -1 * self.Vy)
+        if pressed_keys[pygame.K_d]:
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vx,
+                                                                 self.y_player, self.Vy)
+        if pressed_keys[pygame.K_s]:
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, -1 * self.Vy,
+                                                                 self.y_player, -1 * self.Vx)
+        if pressed_keys[pygame.K_w]:
+            self.x_player, self.y_player = self.__mover_player__(self.x_player, self.Vy,
+                                                                 self.y_player, self.Vx)
         if pressed_keys[pygame.K_RIGHT]:
             self.angle += player_angle_change_speed * (1 + self.sensitivity / 100)
         if pressed_keys[pygame.K_LEFT]:
@@ -118,12 +109,11 @@ class Player:
         m_y = mapping(cord_x, cord_y + Vy_m)  # Создает кортеж координат.
         m_d = mapping(cord_x + Vx_m // 9, cord_y + Vy_m // 9)
         map, active_map = engine.map.map_create(engine.map.text_map)
-        if m_x in map or m_y in map:
-            if m_x in map:
-                Vx = 0
-            if m_y in map:
-                Vy = 0
-        elif m_d in map:
+        if m_x in map:
+            Vx = 0
+        if m_y in map:
+            Vy = 0
+        if m_d in map and not (m_x in map and m_y in map):
             Vx = 0
             Vy = 0
         return Vx, Vy
@@ -132,10 +122,12 @@ class Player:
         """
         Меняет координаты игрока.
         Проверяет, может ли он идти дальше (проверка на текстутры).
+        Меняет переменную, в которой отмечено, есть ли движение.
         :cord_x: и :cord_y:  Координаты, по которым считается перемещение.
         :Vx: и :Vy: - Скорости по данным коодринатам.
         :return: Новую коодринату.
         """
+        self.is_move = True
         Vx, Vy = self.is_player_in_colader(cord_x, Vx, cord_y, Vy)
         cord_x += Vx
         cord_y += Vy

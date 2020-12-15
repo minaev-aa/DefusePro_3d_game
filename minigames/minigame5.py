@@ -78,6 +78,9 @@ class Game5(minigames.super_minigame.SuperMinigame):
             self.screen.blit(self.symbols[self.writed_on_display[i] - 1], (x, y))  # Нарисуем символ на экране.
 
     def manager(self):
+        """
+        Рисует саму миниигру и обрабатывает все взаимодействия с ней.
+        """
         self.finished = False
         while not self.finished:
             mouse_position = pygame.mouse.get_pos()
@@ -114,7 +117,7 @@ class Game5(minigames.super_minigame.SuperMinigame):
 
             pygame.time.delay(60)
             pygame.display.update()
-        return (self.win, self.mistakes)
+        return self.win, self.mistakes
 
     def choose_elements_in_column(self):
         """
@@ -221,28 +224,25 @@ class Game5(minigames.super_minigame.SuperMinigame):
         Проверяет, навел ли игрок курсор на доп кнопки.
         :return: 1, если навел и  0, если не навел.
         """
+        is_down = 0
         x = self.x_but_of_disp
         y = self.y_but_of_disp - (line - 1) * self.delta_but_on_disp
         a = self.size_of_disp_buts[0]
         b = self.size_of_disp_buts[1]
         if x <= massive[0] <= x + a and y <= massive[1] <= y + b:
-            return 1
-        else:
-            return 0
+            is_down = 1
+        return is_down
 
     def is_player_lost(self):
         """
         Проверяет, верно ли игрок ввел значения с клавиатуры.
         :return: 1, если ошибся и 0Ю если не ошибся.
         """
-        mistakes = 0
+        mistake = 0
         for i in range(self.count_of_symbol_on_keyboard):
             if self.writed_on_display[i] != self.right_answer[i]:
-                mistakes += 1
-        if mistakes > 0:
-            return 1
-        else:
-            return 0
+                mistake = 1
+        return mistake
 
     def draw_underlining_for_disp_buts(self, colour, line):
         """
@@ -278,11 +278,11 @@ class Button():
         :param massive: Массив положения мышки.
         return: возравращает 1, если над кнопками, 0, если нет.
         """
+        is_down = 0
         if self.x <= massive[0] <= self.x + self.size and \
-                                self.y <= massive[1] <= self.y + self.size:
-            return 1
-        else:
-            return 0
+                self.y <= massive[1] <= self.y + self.size:
+            is_down = 1
+        return is_down
 
 
 if __name__ == '__main__':
@@ -291,7 +291,7 @@ if __name__ == '__main__':
     screen = pg.display.set_mode((width_screen, height_screen))
     screen.fill((100, 150, 200))
     TimeAll = time.time()
-    g = game5(0, TimeAll)
+    g = Game5(0, TimeAll)
 
     # Проверим функцию choose_elements_in_column()
     errors = 0

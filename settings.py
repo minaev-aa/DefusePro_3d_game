@@ -14,7 +14,7 @@ width_screen = 1200
 height_screen = 800
 FPS = 60
 cube = 100
-ip = "localhost"
+ip = "25.55.252.98"  # "localhost"
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 fov = math.pi / 3
@@ -57,6 +57,8 @@ Red = (255, 0, 0)
 DarkRed = (200, 0, 0)
 Grey = (40, 40, 40)
 BACK_LOAD = (250, 235, 205)
+BUT_LOAD = (240, 225, 215)
+GREEN_LOAD = (10, 200, 20)
 SET_BUT = (105, 115, 105)
 Grey_for_slider = (193, 193, 193)
 

@@ -62,13 +62,13 @@ class Menu():
         Проверяетб нажата ли кнопка.
         :return: -1, если не нажата, номер нажатой кнопки в массиве, если нажата.
         """
+        downed_buts_num = -1
         self.searched = False
         for num in range(len(self.buts)):
             if self.buts[num].is_down == 1:
                 self.searched = True
-                return num
-        if not self.searched:
-            return -1
+                downed_buts_num = num
+        return downed_buts_num
 
 
 class Button():
@@ -86,13 +86,9 @@ class Button():
         self.y = y
         self.x = x
         self.sc = sc
-        self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
-        self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
-        self.COLOR = self.BACK_LOAD
+        self.COLOR = BACK_LOAD
         self.W = width_screen  # Размеры экрана для модуля главного меню.
         self.H = height_screen  # Ширина для модуля главного меню.
-        self.pi = 3.14
-
         self.audio = audio
         self.is_down = 0
 
@@ -108,7 +104,7 @@ class Button():
         a = int(self.size / 2)
         pg.draw.arc(sc, self.COLOR,
                     (x - 3 * a, y - a / 2, 6 * a, a),
-                    0, 2 * self.pi, 13)
+                    0, 2 * math.pi, 13)
         text_blit(x - int((len(self.Text) / 2) * self.size_of_font // 3),
                   y - int(self.size_of_font / 3),
                   self.Text, White, self.size_of_font)
@@ -121,14 +117,13 @@ class Button():
         """
         a = int(self.size / 2)
         if self.y - a / 2 < massive[1] < self.y + a / 2 and \
-                                                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
-            self.COLOR = self.BUT_LOAD
+                self.W // 2 - 3 * a < massive[0] < self.W // 2 + 3 * a:
+            self.COLOR = BUT_LOAD
             self.is_down = 1
-            return self.is_down
         else:
-            self.COLOR = self.BACK_LOAD
+            self.COLOR = BACK_LOAD
             self.is_down = 0
-            return self.is_down
+        return self.is_down
 
 
 class Load_cicle():
@@ -147,12 +142,8 @@ class Load_cicle():
         self.size = 150
         self.sc = sc
         self.size_of_font = 30
-        self.GREEN_LOAD = (10, 200, 20)  # Цвет кружка загрузки.
-        self.BACK_LOAD = (250, 235, 205)  # Цвет для фона экрана загрузки.
-        self.BUT_LOAD = (240, 225, 215)  # Цвет для нажатой кнопки экрана загрузки.
         self.W = width_screen  # Размеры экрана для модуля главного меню.
         self.H = height_screen  # Ширина для модуля главного меню.
-        self.pi = 3.14
 
     def draw_cicle(self, x, y):
         """
@@ -162,9 +153,9 @@ class Load_cicle():
         """
         sc = self.sc
         r = int(self.size / 2)
-        pg.draw.arc(sc, self.GREEN_LOAD,
+        pg.draw.arc(sc, GREEN_LOAD,
                     (x - r, y - r, 2 * r, 2 * r),
-                    self.opposite_persent_of_load, 2 * self.pi * self.persent_of_load, 13)
+                    self.opposite_persent_of_load, 2 * math.pi * self.persent_of_load, 13)
         font = pg.font.Font(None, self.size_of_font)  # Задает шрифт.
         text = font.render(str(int(self.persent_of_load * 100)) + "%", True, Grey)
         # Добавляет текст на шкалу на координатах x, y.
@@ -175,7 +166,7 @@ class Load_cicle():
         Меняет цвет фона и рисует процесс загрузки.
         :return: фон, процесс загрузки.
         """
-        pg.draw.rect(self.sc, self.BACK_LOAD, (0, 0, self.W, self.H), 0)
+        pg.draw.rect(self.sc, BACK_LOAD, (0, 0, self.W, self.H), 0)
         self.draw_cicle(self.W // 2, self.H // 2)
 
     def main_menu_init(self):
@@ -358,7 +349,7 @@ class Points_of_settings():
         c = self.size_of_font / 2
         leng = self.size_of_font * len(self.Text)
         if self.x - c <= massive[0] <= self.x + leng and \
-                                        self.y - a <= massive[1] <= self.y + a:
+                self.y - a <= massive[1] <= self.y + a:
             if self.parametr:
                 self.parametr = False
             else:
@@ -424,7 +415,7 @@ class Fractional_settings(Points_of_settings):
         a = self.size * 1.5
         c = self.lenght_of_slider
         if self.x <= massive[0] <= self.x + c and \
-                                        self.y + a <= massive[1] <= self.y + 3 * a:
+                self.y + a <= massive[1] <= self.y + 3 * a:
             self.parametr = int((massive[0] - self.x) / c * 100)
             save_sets_in_file(number, self.parametr)
         return self.parametr
