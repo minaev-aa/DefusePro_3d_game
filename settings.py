@@ -14,7 +14,7 @@ width_screen = 1200
 height_screen = 800
 FPS = 60
 cube = 100
-ip = "25.55.252.98"  # "localhost"
+ip = "localhost"
 screen = pygame.display.set_mode((width_screen, height_screen))
 
 fov = math.pi / 3
